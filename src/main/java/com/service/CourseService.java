@@ -12,7 +12,15 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Course getNewCourse(){
-        return courseRepository.getOneCourse();
+    //增
+    public boolean addNewCourse(Course newCourse){
+        return true;
     }
+
+
+    //查
+    public Course getCourseById(int courseId){
+        return courseRepository.selectCourseById(courseId);
+    }
+
 }
