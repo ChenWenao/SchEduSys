@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DepartService {
     @Autowired
-    DepartRepository departRepository;
+    private DepartRepository departRepository;
 
     //增
     public boolean addNewDepartment(Department newDepartment){

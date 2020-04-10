@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class DepartRepository {
     @Autowired
-    JdbcTemplate template;
+    private JdbcTemplate template;
     DepartRowMapper departRowMapper = new DepartRowMapper();
 
     //增
@@ -24,8 +24,8 @@ public class DepartRepository {
             return true;
         } catch (Exception e) {
             System.out.println(e);
-            return false;
         }
+        return false;
     }
 
     //删
@@ -35,8 +35,8 @@ public class DepartRepository {
             return true;
         }catch (Exception e){
             System.out.println(e);
-            return false;
         }
+        return false;
     }
 
     //改
@@ -47,11 +47,11 @@ public class DepartRepository {
             template.update("update Course set isEnable='F' where courseDepartName=?", departName);
             //删除学院。
             template.update("update Department set isEnable='F' where departName=?", departName);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
-            return false;
         }
-        return true;
+        return false;
     }
 
     //查
@@ -61,8 +61,8 @@ public class DepartRepository {
             return departments.get(0);
         }catch (Exception e){
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 
     public Department selectDepartById(int departId){
@@ -71,8 +71,8 @@ public class DepartRepository {
             return departments.get(0);
         }catch (Exception e){
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 
     public List<Department> selectAllDeparts(String order_by,String order){
@@ -84,7 +84,7 @@ public class DepartRepository {
             return departments;
         }catch (Exception e){
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 }

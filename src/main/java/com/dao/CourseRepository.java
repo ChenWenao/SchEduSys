@@ -36,6 +36,33 @@ public class CourseRepository {
         }
     }
 
+    //删
+    public boolean deleteCourse(int courseId) {
+        try {
+            template.update("delete from Course where courseId=?",courseId);
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
+
+
+
+
+    //改
+    public boolean dropCourse(int courseId) {
+        try {
+            template.update("update Course set isEnable='F' where courseId=?", courseId);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+
     //查
     public Course selectCourseById(int courseId) {
         try {
@@ -43,7 +70,7 @@ public class CourseRepository {
             return courses.get(0);
         } catch (Exception e) {
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 }

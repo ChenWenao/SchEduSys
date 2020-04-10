@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class DepartController {
     @Autowired
-    DepartService departService;
+    private DepartService departService;
 
     //增
     @PostMapping("/SchEduSys/Depart/newDepart")

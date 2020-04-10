@@ -5,9 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-<label th:text="${oneCourse.courseId}">
-</label>
-<label th:text="${oneCourse.courseName}">
-</label>
+<form enctype="multipart/form-data" method="post"
+      action="/SchEduSys/Course/newCourse"
+      th:object="${newCourse}">
+    文件：
+    <input type="file" name="courseImg"/><br>
+    Name
+    <input type="text" name="courseName"><br>
+    TopicName
+    <input type="text" name="courseTopicName"><br>
+    DepartName
+    <input type="text" name="courseDepartName"><br>
+    Period
+    <input type="text" name="coursePeriod"><br>
+    Credit
+    <input type="text" name="courseCredit"><br>
+    StartTime
+    <input type="text" name="courseStartTime"><br>
+    Level
+    <input type="text" name="courseLevel"><br>
+    Type
+    <input type="text" name="courseType"><br>
+    <button type="submit">上传</button><br>
+</form>
 </body>
 </html>

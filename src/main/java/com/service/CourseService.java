@@ -13,13 +13,24 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     //增
-    public boolean addNewCourse(Course newCourse){
-        return true;
+    public boolean addNewCourse(Course newCourse) {
+        return courseRepository.insertANewCourse(newCourse);
+    }
+
+    //删
+    public boolean removeCourse(int courseId) {
+        return courseRepository.deleteCourse(courseId);
+    }
+
+
+    //改
+    public boolean dropCourse(int courseId) {
+        return courseRepository.dropCourse(courseId);
     }
 
 
     //查
-    public Course getCourseById(int courseId){
+    public Course getCourseById(int courseId) {
         return courseRepository.selectCourseById(courseId);
     }
 

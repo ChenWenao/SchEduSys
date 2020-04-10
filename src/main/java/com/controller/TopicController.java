@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class TopicController {
     @Autowired
-    TopicService topicService;
+    private TopicService topicService;
 
     //增
     @RequestMapping("/SchEduSys/Topic/newTopic/{topicName}")
@@ -24,9 +24,8 @@ public class TopicController {
     //删
     @RequestMapping("/SchEduSys/Topic/removeTopic/{topicName}")
     public boolean removeTopic(@PathVariable("topicName") String topicName) {
-        if (topicService.getTopicByName(topicName) != null) {
+        if (topicService.getTopicByName(topicName) != null)
             return topicService.removeTopic(topicName);
-        }
         return false;
     }
 

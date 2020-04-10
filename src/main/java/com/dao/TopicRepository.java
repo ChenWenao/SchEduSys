@@ -17,26 +17,27 @@ public class TopicRepository {
     //增
     public boolean insertANewTopic(String topicName) {
         try {
-            template.update("insert into Topic(topicName) value(?)", topicRowMapper, topicName);
+            template.update("insert into Topic(topicName) value(?)", topicName);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+
         }
-        return true;
+        return false;
     }
 
     //删
-    public boolean deleteTopic(String topicName){
-        try{
+    public boolean deleteTopic(String topicName) {
+        try {
             //删除course表的数据。
-            template.update("delete from Course where courseTopicName=?",topicName);
+            template.update("delete from Course where courseTopicName=?", topicName);
             //删除topic表的数据。
-            template.update("delete from Topic where topicName=?",topicName);
+            template.update("delete from Topic where topicName=?", topicName);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-            return  false;
         }
+        return false;
     }
 
     //改
@@ -49,8 +50,8 @@ public class TopicRepository {
             return true;
         } catch (Exception e) {
             System.out.println(e);
-            return false;
         }
+        return false;
     }
 
 
@@ -61,8 +62,8 @@ public class TopicRepository {
             return topics.get(0);
         } catch (Exception e) {
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 
     public Topic selectTopicById(int topicId) {
@@ -71,8 +72,8 @@ public class TopicRepository {
             return topics.get(0);
         } catch (Exception e) {
             System.out.println(e);
-            return null;
         }
+        return null;
     }
 
     public List<Topic> selectAllTopics() {
@@ -80,7 +81,8 @@ public class TopicRepository {
             List<Topic> topics = template.query("select * from Topic", topicRowMapper);
             return topics;
         } catch (Exception e) {
-            return null;
+            System.out.println(e);
         }
+        return null;
     }
 }
