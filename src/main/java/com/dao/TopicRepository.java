@@ -19,6 +19,7 @@ public class TopicRepository {
         try {
             template.update("insert into Topic(topicName) value(?)", topicRowMapper, topicName);
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
         return true;
@@ -33,6 +34,7 @@ public class TopicRepository {
             template.update("delete from Topic where topicName=?",topicName);
             return true;
         }catch (Exception e){
+            System.out.println(e);
             return  false;
         }
     }
@@ -46,6 +48,7 @@ public class TopicRepository {
             template.update("update Topic set topicName=? where topicName=?", newTopicName, oldTopicName);
             return true;
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
@@ -57,6 +60,7 @@ public class TopicRepository {
             List<Topic> topics = template.query("select * from Topic where topicName = ?", topicRowMapper, topicName);
             return topics.get(0);
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
@@ -66,6 +70,7 @@ public class TopicRepository {
             List<Topic> topics = template.query("select * from Topic where topicId = ?", topicRowMapper, topicId);
             return topics.get(0);
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }

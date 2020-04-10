@@ -31,6 +31,7 @@ public class CourseRepository {
                     , newCourse.getCourseType());
             return true;
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
@@ -41,6 +42,7 @@ public class CourseRepository {
             List<Course> courses = template.query("select * from Course where courseId =?", courseRowMapper, courseId);
             return courses.get(0);
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }

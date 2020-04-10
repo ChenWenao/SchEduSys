@@ -17,35 +17,41 @@ public class TopicController {
 
     //增
     @RequestMapping("/SchEduSys/Topic/newTopic/{topicName}")
-    public boolean addNewTopic(@PathVariable("topicName") String topicName){
+    public boolean addNewTopic(@PathVariable("topicName") String topicName) {
         return topicService.addNewTopic(topicName);
     }
 
     //删
     @RequestMapping("/SchEduSys/Topic/removeTopic/{topicName}")
-    public boolean removeTopic(@PathVariable("topicName") String topicName){
-        return topicService.removeTopic(topicName);
+    public boolean removeTopic(@PathVariable("topicName") String topicName) {
+        if (topicService.getTopicByName(topicName) != null) {
+            return topicService.removeTopic(topicName);
+        }
+        return false;
     }
 
     //改
     @RequestMapping("/SchEduSys/Topic/modifyTopic/{oldTopicName}/{newTopicName}")
-    public boolean modifyTopic(@PathVariable("oldTopicName") String oldTopicName,@PathVariable("newTopicName") String newTopicName){
-        return topicService.modifyTopic(oldTopicName,newTopicName);
+    public boolean modifyTopic(@PathVariable("oldTopicName") String oldTopicName, @PathVariable("newTopicName") String newTopicName) {
+        if (topicService.getTopicByName(oldTopicName) != null) {
+            return topicService.modifyTopic(oldTopicName, newTopicName);
+        }
+        return false;
     }
 
     //查
     @RequestMapping("/SchEduSys/Topic/topicByName/{topicName}")
-    public Topic getTopicByName(@PathVariable("topicName") String topicName){
+    public Topic getTopicByName(@PathVariable("topicName") String topicName) {
         return topicService.getTopicByName(topicName);
     }
 
     @RequestMapping("/SchEduSys/Topic/topicById/{topicId}")
-    public Topic getTopicById(@PathVariable("topicId") int topicId){
+    public Topic getTopicById(@PathVariable("topicId") int topicId) {
         return topicService.getTopicById(topicId);
     }
 
     @RequestMapping("/SchEduSys/Topic/allTopics")
-    public List<Topic> getAllTopics(){
+    public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
     }
 
