@@ -92,8 +92,13 @@ public class CourseController {
     //删
     @RequestMapping("/SchEduSys/Course/removeCourse/{courseId}")
     public boolean removeCourse(@PathVariable("courseId") int courseId) {
-        if (courseService.getCourseById(courseId) != null)
-            return courseService.removeCourse(courseId);
+        Course course_drop=courseService.getCourseById(courseId);
+        if (course_drop != null) {
+            File file = new File(course_drop.getCourseLogo());//根据指定的文件名创建File对象
+            if ( file.exists()&&file.isFile() ){
+                return file.delete()&&courseService.removeCourse(courseId);
+            }
+        }
         return false;
     }
 
@@ -105,7 +110,19 @@ public class CourseController {
         return false;
     }
 
+    @RequestMapping("/SchEduSys/Course/restoreCourse/{courseId}")
+    public boolean restoreCourse(@PathVariable("courseId") int courseId) {
+        if (courseService.getCourseById(courseId) != null)
+            return courseService.restoreCourse(courseId);
+        return false;
+    }
+
+
     //查
+    @RequestMapping("/SchEduSys/Course/CourseById/{courseId}")
+    public Course getCourseById(@PathVariable("courseId") int courseId){
+        return courseService.getCourseById(courseId);
+    }
 
 
 }

@@ -14,8 +14,11 @@ public class RegisterRowMapper implements RowMapper<Register> {
         register.setRegisterId(resultSet.getInt("registerId"));
         register.setReg_scheduleId(resultSet.getInt("reg_scheduleId"));
         register.setReg_studentId(resultSet.getInt("reg_studentId"));
+        register.setReg_courseId(resultSet.getInt("reg_courseId"));
         register.setIsEnable(resultSet.getString("isEnable"));
-        register.setScore(resultSet.getFloat("score"));
+        register.setGrade(resultSet.getFloat("grade"));
+        register.setTestScore(resultSet.getFloat("testScore"));
+        register.setFinalScore(resultSet.getFloat("finalScore"));
         return register;
     }
 }

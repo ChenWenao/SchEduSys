@@ -4,8 +4,11 @@ public class Register {
     private int registerId;
     private int reg_scheduleId;
     private int reg_studentId;
+    private int reg_courseId;
     private String isEnable;
-    private float score;
+    private float grade;
+    private float testScore;
+    private float finalScore;
 
     public int getRegisterId() {
         return registerId;
@@ -31,6 +34,14 @@ public class Register {
         this.reg_studentId = reg_studentId;
     }
 
+    public int getReg_courseId() {
+        return reg_courseId;
+    }
+
+    public void setReg_courseId(int reg_courseId) {
+        this.reg_courseId = reg_courseId;
+    }
+
     public String getIsEnable() {
         return isEnable;
     }
@@ -39,11 +50,27 @@ public class Register {
         this.isEnable = isEnable;
     }
 
-    public float getScore() {
-        return score;
+    public float getGrade() {
+        return grade;
     }
 
-    public void setScore(float score) {
-        this.score = score;
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
+
+    public float getTestScore() {
+        return testScore;
+    }
+
+    public void setTestScore(float testScore) {
+        this.testScore = testScore;
+    }
+
+    public float getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(float finalScore) {
+        this.finalScore = finalScore;
     }
 }

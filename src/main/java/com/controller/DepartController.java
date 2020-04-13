@@ -36,6 +36,22 @@ public class DepartController {
         return false;
     }
 
+    @RequestMapping("/SchEduSys/Depart/restoreDepart/{departName}")
+    public boolean restoreDepartment(@PathVariable("departName") String departName){
+        if (departService.getDepartmentByName(departName) != null) {
+            return departService.restoreDepartment(departName);
+        }
+        return false;
+    }
+
+    @RequestMapping("/SchEduSys/Depart/modifyDepart/")
+    public boolean modifyDepartment(@ModelAttribute(value = "Department") Department department){
+        Department department_find=departService.getDepartmentById(department.getDepartId());
+        if(department_find==null)
+            return false;//要修改的department不存在。
+        return departService.modifyDepartment(department);
+    }
+
     //查
     @RequestMapping("/SchEduSys/Depart/departByName/{departName}")
     public Department getDepartmentById(@PathVariable("departName") String departName) {

@@ -27,6 +27,13 @@ public class DepartService {
         return departRepository.dropDepart(departName);
     }
 
+    public boolean restoreDepartment(String departName){
+        return departRepository.restoreDepart(departName);
+    }
+
+    public boolean modifyDepartment(Department department){
+        return departRepository.updateDepart(department);
+    }
     //查
     public Department getDepartmentByName(String departName){
         return departRepository.selectDepartByName(departName);

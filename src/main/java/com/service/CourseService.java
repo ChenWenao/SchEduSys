@@ -28,6 +28,9 @@ public class CourseService {
         return courseRepository.dropCourse(courseId);
     }
 
+    public boolean restoreCourse(int courseId){
+        return courseRepository.restoreCourse(courseId);
+    }
 
     //查
     public Course getCourseById(int courseId) {

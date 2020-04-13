@@ -39,6 +39,11 @@ public class CourseRepository {
     //删
     public boolean deleteCourse(int courseId) {
         try {
+            //删除CourseRegister
+            template.update("delete from courseRegister where reg_courseId=?",courseId);
+            //删除CourseSchedule
+            template.update("delete from courseSchedule where sch_courseId=?",courseId);
+            //删除Course
             template.update("delete from Course where courseId=?",courseId);
             return true;
         }catch (Exception e){
@@ -54,7 +59,27 @@ public class CourseRepository {
     //改
     public boolean dropCourse(int courseId) {
         try {
+            //删除CourseRegister
+            template.update("update courseRegister set isEnable='F' where courseId=?",courseId);
+            //删除CourseSchedule
+            template.update("update courseSchedule set isEnable='F' where courseId=?",courseId);
+            //删除Course
             template.update("update Course set isEnable='F' where courseId=?", courseId);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean restoreCourse(int courseId){
+        try {
+            //恢复CourseRegister
+            template.update("update courseRegister set isEnable='T' where courseId=?",courseId);
+            //恢复CourseSchedule
+            template.update("update courseSchedule set isEnable='T' where courseId=?",courseId);
+            //恢复Course
+            template.update("update Course set isEnable='T' where courseId=?", courseId);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -71,6 +96,10 @@ public class CourseRepository {
         } catch (Exception e) {
             System.out.println(e);
         }
+        return null;
+    }
+
+    public List<Course> selectCourses(String order_by,String order){
         return null;
     }
 }
