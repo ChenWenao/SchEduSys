@@ -32,6 +32,9 @@ public class CourseService {
         return courseRepository.restoreCourse(courseId);
     }
 
+    public boolean modifyCourse(Course course){
+        return courseRepository.modifyCourse(course);
+    }
     //查
     public Course getCourseById(int courseId) {
         return courseRepository.selectCourseById(courseId);

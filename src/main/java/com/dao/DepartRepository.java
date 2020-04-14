@@ -82,7 +82,7 @@ public class DepartRepository {
         return false;
     }
 
-    public boolean updateDepart(Department department){
+    public boolean modifyDepart(Department department){
         try {
             //修改Department
             template.update("update Department set departName=?,departCreateTime=?,departDescription=? where departId=?"

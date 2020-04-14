@@ -87,6 +87,38 @@ public class CourseRepository {
         return false;
     }
 
+    public boolean modifyCourse(Course modifyCourse){
+        try {
+            template.update("update Course set " +
+                    "courseName=?," +
+                    "courseTopicId=?," +
+                    "courseTopicName=?," +
+                    "courseDepartId=?," +
+                    "courseDepartName=?," +
+                    "coursePeriod=?," +
+                    "courseCredit=?," +
+                    "courseStartTime=?," +
+                    "courseLogo=?," +
+                    "courseLevel=?," +
+                    "courseType=?," +
+                    "courseDescription=?," +
+                    "courseFAQ=?," +
+                    "courseGradingPolicy=?," +
+                    "courseRequirement=?" +
+                    "where courseId=?",modifyCourse.getCourseName(),modifyCourse.getCourseTopicId(),modifyCourse.getCourseTopicName(),
+                    modifyCourse.getCourseDepartId(),modifyCourse.getCourseDepartName(),modifyCourse.getCoursePeriod(),
+                    modifyCourse.getCourseCredit(),modifyCourse.getCourseStartTime(),modifyCourse.getCourseLogo(),
+                    modifyCourse.getCourseLevel(),modifyCourse.getCourseType(),modifyCourse.getCourseDescription(),
+                    modifyCourse.getCourseFAQ(),modifyCourse.getCourseGradingPolicy(),modifyCourse.getCourseRequirement(),
+                    modifyCourse.getCourseId()
+                    );
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
 
     //查
     public Course selectCourseById(int courseId) {

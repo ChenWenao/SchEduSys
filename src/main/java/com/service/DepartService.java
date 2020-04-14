@@ -32,7 +32,7 @@ public class DepartService {
     }
 
     public boolean modifyDepartment(Department department){
-        return departRepository.updateDepart(department);
+        return departRepository.modifyDepart(department);
     }
     //查
     public Department getDepartmentByName(String departName){

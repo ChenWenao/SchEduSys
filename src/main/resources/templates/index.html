@@ -28,5 +28,40 @@
     <input type="text" name="courseType"><br>
     <button type="submit">上传</button><br>
 </form>
+
+<form enctype="multipart/form-data" method="post"
+      action="/SchEduSys/Course/modifyCourse"
+      th:object="${newCourse}">
+    文件：
+    <input type="file" name="courseImg"/><br>
+    Id:
+    <input type="text" name="courseId"><br>
+    Name
+    <input type="text" name="courseName"><br>
+    TopicName
+    <input type="text" name="courseTopicName"><br>
+    DepartName
+    <input type="text" name="courseDepartName"><br>
+    Period
+    <input type="text" name="coursePeriod"><br>
+    Credit
+    <input type="text" name="courseCredit"><br>
+    StartTime
+    <input type="text" name="courseStartTime"><br>
+    Level
+    <input type="text" name="courseLevel"><br>
+    Type
+    <input type="text" name="courseType"><br>
+    Description
+    <input type="text" name="courseDescription"><br>
+    FAQ
+    <input type="text" name="courseFAQ"><br>
+    GradingPolicy
+    <input type="text" name="courseGradingPolicy"><br>
+    Requirement
+    <input type="text" name="courseRequirement"><br>
+    <button type="submit">上传</button><br>
+</form>
+
 </body>
 </html>

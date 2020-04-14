@@ -16,12 +16,16 @@ public class TopicController {
     private TopicService topicService;
 
     //增
+
+    //新建课程类型
     @RequestMapping("/SchEduSys/Topic/newTopic/{topicName}")
     public boolean addNewTopic(@PathVariable("topicName") String topicName) {
         return topicService.addNewTopic(topicName);
     }
 
     //删
+
+    //删除课程类型，同时会删除课程
     @RequestMapping("/SchEduSys/Topic/removeTopic/{topicName}")
     public boolean removeTopic(@PathVariable("topicName") String topicName) {
         if (topicService.getTopicByName(topicName) != null)
@@ -30,6 +34,8 @@ public class TopicController {
     }
 
     //改
+
+    //修改课程类型
     @RequestMapping("/SchEduSys/Topic/modifyTopic/{oldTopicName}/{newTopicName}")
     public boolean modifyTopic(@PathVariable("oldTopicName") String oldTopicName, @PathVariable("newTopicName") String newTopicName) {
         if (topicService.getTopicByName(oldTopicName) != null) {

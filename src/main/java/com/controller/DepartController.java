@@ -13,12 +13,16 @@ public class DepartController {
     private DepartService departService;
 
     //增
+
+    //新建学院
     @PostMapping("/SchEduSys/Depart/newDepart")
     public boolean addNewDepartment(@ModelAttribute(value = "Department") Department department) {
         return departService.addNewDepartment(department);
     }
 
     //删
+
+    //删除学院
     @RequestMapping("/SchEduSys/Depart/removeDepart/{departName}")
     public boolean removeDepartment(@PathVariable("departName") String departName) {
         if (departService.getDepartmentByName(departName) != null) {
@@ -28,6 +32,8 @@ public class DepartController {
     }
 
     //改
+
+    //下架学院
     @RequestMapping("/SchEduSys/Depart/dropDepart/{departName}")
     public boolean dropDepartment(@PathVariable("departName") String departName) {
         if (departService.getDepartmentByName(departName) != null) {
@@ -36,6 +42,7 @@ public class DepartController {
         return false;
     }
 
+    //上架学院
     @RequestMapping("/SchEduSys/Depart/restoreDepart/{departName}")
     public boolean restoreDepartment(@PathVariable("departName") String departName){
         if (departService.getDepartmentByName(departName) != null) {
@@ -44,6 +51,7 @@ public class DepartController {
         return false;
     }
 
+    //修改学院的全部信息
     @RequestMapping("/SchEduSys/Depart/modifyDepart/")
     public boolean modifyDepartment(@ModelAttribute(value = "Department") Department department){
         Department department_find=departService.getDepartmentById(department.getDepartId());
@@ -63,8 +71,11 @@ public class DepartController {
         return departService.getDepartmentById(departId);
     }
 
-    @RequestMapping("/SchEduSys/Depart/departments/{order_by}/{order}")
-    public List<Department> getAllDepartments(@PathVariable("order_by") String order_by, @PathVariable("order") String order) {
+    //order_by表示根据哪个字段查询，
+    // order表示正序还是倒序查询，order为0表示逆序，其他值表示正序
+    // isEnable表示是否启用，on表示查询启用的学院，off表示查询未启用的学院，all表示查询所有学院
+    @RequestMapping("/SchEduSys/Depart/departments/{isEnable}/{order_by}/{order}")
+    public List<Department> getAllDepartments(@PathVariable("isEnable")String isEnable,@PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return departService.getAllDepartments(order_by, order);
     }
 }
