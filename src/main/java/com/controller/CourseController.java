@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -180,6 +181,14 @@ public class CourseController {
     @RequestMapping("/SchEduSys/Course/CourseById/{courseId}")
     public Course getCourseById(@PathVariable("courseId") int courseId){
         return courseService.getCourseById(courseId);
+    }
+
+    // order_by表示根据哪个字段查询，
+    // order表示正序还是倒序查询，order为0表示逆序，1表示正序
+    // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有课程
+    @RequestMapping("/SchEduSys/Course/courses/{isEnable}/{order_by}/{order}")
+    public List<Course> getCourses(@PathVariable("isEnable") String isEnable,@PathVariable("order_by") String order_by, @PathVariable("order") String order){
+        return courseService.getCourses(isEnable,order_by,order);
     }
 }
 

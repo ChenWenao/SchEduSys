@@ -117,9 +117,16 @@ public class DepartRepository {
         return null;
     }
 
-    public List<Department> selectAllDeparts(String order_by,String order){
+    public List<Department> selectDeparts(String isEnable,String order_by,String order){
         try {
-            String sql="select * from Department order by "+order_by;
+            String sql="select * from Department ";
+            if("on".equals(isEnable))
+                sql+="where isEnable='T' ";
+            else if("off".equals(isEnable))
+                sql+="where isEnable='F' ";
+
+            sql+="order by ";
+            sql+=order_by;
             if("0".equals(order))
                 sql+=" desc";
             List<Department> departments=template.query(sql,departRowMapper);

@@ -43,9 +43,7 @@ public class DepartService {
         return departRepository.selectDepartById(departId);
     }
 
-    public List<Department> getAllDepartments(String order_by,String order){
-        return departRepository.selectAllDeparts(order_by,order);
+    public List<Department> getDepartments(String isEnable,String order_by,String order){
+        return departRepository.selectDeparts(isEnable,order_by,order);
     }
-
-
 }
