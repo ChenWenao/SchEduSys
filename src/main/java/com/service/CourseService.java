@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Service
 public class CourseService {
     @Autowired
@@ -39,5 +41,10 @@ public class CourseService {
     public Course getCourseById(int courseId) {
         return courseRepository.selectCourseById(courseId);
     }
+
+    public List<Course> getCourses(String isEnable,String order_by,String order){
+        return courseRepository.selectCourses(isEnable,order_by,order);
+    }
+
 
 }

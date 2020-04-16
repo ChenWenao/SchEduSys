@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.bean.Course;
+import com.bean.Department;
 import com.bean.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -51,9 +52,6 @@ public class CourseRepository {
         }
         return false;
     }
-
-
-
 
 
     //改
@@ -131,7 +129,23 @@ public class CourseRepository {
         return null;
     }
 
-    public List<Course> selectCourses(String order_by,String order){
+    public List<Course> selectCourses(String isEnable, String order_by,String order){
+        try {
+            String sql="select * from Course ";
+            if("on".equals(isEnable))
+                sql+="where isEnable='T' ";
+            else if("off".equals(isEnable))
+                sql+="where isEnable='F' ";
+            sql+="order by ";
+            sql+=order_by;
+            if("0".equals(order))
+                sql+=" desc";
+            List<Course> courses=template.query(sql,courseRowMapper);
+            return courses;
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return null;
     }
+
 }
