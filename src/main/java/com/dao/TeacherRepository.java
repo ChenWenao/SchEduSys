@@ -38,12 +38,13 @@ public class TeacherRepository {
     public boolean deleteTeacher(int teacherId) {
         try {
             //删除TeacherSchedule
-            template.update("delete from teacherSchedule where sch_teacherId=?",teacherId);
+            template.update("delete from courseSchedule where sch_teacherId=?", teacherId);
             //删除Teacher
-            template.update("delete from Teacher where teacherId=?",teacherId);
+            template.update("delete from Teacher where teacherId=?", teacherId);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
+}

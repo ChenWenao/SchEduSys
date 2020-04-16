@@ -16,6 +16,14 @@ public class Admin {
     private Date adminCreateTime;
     private String adminNote;
 
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
     public String getAdminCode() {
         return adminCode;
     }

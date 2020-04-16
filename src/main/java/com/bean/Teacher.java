@@ -19,11 +19,11 @@ public class Teacher {
     private Date teacherEntryTime;
 
     public int getTeacherId() {
-        return TeacherId;
+        return teacherId;
     }
 
     public void setTeacherId(int teacherId) {
-        TeacherId = teacherId;
+        this.teacherId = teacherId;
     }
 
     public String getTeacherCode() {
@@ -113,5 +113,4 @@ public class Teacher {
     public void setTeacherEntryTime(Date teacherEntryTime) {
         this.teacherEntryTime = teacherEntryTime;
     }
-
 }

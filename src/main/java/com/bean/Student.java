@@ -19,11 +19,11 @@ public class Student {
     private String studentNote;
 
     public int getStudentId() {
-        return StudentId;
+        return studentId;
     }
 
     public void setStudentId(int studentId) {
-        StudentId = studentId;
+        this.studentId = studentId;
     }
 
     public String getStudentCode() {
@@ -113,4 +113,6 @@ public class Student {
     public void setStudentNote(String studentNote) {
         this.studentNote = studentNote;
     }
+
+
 }
