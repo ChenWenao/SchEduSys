@@ -12,11 +12,14 @@ public class AdminRepository{
     private AdminRowMapper adminRowMapper=new AdminRowMapper();
 
 
-
-
-
-
-
-
-
+    //查
+    public Admin selectAdminById(int adminId) {
+        try {
+            List<Admin> admins = template.query("select * from Admin where adminId =?", adminRowMapper, adminId);
+            return admins.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

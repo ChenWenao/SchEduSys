@@ -10,5 +10,11 @@ public class TeacherController{
     @Autowired
     private TeacherService teacherService;
 
+    //查
+    @RequestMapping("/SchEduSys/Teacher/teacherById/{teacherId}")
+    public Teacher getTeacherById(@PathVariable("teacherId") int teacherId){
+        return teacherService.getTeacherById(teacherId);
+    }
+
 
 }

@@ -47,4 +47,15 @@ public class TeacherRepository {
         }
         return false;
     }
+
+    //查
+    public Teacher selectTeacherById(int teacherId) {
+        try {
+            List<Teacher> teachers = template.query("select * from Teacher where teacherId =?", teacherRowMapper, teacherId);
+            return teachers.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

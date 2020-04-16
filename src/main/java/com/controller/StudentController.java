@@ -11,6 +11,10 @@ public class StudentController{
     private StudentService studentService;
 
 
-
+    //查
+    @RequestMapping("/SchEduSys/Student/studentById/{studentId}")
+    public Student getStudentById(@PathVariable("studentId") int studentId){
+        return studentService.getStudentById(studentId);
+    }
 
 }

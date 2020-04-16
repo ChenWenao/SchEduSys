@@ -10,5 +10,9 @@ public class UserController{
     @Autowired
     UserService userService;
 
-
+    //查
+    @RequestMapping("/SchEduSys/User/userById/{userId}")
+    public User getUserById(@PathVariable("userId") int userId){
+        return userService.getUserById(userId);
+    }
 }

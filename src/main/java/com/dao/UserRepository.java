@@ -12,7 +12,16 @@ public class UserRepository{
     private UserRowMapper userRowMapper=new UserRowMapper();
 
 
-
+    //查
+    public User selectUserById(int userId) {
+        try {
+            List<User> users = template.query("select * from User where userId =?", userRowMapper, userId);
+            return users.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
 
 }

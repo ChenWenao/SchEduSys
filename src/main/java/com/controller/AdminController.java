@@ -10,7 +10,9 @@ public class AdminController{
     @Autowired
     private AdminService adminService;
 
-
-
-
+    //查
+    @RequestMapping("/SchEduSys/Admin/adminById/{adminId}")
+    public Admin getAdminById(@PathVariable("adminId") int adminId){
+        return adminService.getAdminById(adminId);
+    }
 }

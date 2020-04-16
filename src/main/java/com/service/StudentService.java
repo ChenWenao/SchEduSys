@@ -11,7 +11,9 @@ public class StudentService{
     private StudentRepository studentRepository;
 
 
-
-
+    //查
+    public Student getStudentById(int studentId) {
+        return studentRepository.selectStudentById(studentId);
+    }
 
 }

@@ -10,6 +10,11 @@ public class AdminService{
     @Autowired
     private AdminRepository adminRepository;
 
+    //查
+    public Admin getAdminById(int adminId) {
+        return adminRepository.selectAdminById(adminId);
+    }
+
 
 
 }

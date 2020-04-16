@@ -10,5 +10,9 @@ public class UserService{
     @Autowired
     private UserRepository userRepository;
 
+    //查
+    public User getUserById(int userId) {
+        return userRepository.selectUserById(userId);
+    }
 
 }
