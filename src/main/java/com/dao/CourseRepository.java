@@ -129,13 +129,17 @@ public class CourseRepository {
         return null;
     }
 
-    public List<Course> selectCourses(String isEnable, String order_by,String order){
+    public List<Course> selectCourses(String isEnable,String haveTeacher ,String order_by,String order){
         try {
             String sql="select * from Course ";
             if("on".equals(isEnable))
                 sql+="where isEnable='T' ";
             else if("off".equals(isEnable))
                 sql+="where isEnable='F' ";
+            if("have".equals(haveTeacher))
+                sql+="and haveTeacher='T' ";
+            else if("lack".equals(haveTeacher))
+                sql+="and haveTeacher='F' ";
             sql+="order by ";
             sql+=order_by;
             if("0".equals(order))

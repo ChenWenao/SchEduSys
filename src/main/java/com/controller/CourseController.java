@@ -1,24 +1,17 @@
 package com.controller;
 
 import com.bean.Course;
-import com.bean.Department;
-import com.bean.Topic;
+
 import com.service.CourseService;
 import com.service.DepartService;
 import com.service.TopicService;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.xml.ws.Response;
 import java.io.File;
 import java.io.IOException;
-import java.security.Timestamp;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 public class CourseController {
@@ -35,6 +28,7 @@ public class CourseController {
         mav.setViewName("index");
         return mav;
     }
+
 
     //增
 
@@ -185,10 +179,12 @@ public class CourseController {
 
     // order_by表示根据哪个字段查询，
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
-    // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有课程
-    @RequestMapping("/SchEduSys/Course/courses/{isEnable}/{order_by}/{order}")
-    public List<Course> getCourses(@PathVariable("isEnable") String isEnable,@PathVariable("order_by") String order_by, @PathVariable("order") String order){
-        return courseService.getCourses(isEnable,order_by,order);
+    // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
+    // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
+    // 示例：/SchEduSys/Course/courses/on/have/courseId/0
+    @RequestMapping("/SchEduSys/Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
+    public List<Course> getCourses(@PathVariable("isEnable") String isEnable,@PathVariable("haveTeacher") String haveTeacher,@PathVariable("order_by") String order_by, @PathVariable("order") String order){
+        return courseService.getCourses(isEnable,haveTeacher,order_by,order);
     }
 }
 

@@ -42,8 +42,8 @@ public class CourseService {
         return courseRepository.selectCourseById(courseId);
     }
 
-    public List<Course> getCourses(String isEnable,String order_by,String order){
-        return courseRepository.selectCourses(isEnable,order_by,order);
+    public List<Course> getCourses(String isEnable,String haveTeacher,String order_by,String order){
+        return courseRepository.selectCourses(isEnable,haveTeacher,order_by,order);
     }
 
 
