@@ -16,8 +16,8 @@ public class DepartController {
 
     //新建学院
     @PostMapping("/SchEduSys/Depart/newDepart")
-    public boolean addNewDepartment(@ModelAttribute(value = "Department") Department department) {
-        return departService.addNewDepartment(department);
+    public boolean addNewDepartment(@ModelAttribute(value = "newDepartment") Department newDepartment) {
+        return departService.addNewDepartment(newDepartment);
     }
 
     //删

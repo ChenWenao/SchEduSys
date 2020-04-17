@@ -13,6 +13,17 @@ public class AdminController{
     @Autowired
     private AdminService adminService;
 
+    //增
+    //传入字段：userCode,userIdCard,userRealName,userIdentity       PS:isEnable默认是T，启用状态，密码默认123456，让用户自己修改。
+    //adminCode(其实就是userCode),adminGender,adminPoliticeStatus,adminPhoneNumber,adminRealName(其实就是user的userRealName),
+    //adminIdCard(其实就是user的userIdCard),adminNote
+    //Ps:adminCreateTime不用管，数据库默认插入新建用户的时间。
+
+
+
+
+
+
     //查
     @RequestMapping("/SchEduSys/Admin/adminById/{adminId}")
     public Admin getAdminById(@PathVariable("adminId") int adminId){
