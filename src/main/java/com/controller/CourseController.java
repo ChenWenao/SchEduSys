@@ -6,6 +6,7 @@ import com.service.CourseService;
 import com.service.DepartService;
 import com.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ public class CourseController {
     @Autowired
     private TopicService topicService;
 
-    @RequestMapping("/SchEduSys/Course/index")
+    @GetMapping("/SchEduSys/Course/index")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
@@ -34,7 +35,7 @@ public class CourseController {
 
     //此处为新建课程，需要课程字段：name，topicName，departName，Period，Credit，StartTime
     //Logo（courseImg），Level，Type。
-    @RequestMapping("/SchEduSys/Course/newCourse")
+    @PostMapping("/SchEduSys/Course/newCourse")
     public String addNewCourse(@RequestParam("courseImg") MultipartFile courseImg, @ModelAttribute(value = "newCourse") Course newCourse) {
         String msg = "";
         //设置课程类型以及学院的id。
@@ -88,7 +89,6 @@ public class CourseController {
     }
 
     //删
-
     //删除课程
     @RequestMapping("/SchEduSys/Course/removeCourse/{courseId}")
     public boolean removeCourse(@PathVariable("courseId") int courseId) {
@@ -121,7 +121,7 @@ public class CourseController {
     }
 
     //修改课程的全部信息
-    @RequestMapping("/SchEduSys/Course/modifyCourse")
+    @PostMapping("/SchEduSys/Course/modifyCourse")
     public String modifyCourse(@RequestParam("courseImg") MultipartFile courseImg,@ModelAttribute(value = "modifyCourse")Course modifyCourse){
         String msg = "";
         Course oldCourse=courseService.getCourseById(modifyCourse.getCourseId());
@@ -169,6 +169,14 @@ public class CourseController {
             return msg;
         }
         return "课程修改失败！";
+    }
+
+    //修改课程的部分信息
+    //传入一个课程对象
+    //需要课程字段：Id，Description，FAQ，gradingPolicy，Requirement
+    @PostMapping("/SchEduSys/Course/modifyCourseInfo")
+    public boolean modifyCourseInfo(@ModelAttribute(value = "courseInfo") Course courseInfo){
+        return courseService.modifyCourseInfo(courseInfo);
     }
 
     //查

@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+新增课程
 <form enctype="multipart/form-data" method="post"
       action="/SchEduSys/Course/newCourse"
       th:object="${newCourse}">
@@ -28,7 +29,7 @@
     <input type="text" name="courseType"><br>
     <button type="submit">上传</button><br>
 </form>
-
+修改课程全部信息
 <form enctype="multipart/form-data" method="post"
       action="/SchEduSys/Course/modifyCourse"
       th:object="${newCourse}">
@@ -52,6 +53,22 @@
     <input type="text" name="courseLevel"><br>
     Type
     <input type="text" name="courseType"><br>
+    Description
+    <input type="text" name="courseDescription"><br>
+    FAQ
+    <input type="text" name="courseFAQ"><br>
+    GradingPolicy
+    <input type="text" name="courseGradingPolicy"><br>
+    Requirement
+    <input type="text" name="courseRequirement"><br>
+    <button type="submit">上传</button><br>
+</form>
+修改课程部分信息
+<form enctype="multipart/form-data" method="post"
+      action="/SchEduSys/Course/modifyCourseInfo"
+      th:object="${courseInfo}">
+    Id:
+    <input type="text" name="courseId"><br>
     Description
     <input type="text" name="courseDescription"><br>
     FAQ

@@ -117,6 +117,21 @@ public class CourseRepository {
         return false;
     }
 
+    public boolean modifyCourseInfo(Course courseInfo){
+        try {
+            template.update("update Course set courseDescription=?," +
+                    "courseFAQ=?," +
+                    "courseGradingPolicy=?," +
+                    "courseRequirement=?" +
+                    "where courseId=?",courseInfo.getCourseDescription(),courseInfo.getCourseFAQ(),courseInfo.getCourseGradingPolicy(),
+                    courseInfo.getCourseRequirement(),courseInfo.getCourseId());
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
 
     //查
     public Course selectCourseById(int courseId) {
