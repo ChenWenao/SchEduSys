@@ -15,7 +15,7 @@ public class DepartController {
     //增
 
     //新建学院
-    @PostMapping("/SchEduSys/Depart/newDepart")
+    @PostMapping("Depart/newDepart")
     public boolean addNewDepartment(@ModelAttribute(value = "newDepartment") Department newDepartment) {
         return departService.addNewDepartment(newDepartment);
     }
@@ -23,7 +23,7 @@ public class DepartController {
     //删
 
     //删除学院
-    @RequestMapping("/SchEduSys/Depart/removeDepart/{departName}")
+    @RequestMapping("Depart/removeDepart/{departName}")
     public boolean removeDepartment(@PathVariable("departName") String departName) {
         if (departService.getDepartmentByName(departName) != null) {
             return departService.removeDepartment(departName);
@@ -34,7 +34,7 @@ public class DepartController {
     //改
 
     //下架学院
-    @RequestMapping("/SchEduSys/Depart/dropDepart/{departName}")
+    @RequestMapping("Depart/dropDepart/{departName}")
     public boolean dropDepartment(@PathVariable("departName") String departName) {
         if (departService.getDepartmentByName(departName) != null) {
             return departService.dropDepartment(departName);
@@ -43,7 +43,7 @@ public class DepartController {
     }
 
     //上架学院
-    @RequestMapping("/SchEduSys/Depart/restoreDepart/{departName}")
+    @RequestMapping("Depart/restoreDepart/{departName}")
     public boolean restoreDepartment(@PathVariable("departName") String departName){
         if (departService.getDepartmentByName(departName) != null) {
             return departService.restoreDepartment(departName);
@@ -52,7 +52,7 @@ public class DepartController {
     }
 
     //修改学院的全部信息
-    @RequestMapping("/SchEduSys/Depart/modifyDepart/")
+    @RequestMapping("Depart/modifyDepart/")
     public boolean modifyDepartment(@ModelAttribute(value = "Department") Department department){
         Department department_find=departService.getDepartmentById(department.getDepartId());
         if(department_find==null)
@@ -61,12 +61,12 @@ public class DepartController {
     }
 
     //查
-    @RequestMapping("/SchEduSys/Depart/departByName/{departName}")
+    @RequestMapping("Depart/departByName/{departName}")
     public Department getDepartmentById(@PathVariable("departName") String departName) {
         return departService.getDepartmentByName(departName);
     }
 
-    @RequestMapping("/SchEduSys/Depart/departById/{departId}")
+    @RequestMapping("Depart/departById/{departId}")
     public Department getDepartmentById(@PathVariable("departId") int departId) {
         return departService.getDepartmentById(departId);
     }
@@ -74,7 +74,7 @@ public class DepartController {
     // order_by表示根据哪个字段查询，
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的学院，off表示查询未启用的学院，all表示查询所有学院
-    @RequestMapping("/SchEduSys/Depart/departments/{isEnable}/{order_by}/{order}")
+    @RequestMapping("Depart/departments/{isEnable}/{order_by}/{order}")
     public List<Department> getDepartments(@PathVariable("isEnable")String isEnable,@PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return departService.getDepartments(isEnable,order_by, order);
     }

@@ -18,7 +18,7 @@ public class TopicController {
     //增
 
     //新建课程类型
-    @RequestMapping("/SchEduSys/Topic/newTopic/{topicName}")
+    @RequestMapping("Topic/newTopic/{topicName}")
     public boolean addNewTopic(@PathVariable("topicName") String topicName) {
         return topicService.addNewTopic(topicName);
     }
@@ -26,7 +26,7 @@ public class TopicController {
     //删
 
     //删除课程类型，同时会删除课程
-    @RequestMapping("/SchEduSys/Topic/removeTopic/{topicName}")
+    @RequestMapping("Topic/removeTopic/{topicName}")
     public boolean removeTopic(@PathVariable("topicName") String topicName) {
         if (topicService.getTopicByName(topicName) != null)
             return topicService.removeTopic(topicName);
@@ -36,7 +36,7 @@ public class TopicController {
     //改
 
     //修改课程类型
-    @RequestMapping("/SchEduSys/Topic/modifyTopic/{oldTopicName}/{newTopicName}")
+    @RequestMapping("Topic/modifyTopic/{oldTopicName}/{newTopicName}")
     public boolean modifyTopic(@PathVariable("oldTopicName") String oldTopicName, @PathVariable("newTopicName") String newTopicName) {
         if (topicService.getTopicByName(oldTopicName) != null) {
             return topicService.modifyTopic(oldTopicName, newTopicName);
@@ -45,17 +45,17 @@ public class TopicController {
     }
 
     //查
-    @RequestMapping("/SchEduSys/Topic/topicByName/{topicName}")
+    @RequestMapping("Topic/topicByName/{topicName}")
     public Topic getTopicByName(@PathVariable("topicName") String topicName) {
         return topicService.getTopicByName(topicName);
     }
 
-    @RequestMapping("/SchEduSys/Topic/topicById/{topicId}")
+    @RequestMapping("Topic/topicById/{topicId}")
     public Topic getTopicById(@PathVariable("topicId") int topicId) {
         return topicService.getTopicById(topicId);
     }
 
-    @RequestMapping("/SchEduSys/Topic/allTopics")
+    @RequestMapping("Topic/allTopics")
     public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
     }
