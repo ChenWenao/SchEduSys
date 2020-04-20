@@ -57,11 +57,11 @@ public class CourseRepository {
     //改
     public boolean dropCourse(int courseId) {
         try {
-            //删除CourseRegister
+            //下架CourseRegister
             template.update("update courseRegister set isEnable='F' where reg_courseId=?",courseId);
-            //删除CourseSchedule
+            //下架CourseSchedule
             template.update("update courseSchedule set isEnable='F' where sch_courseId=?",courseId);
-            //删除Course
+            //下架Course
             template.update("update Course set isEnable='F' where courseId=?", courseId);
             return true;
         } catch (Exception e) {

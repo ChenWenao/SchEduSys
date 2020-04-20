@@ -194,7 +194,7 @@ public class CourseController {
     }
 
     //查
-    @RequestMapping("Course/CourseById/{courseId}")
+    @RequestMapping("Course/courseById/{courseId}")
     public Course getCourseById(@PathVariable("courseId") int courseId){
         return courseService.getCourseById(courseId);
     }
