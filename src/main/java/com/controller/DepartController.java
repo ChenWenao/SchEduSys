@@ -23,32 +23,38 @@ public class DepartController {
     //删
 
     //删除学院
-    @RequestMapping("Depart/removeDepart/{departName}")
-    public boolean removeDepartment(@PathVariable("departName") String departName) {
-        if (departService.getDepartmentByName(departName) != null) {
-            return departService.removeDepartment(departName);
+    @PostMapping("Depart/removeDepart")
+    public boolean removeDepartment(@RequestBody List<String> departNames) {
+        for (String departName:departNames) {
+            if (departService.getDepartmentByName(departName) == null||!departService.removeDepartment(departName)){
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     //改
 
     //下架学院
-    @RequestMapping("Depart/dropDepart/{departName}")
-    public boolean dropDepartment(@PathVariable("departName") String departName) {
-        if (departService.getDepartmentByName(departName) != null) {
-            return departService.dropDepartment(departName);
+    @PostMapping("Depart/dropDepart")
+    public boolean dropDepartment(@RequestBody List<String> departNames) {
+        for (String departName:departNames) {
+            if (departService.getDepartmentByName(departName) == null||!departService.dropDepartment(departName)){
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     //上架学院
-    @RequestMapping("Depart/restoreDepart/{departName}")
-    public boolean restoreDepartment(@PathVariable("departName") String departName){
-        if (departService.getDepartmentByName(departName) != null) {
-            return departService.restoreDepartment(departName);
+    @PostMapping("Depart/restoreDepart")
+    public boolean restoreDepartment(@RequestBody List<String> departNames){
+        for (String departName:departNames) {
+            if (departService.getDepartmentByName(departName) == null||!departService.restoreDepartment(departName)){
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     //修改学院的全部信息

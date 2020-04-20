@@ -90,14 +90,22 @@ public class CourseController {
 
     //删
     //删除课程
-    @RequestMapping("Course/removeCourse/{courseId}")
-    public boolean removeCourse(@PathVariable("courseId") int courseId) {
-        Course course_drop=courseService.getCourseById(courseId);
-        if (course_drop != null) {
-            File file = new File(course_drop.getCourseLogo());
-            if ( file.exists()&&file.isFile() ){
-                return file.delete()&&courseService.removeCourse(courseId);
+    @RequestMapping("Course/removeCourse")
+    public boolean removeCourse(@RequestBody List<Integer> courseIds) {
+        try {
+            for (int courseId : courseIds) {
+                Course course_drop = courseService.getCourseById(courseId);
+                if (course_drop != null) {
+                    File file = new File(course_drop.getCourseLogo());
+                    if (file.exists() && file.isFile()) {
+                        file.delete();
+                        courseService.removeCourse(courseId);
+                    }
+                }
             }
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
         }
         return false;
     }
@@ -105,19 +113,25 @@ public class CourseController {
     //改
 
     //下架课程
-    @RequestMapping("Course/dropCourse/{courseId}")
-    public boolean dropCourse(@PathVariable("courseId") int courseId) {
-        if (courseService.getCourseById(courseId) != null)
-            return courseService.dropCourse(courseId);
-        return false;
+    @PostMapping("Course/dropCourse")
+    public boolean dropCourse(@RequestBody List<Integer> courseIds) {
+        for (int courseId:courseIds) {
+            if (courseService.getCourseById(courseId) == null||!courseService.dropCourse(courseId)){
+                return false;
+            }
+        }
+        return true;
     }
 
     //上架课程
-    @RequestMapping("Course/restoreCourse/{courseId}")
-    public boolean restoreCourse(@PathVariable("courseId") int courseId) {
-        if (courseService.getCourseById(courseId) != null)
-            return courseService.restoreCourse(courseId);
-        return false;
+    @PostMapping("Course/restoreCourse")
+    public boolean restoreCourse(@RequestBody List<Integer> courseIds) {
+        for (int courseId:courseIds) {
+            if (courseService.getCourseById(courseId) == null||!courseService.restoreCourse(courseId)){
+                return false;
+            }
+        }
+        return true;
     }
 
     //修改课程的全部信息

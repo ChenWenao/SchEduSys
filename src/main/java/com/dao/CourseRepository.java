@@ -58,9 +58,9 @@ public class CourseRepository {
     public boolean dropCourse(int courseId) {
         try {
             //删除CourseRegister
-            template.update("update courseRegister set isEnable='F' where courseId=?",courseId);
+            template.update("update courseRegister set isEnable='F' where reg_courseId=?",courseId);
             //删除CourseSchedule
-            template.update("update courseSchedule set isEnable='F' where courseId=?",courseId);
+            template.update("update courseSchedule set isEnable='F' where sch_courseId=?",courseId);
             //删除Course
             template.update("update Course set isEnable='F' where courseId=?", courseId);
             return true;
@@ -73,9 +73,9 @@ public class CourseRepository {
     public boolean restoreCourse(int courseId){
         try {
             //恢复CourseRegister
-            template.update("update courseRegister set isEnable='T' where courseId=?",courseId);
+            template.update("update courseRegister set isEnable='T' where reg_courseId=?",courseId);
             //恢复CourseSchedule
-            template.update("update courseSchedule set isEnable='T' where courseId=?",courseId);
+            template.update("update courseSchedule set isEnable='T' where sch_courseId=?",courseId);
             //恢复Course
             template.update("update Course set isEnable='T' where courseId=?", courseId);
             return true;

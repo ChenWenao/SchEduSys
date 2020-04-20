@@ -5,6 +5,7 @@ import com.service.TopicService;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,11 +27,13 @@ public class TopicController {
     //删
 
     //删除课程类型，同时会删除课程
-    @RequestMapping("Topic/removeTopic/{topicName}")
-    public boolean removeTopic(@PathVariable("topicName") String topicName) {
-        if (topicService.getTopicByName(topicName) != null)
-            return topicService.removeTopic(topicName);
-        return false;
+    @RequestMapping("Topic/removeTopic")
+    public boolean removeTopic(@RequestBody List<String> topicNames) {
+        for (String topicName:topicNames) {
+            if (topicService.getTopicByName(topicName) == null||!topicService.removeTopic(topicName))
+                return false;
+        }
+        return true;
     }
 
     //改
