@@ -2,6 +2,7 @@ package com.dao;
 
 
 import com.bean.Admin;
+import com.bean.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,24 @@ public class AdminRepository{
     private JdbcTemplate template;
     private AdminRowMapper adminRowMapper=new AdminRowMapper();
 
+    //增
+    public boolean insertANewAdmin(Admin newAdmin) {
+        try {
+            template.update("insert into Admin(adminCode,adminNativePlace,adminGender,adminPoliticeStatus,adminPhoneNumber,adminRealName,adminIdCard,adminNote) values (?,?,?,?,?,?,?,?)"
+                    , newAdmin.getAdminCode()
+                    , newAdmin.getAdminNativePlace()
+                    , newAdmin.getAdminGender()
+                    , newAdmin.getAdminPoliticsStatus()
+                    , newAdmin.getAdminPhoneNumber()
+                    , newAdmin.getAdminRealName()
+                    , newAdmin.getAdminIdCard()
+                    , newAdmin.getAdminNote());
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 
     //查
     public Admin selectAdminById(int adminId) {
