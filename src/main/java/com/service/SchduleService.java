@@ -35,9 +35,17 @@ public class SchduleService {
         return scheduleRepository.publishScore(courseId);
     }
 
+    public boolean publishScoreOff(int courseId){
+        return scheduleRepository.publishScoreOff(courseId);
+    }
+
     //查
-    public Schedule getScheduleById(String order_by, int order_value){
-        return scheduleRepository.selectScheduleById(order_by,order_value);
+    public Schedule getScheduleByCourseId(int courseId){
+        return scheduleRepository.selectScheduleByCourseId(courseId);
+    }
+
+    public List<Schedule> getScheduleByTeacherId(String teacherCode){
+        return scheduleRepository.selectScheduleByTeacherId(teacherCode);
     }
 
     public List<Schedule> getSchedules(String isEnable,String order_by,String order){

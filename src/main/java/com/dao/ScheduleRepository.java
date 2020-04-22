@@ -82,13 +82,35 @@ public class ScheduleRepository {
         return false;
     }
 
-    //查
-    public Schedule selectScheduleById(String order_by,int order_value){
+    public boolean publishScoreOff(int courseId){
         try {
-            String sql="select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and "+order_by+" = "+order_value;
-            List<Schedule> schedules=template.query(sql
-                    ,scheduleRowMapper);
+            template.update("update courseSchedule set publishScore='F' where sch_courseId=?",courseId);
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    //查
+    public Schedule selectScheduleByCourseId(int courseId){
+        try {
+
+            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and courseId=?"
+                    ,scheduleRowMapper,courseId);
             return schedules.get(0);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Schedule> selectScheduleByTeacherId(String teacherCode){
+        try {
+
+            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and teacherCode=? and isEnable='T'"
+                    ,scheduleRowMapper,teacherCode);
+            return schedules;
         }catch (Exception e){
             System.out.println(e);
         }
