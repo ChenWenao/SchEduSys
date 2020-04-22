@@ -89,7 +89,7 @@ public class ScheduleController {
 
     //查询单个数据。
 
-    //查询某个课程的授课数据，单条，一个课程只能有一条授课信息（即一个课程只能有一个老师）
+    //查询某个课程的授课数据，单条，一个课程只能有一条授课信息（即一个课程只能有一个老师），学生查询选课详细信息时用
     @RequestMapping("Schedule/scheduleByCourseId/{courseId}")
     public Schedule getScheduleByCourseId(@PathVariable("courseId") int courseId){
         return scheduleService.getScheduleByCourseId(courseId);
