@@ -1,14 +1,76 @@
 package com.controller;
 
+import com.bean.*;
+import com.service.CourseService;
 import com.service.RegisterService;
+import com.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class RegisterController {
     @Autowired
-    RegisterService registerService;
+    private RegisterService registerService;
+    @Autowired
+    private ScheduleService scheduleService;
+    @Autowired
+    private CourseService courseService;
 
+    //增
+    //学生选课，只需要传入课程id，后台通过session自动获取学生id
+    @RequestMapping("Register/newRegister/{courseId}")
+    public String addNewRegister(HttpSession session, @PathVariable("courseId") int courseId){
+        //暂时新建一个学生，登陆做完后删除。
+        User loginUser_pre=new User();
+        loginUser_pre.setUserId(1);
+        loginUser_pre.setUserCode("201722111920129");
+        session.setAttribute("loginUser",loginUser_pre);
+        //删到这里。
+
+        Schedule courseSchedule= scheduleService.getScheduleByCourseId(courseId);
+        if(courseSchedule==null){
+            return "授课数据不存在！";
+        }
+        else if(registerService.addNewRegister(courseSchedule.getSch_teacherId(), ((User)session.getAttribute("loginUser")).getUserId(), courseId)){
+                return "选课成功！";
+        }
+        return "您已选了该课程！";
+    }
+
+    //删
+    //学生调用，退选课程。
+    @RequestMapping("Register/removeRegister/{courseId}")
+    public boolean removeRegister(HttpSession session,@PathVariable("courseId") int courseId){
+        //暂时新建一个学生，登陆做完后删除。
+        User loginUser_pre=new User();
+        loginUser_pre.setUserId(1);
+        loginUser_pre.setUserCode("201722111920129");
+        session.setAttribute("loginUser",loginUser_pre);
+        //删到这里。
+
+        return registerService.removeRegister(((User)session.getAttribute("loginUser")).getUserId(),courseId);
+    }
+
+    //改
+    //教师调用，打分。
+    @RequestMapping("Register/giveGrade/{courseId}/{studentId}/{grade}/{testScore}")
+    public boolean giveGrade(@PathVariable("courseId")int courseId,@PathVariable("studentId") int studentId,@PathVariable("grade")float grade,@PathVariable("testScore")float testScore){
+        Course course=courseService.getCourseById(courseId);
+        String[] gradePolicy=course.getCourseGradingPolicy().split("，");
+        float finalScore= (float) ((Float.parseFloat(gradePolicy[0].substring(5,7))*grade+Float.parseFloat(gradePolicy[1].substring(5,7))*testScore)*0.01);
+        return registerService.giveGrade(courseId,studentId,grade,testScore,finalScore);
+    }
+
+    //查
+    @RequestMapping("Register/registerByCourseId/{courseId}")
+    public Register getRegisterByCourseId(@PathVariable("courseId")int reg_courseId){
+        return registerService.getRegisterByCourseId(reg_courseId);
+    }
 
 
 

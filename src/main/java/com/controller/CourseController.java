@@ -199,7 +199,7 @@ public class CourseController {
         return courseService.getCourseById(courseId);
     }
 
-    // order_by表示根据哪个字段查询，
+    // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
