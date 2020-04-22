@@ -64,7 +64,6 @@ public class RegisterRowMapper implements RowMapper<Register> {
         register.setCourseGradingPolicy(resultSet.getString("courseGradingPolicy"));
         register.setCourseRequirement(resultSet.getString("courseRequirement"));
 
-
         return register;
     }
 }

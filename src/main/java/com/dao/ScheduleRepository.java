@@ -108,7 +108,7 @@ public class ScheduleRepository {
     public List<Schedule> selectScheduleByTeacherId(String teacherCode){
         try {
 
-            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and teacherCode=? and isEnable='T'"
+            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and teacherCode=? and courseSchedule.isEnable='T'"
                     ,scheduleRowMapper,teacherCode);
             return schedules;
         }catch (Exception e){

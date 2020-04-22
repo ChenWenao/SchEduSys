@@ -3,18 +3,20 @@ package com.controller;
 import com.bean.Course;
 import com.bean.Schedule;
 import com.bean.Teacher;
+import com.bean.User;
 import com.service.CourseService;
-import com.service.SchduleService;
+import com.service.ScheduleService;
 import com.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
 public class ScheduleController {
     @Autowired
-    private SchduleService schduleService;
+    private ScheduleService scheduleService;
 
     @Autowired
     private CourseService courseService;
@@ -29,7 +31,7 @@ public class ScheduleController {
         Course sch_course=courseService.getCourseById(sch_courseId);
         Teacher sch_teacher=teacherService.getTeacherById(sch_teacherId);
         if(sch_course!=null&&sch_teacher!=null)
-            if("F".equals(sch_course.getHaveTeacher())&&schduleService.addNewSchedule(sch_courseId,sch_teacherId))
+            if("F".equals(sch_course.getHaveTeacher())&& scheduleService.addNewSchedule(sch_courseId,sch_teacherId))
                 return "课程分配教师完成！";
             else
                 return "课程已有教师！";
@@ -41,7 +43,7 @@ public class ScheduleController {
     @PostMapping("Schedule/removeSchedule")
     public boolean removeSchedule(@RequestBody List<Integer> sch_courseIds){
         for (int sch_courseId:sch_courseIds) {
-            if(!schduleService.removeSchedule(sch_courseId)){
+            if(!scheduleService.removeSchedule(sch_courseId)){
                 return false;
             }
         }
@@ -53,7 +55,7 @@ public class ScheduleController {
     @PostMapping("Schedule/dropSchedule")
     public boolean dropSchedule(@RequestBody List<Integer> sch_courseIds){
         for (int sch_courseId:sch_courseIds) {
-            if(!schduleService.dropSchedule(sch_courseId)){
+            if(!scheduleService.dropSchedule(sch_courseId)){
                 return false;
             }
         }
@@ -64,7 +66,7 @@ public class ScheduleController {
     @PostMapping("Schedule/restoreSchedule")
     public boolean restoreSchedule(@RequestBody List<Integer> sch_courseIds){
         for (int sch_courseId:sch_courseIds) {
-            if(!schduleService.restoreSchedule(sch_courseId)){
+            if(!scheduleService.restoreSchedule(sch_courseId)){
                 return false;
             }
         }
@@ -74,13 +76,13 @@ public class ScheduleController {
     //发布分数。
     @RequestMapping("Schedule/publishScore/{courseId}")
     public boolean publishScore(@PathVariable("courseId") int courseId){
-        return schduleService.publishScore(courseId);
+        return scheduleService.publishScore(courseId);
     }
 
     //停止发布分数
     @RequestMapping("Schedule/publishScoreOff/{courseId}")
     public boolean publishScoreOff(@PathVariable("courseId") int courseId){
-        return schduleService.publishScoreOff(courseId);
+        return scheduleService.publishScoreOff(courseId);
     }
 
     //查，同时会查出该授课计划的课程信息以及教师信息
@@ -90,15 +92,22 @@ public class ScheduleController {
     //查询某个课程的授课数据，单条，一个课程只能有一条授课信息（即一个课程只能有一个老师）
     @RequestMapping("Schedule/scheduleByCourseId/{courseId}")
     public Schedule getScheduleByCourseId(@PathVariable("courseId") int courseId){
-        return schduleService.getScheduleByCourseId(courseId);
+        return scheduleService.getScheduleByCourseId(courseId);
     }
 
     //查询多条数据。
 
     //查询某个老师的授课数据，多条（可能一个老师教n门课）
-    @RequestMapping("Schedule/scheduleByTeacherCode/{teacherCode}")
-    public List<Schedule> getScheduleByTeacherId(@PathVariable("teacherCode") String teacherCode){
-        return schduleService.getScheduleByTeacherId(teacherCode);
+    @RequestMapping("Schedule/mySchedule")
+    public List<Schedule> getScheduleByTeacherId(HttpSession session){
+
+        //暂时建立一个session，登陆做完后删除
+        User loginUser_pre=new User();
+        loginUser_pre.setUserCode("201722111920129");
+        session.setAttribute("loginUser",loginUser_pre);
+        //删到这里。
+
+        return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode());
     }
 
     //查询所有的授课数据。
@@ -108,6 +117,6 @@ public class ScheduleController {
     // PS：两个order主要实现根据某个字段排序的功能
     @RequestMapping("Schedule/schedules/{isEnable}/{order_by}/{order}")
     public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable,@PathVariable("order_by")String order_by,@PathVariable("order")String order){
-        return schduleService.getSchedules(isEnable,order_by,order);
+        return scheduleService.getSchedules(isEnable,order_by,order);
     }
 }
