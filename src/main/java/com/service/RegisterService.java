@@ -25,7 +25,7 @@ public class RegisterService {
         return registerRepository.updateGrade(courseId, studentId, grade, testScore, finalScore);
     }
 
-    public Register getRegisterByCourseId(int reg_courseId){
+    public List<Register> getRegisterByCourseId(int reg_courseId){
         return registerRepository.selectScheduleByCourseId(reg_courseId);
     }
 

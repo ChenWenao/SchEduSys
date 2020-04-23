@@ -67,9 +67,9 @@ public class RegisterController {
     }
 
     //查
-    //根据课程id查询单条选课数据。
+    //根据课程id查询某门课程的选课数据，可以用来查所有选择某门课的学生。
     @RequestMapping("Register/registerByCourseId/{courseId}")
-    public Register getRegisterByCourseId(@PathVariable("courseId")int reg_courseId){
+    public List<Register> getRegisterByCourseId(@PathVariable("courseId")int reg_courseId){
         return registerService.getRegisterByCourseId(reg_courseId);
     }
 

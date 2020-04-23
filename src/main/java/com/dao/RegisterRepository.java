@@ -48,11 +48,13 @@ public class RegisterRepository {
     }
 
     //查
-    public Register selectScheduleByCourseId(int reg_courseId){
+    public List<Register> selectScheduleByCourseId(int reg_courseId){
         try {
             List<Register> registers=template.query("select * from Course,Teacher,Student,courseRegister " +
-                    "where courseId=reg_courseId and teacherId=reg_teacherId and studentId=reg_studentId and courseId=?",registerRowMapper,reg_courseId);
-            return registers.get(0);
+                    "where courseId=reg_courseId " +
+                    "and teacherId=reg_teacherId " +
+                    "and studentId=reg_studentId " +
+                    "and courseId=?",registerRowMapper,reg_courseId);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -77,17 +79,7 @@ public class RegisterRepository {
 
     public List<Register> selectRegisters(String order_by,String order){
         try{
-//            String sql="select * from Course,Teacher,courseSchedule where courseId=sch_courseId and teacherId=sch_teacherId ";
-//            if("on".equals(isEnable))
-//                sql+="and courseSchedule.isEnable='T' ";
-//            else if("off".equals(isEnable))
-//                sql+="and courseSchedule.isEnable='F' ";
-//            sql+="order by ";
-//            sql+=order_by;
-//            if("0".equals(order))
-//                sql+=" desc";
-//            List<Schedule> schedules=template.query(sql,scheduleRowMapper);
-//            return schedules;
+
             String sql="select * from Course,Teacher,Student,courseRegister " +
                     "where reg_courseId=courseId " +
                     "and reg_teacherId=teacherId " +
