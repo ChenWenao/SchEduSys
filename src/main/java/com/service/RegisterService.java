@@ -6,6 +6,8 @@ import com.dao.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegisterService {
     @Autowired
@@ -23,11 +25,16 @@ public class RegisterService {
         return registerRepository.updateGrade(courseId, studentId, grade, testScore, finalScore);
     }
 
-
-
-
     public Register getRegisterByCourseId(int reg_courseId){
         return registerRepository.selectScheduleByCourseId(reg_courseId);
+    }
+
+    public List<Register> getMyRegister(int studentId){
+        return registerRepository.selectScheduleByStudentId(studentId);
+    }
+
+    public List<Register> getRegisters(String order_by,String order){
+        return registerRepository.selectRegisters(order_by,order);
     }
 
 }

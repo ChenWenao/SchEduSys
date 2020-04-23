@@ -37,7 +37,6 @@ public class RegisterRepository {
     }
 
     //改
-
     public boolean updateGrade(int courseId,int studentId,float grade,float testScore,float finalScore){
         try {
             template.update("update courseRegister set grade=? , testScore=? , finalScore=? where reg_courseId=? and reg_studentId=?",grade,testScore,finalScore,courseId,studentId);
@@ -48,19 +47,55 @@ public class RegisterRepository {
         return false;
     }
 
-
-
-
-
-
-
-
     //查
     public Register selectScheduleByCourseId(int reg_courseId){
         try {
             List<Register> registers=template.query("select * from Course,Teacher,Student,courseRegister " +
                     "where courseId=reg_courseId and teacherId=reg_teacherId and studentId=reg_studentId and courseId=?",registerRowMapper,reg_courseId);
             return registers.get(0);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Register> selectScheduleByStudentId(int studentId){
+        try{
+            List<Register> registers=template.query("select * from Course,Student,Teacher,courseRegister " +
+                    "where reg_studentId=studentId " +
+                    "and reg_courseId=courseId " +
+                    "and reg_teacherId=teacherId " +
+                    "and courseRegister.isEnable='T' " +
+                    "and studentId=?",registerRowMapper,studentId);
+            return registers;
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Register> selectRegisters(String order_by,String order){
+        try{
+//            String sql="select * from Course,Teacher,courseSchedule where courseId=sch_courseId and teacherId=sch_teacherId ";
+//            if("on".equals(isEnable))
+//                sql+="and courseSchedule.isEnable='T' ";
+//            else if("off".equals(isEnable))
+//                sql+="and courseSchedule.isEnable='F' ";
+//            sql+="order by ";
+//            sql+=order_by;
+//            if("0".equals(order))
+//                sql+=" desc";
+//            List<Schedule> schedules=template.query(sql,scheduleRowMapper);
+//            return schedules;
+            String sql="select * from Course,Teacher,Student,courseRegister " +
+                    "where reg_courseId=courseId " +
+                    "and reg_teacherId=teacherId " +
+                    "and reg_studentId=studentId order by "+order_by;
+            if("0".equals(order))
+                sql+=" desc";
+            List<Register> registers=template.query(sql,registerRowMapper);
+            return registers;
         }catch (Exception e){
             System.out.println(e);
         }

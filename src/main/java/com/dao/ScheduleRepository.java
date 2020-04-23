@@ -108,7 +108,7 @@ public class ScheduleRepository {
     public List<Schedule> selectScheduleByTeacherId(String teacherCode){
         try {
 
-            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and teacherCode=? and courseSchedule.isEnable='T'"
+            List<Schedule> schedules=template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and courseSchedule.isEnable='T' and teacherCode=? "
                     ,scheduleRowMapper,teacherCode);
             return schedules;
         }catch (Exception e){
@@ -120,7 +120,9 @@ public class ScheduleRepository {
 
     public List<Schedule> selectSchedules(String isEnable,String order_by,String order){
         try {
-            String sql="select * from Course,Teacher,courseSchedule where courseId=sch_courseId and teacherId=sch_teacherId ";
+            String sql="select * from Course,Teacher,courseSchedule " +
+                    "where courseId=sch_courseId " +
+                    "and teacherId=sch_teacherId ";
             if("on".equals(isEnable))
                 sql+="and courseSchedule.isEnable='T' ";
             else if("off".equals(isEnable))
