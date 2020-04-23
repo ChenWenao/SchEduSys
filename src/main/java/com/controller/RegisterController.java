@@ -61,7 +61,7 @@ public class RegisterController {
     @RequestMapping("Register/giveGrade/{courseId}/{studentId}/{grade}/{testScore}")
     public boolean giveGrade(@PathVariable("courseId")int courseId,@PathVariable("studentId") int studentId,@PathVariable("grade")float grade,@PathVariable("testScore")float testScore){
         Course course=courseService.getCourseById(courseId);
-        String[] gradePolicy=course.getCourseGradingPolicy().split("，");
+        String[] gradePolicy=course.getCourseGradingPolicy().split("\\n");
         float finalScore= (float) ((Float.parseFloat(gradePolicy[0].substring(5,7))*grade+Float.parseFloat(gradePolicy[1].substring(5,7))*testScore)*0.01);
         return registerService.giveGrade(courseId,studentId,grade,testScore,finalScore);
     }
