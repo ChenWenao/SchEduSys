@@ -55,6 +55,7 @@ public class RegisterRepository {
                     "and teacherId=reg_teacherId " +
                     "and studentId=reg_studentId " +
                     "and courseId=?", registerRowMapper, reg_courseId);
+            return registers;
         } catch (Exception e) {
             System.out.println(e);
         }
