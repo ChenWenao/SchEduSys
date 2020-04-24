@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 
-public class Course{
+public class Course {
     private int courseId;
     private String isEnable;
     private String haveTeacher;

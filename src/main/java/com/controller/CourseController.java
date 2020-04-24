@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -81,10 +82,10 @@ public class CourseController {
         //获取的有：topicId，departId，Logo
         //共11个字段。
         //插入课程。
-        if(courseService.addNewCourse(newCourse))
+        if (courseService.addNewCourse(newCourse))
             msg += "课程新建成功！";
         else
-            msg+="课程新建失败！";
+            msg += "课程新建失败！";
         return msg;
     }
 
@@ -104,7 +105,7 @@ public class CourseController {
                 }
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
@@ -115,8 +116,8 @@ public class CourseController {
     //下架课程
     @PostMapping("Course/dropCourse")
     public boolean dropCourse(@RequestBody List<Integer> courseIds) {
-        for (int courseId:courseIds) {
-            if (courseService.getCourseById(courseId) == null||!courseService.dropCourse(courseId)){
+        for (int courseId : courseIds) {
+            if (courseService.getCourseById(courseId) == null || !courseService.dropCourse(courseId)) {
                 return false;
             }
         }
@@ -126,8 +127,8 @@ public class CourseController {
     //上架课程
     @PostMapping("Course/restoreCourse")
     public boolean restoreCourse(@RequestBody List<Integer> courseIds) {
-        for (int courseId:courseIds) {
-            if (courseService.getCourseById(courseId) == null||!courseService.restoreCourse(courseId)){
+        for (int courseId : courseIds) {
+            if (courseService.getCourseById(courseId) == null || !courseService.restoreCourse(courseId)) {
                 return false;
             }
         }
@@ -136,16 +137,15 @@ public class CourseController {
 
     //修改课程的全部信息
     @PostMapping("Course/modifyCourse")
-    public String modifyCourse(@RequestParam("courseImg") MultipartFile courseImg,@ModelAttribute(value = "modifyCourse")Course modifyCourse){
+    public String modifyCourse(@RequestParam("courseImg") MultipartFile courseImg, @ModelAttribute(value = "modifyCourse") Course modifyCourse) {
         String msg = "";
-        Course oldCourse=courseService.getCourseById(modifyCourse.getCourseId());
-        if(oldCourse!=null){
+        Course oldCourse = courseService.getCourseById(modifyCourse.getCourseId());
+        if (oldCourse != null) {
             File file = new File(oldCourse.getCourseLogo());
-            if ( file.exists()&&file.isFile() ){
+            if (file.exists() && file.isFile()) {
                 file.delete();
-            }
-            else{
-                msg="旧的课程图片不存在！";
+            } else {
+                msg = "旧的课程图片不存在！";
             }
             //判断修改的新的课程信息是否符合要求
             if (departService.getDepartmentByName(modifyCourse.getCourseDepartName()) == null) {
@@ -177,9 +177,9 @@ public class CourseController {
                 e.printStackTrace();
             }
             if (courseService.modifyCourse(modifyCourse))
-                msg+="课程修改成功！";
+                msg += "课程修改成功！";
             else
-                msg+="课程修改失败！";
+                msg += "课程修改失败！";
             return msg;
         }
         return "课程修改失败！";
@@ -189,13 +189,13 @@ public class CourseController {
     //传入一个课程对象
     //需要课程字段：Id，Description，FAQ，gradingPolicy，Requirement
     @PostMapping("Course/modifyCourseInfo")
-    public boolean modifyCourseInfo(@ModelAttribute(value = "courseInfo") Course courseInfo){
+    public boolean modifyCourseInfo(@ModelAttribute(value = "courseInfo") Course courseInfo) {
         return courseService.modifyCourseInfo(courseInfo);
     }
 
     //查
     @RequestMapping("Course/courseById/{courseId}")
-    public Course getCourseById(@PathVariable("courseId") int courseId){
+    public Course getCourseById(@PathVariable("courseId") int courseId) {
         return courseService.getCourseById(courseId);
     }
 
@@ -205,8 +205,8 @@ public class CourseController {
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
     // 示例：/SchEduSys/Course/courses/on/have/courseId/0
     @RequestMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
-    public List<Course> getCourses(@PathVariable("isEnable") String isEnable,@PathVariable("haveTeacher") String haveTeacher,@PathVariable("order_by") String order_by, @PathVariable("order") String order){
-        return courseService.getCourses(isEnable,haveTeacher,order_by,order);
+    public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
+        return courseService.getCourses(isEnable, haveTeacher, order_by, order);
     }
 }
 

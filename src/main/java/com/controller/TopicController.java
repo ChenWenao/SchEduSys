@@ -29,8 +29,8 @@ public class TopicController {
     //删除课程类型，同时会删除课程
     @RequestMapping("Topic/removeTopic")
     public boolean removeTopic(@RequestBody List<String> topicNames) {
-        for (String topicName:topicNames) {
-            if (topicService.getTopicByName(topicName) == null||!topicService.removeTopic(topicName))
+        for (String topicName : topicNames) {
+            if (topicService.getTopicByName(topicName) == null || !topicService.removeTopic(topicName))
                 return false;
         }
         return true;

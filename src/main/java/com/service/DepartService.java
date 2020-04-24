@@ -13,37 +13,38 @@ public class DepartService {
     private DepartRepository departRepository;
 
     //增
-    public boolean addNewDepartment(Department newDepartment){
+    public boolean addNewDepartment(Department newDepartment) {
         return departRepository.insertANewDepart(newDepartment);
     }
 
     //删
-    public boolean removeDepartment(String departName){
+    public boolean removeDepartment(String departName) {
         return departRepository.deleteDepart(departName);
     }
 
     //改
-    public boolean dropDepartment(String departName){
+    public boolean dropDepartment(String departName) {
         return departRepository.dropDepart(departName);
     }
 
-    public boolean restoreDepartment(String departName){
+    public boolean restoreDepartment(String departName) {
         return departRepository.restoreDepart(departName);
     }
 
-    public boolean modifyDepartment(Department department){
+    public boolean modifyDepartment(Department department) {
         return departRepository.modifyDepart(department);
     }
+
     //查
-    public Department getDepartmentByName(String departName){
+    public Department getDepartmentByName(String departName) {
         return departRepository.selectDepartByName(departName);
     }
 
-    public Department getDepartmentById(int departId){
+    public Department getDepartmentById(int departId) {
         return departRepository.selectDepartById(departId);
     }
 
-    public List<Department> getDepartments(String isEnable,String order_by,String order){
-        return departRepository.selectDeparts(isEnable,order_by,order);
+    public List<Department> getDepartments(String isEnable, String order_by, String order) {
+        return departRepository.selectDeparts(isEnable, order_by, order);
     }
 }

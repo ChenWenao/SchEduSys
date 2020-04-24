@@ -28,18 +28,18 @@ public class DepartRepository {
     }
 
     //删
-    public boolean deleteDepart(String departName){
-        try{
+    public boolean deleteDepart(String departName) {
+        try {
             //删除CourseRegister
-            template.update("delete from courseRegister where reg_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("delete from courseRegister where reg_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //删除CourseSchedule
-            template.update("delete from courseSchedule where sch_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("delete from courseSchedule where sch_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //删除Course
-            template.update("delete from Course where departName=?",departName);
+            template.update("delete from Course where departName=?", departName);
             //删除Department
-            template.update("delete from Department where departName=?",departName);
+            template.update("delete from Department where departName=?", departName);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
@@ -50,11 +50,11 @@ public class DepartRepository {
     public boolean dropDepart(String departName) {
         try {
             //删除CourseRegister
-            template.update("update courseRegister set isEnable='F' where reg_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("update courseRegister set isEnable='F' where reg_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //删除CourseSchedule
-            template.update("update courseschedule set isEnable='F' where sch_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("update courseschedule set isEnable='F' where sch_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //删除Course
-            template.update("update Course set isEnable='F' where coursedepartName=?",departName);
+            template.update("update Course set isEnable='F' where coursedepartName=?", departName);
             //删除学院。
             template.update("update Department set isEnable='F' where departName=?", departName);
             return true;
@@ -64,14 +64,14 @@ public class DepartRepository {
         return false;
     }
 
-    public boolean restoreDepart(String departName){
+    public boolean restoreDepart(String departName) {
         try {
             //恢复CourseRegister
-            template.update("update courseRegister set isEnable='T' where reg_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("update courseRegister set isEnable='T' where reg_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //恢复CourseSchedule
-            template.update("update courseschedule set isEnable='T' where sch_courseId in (select courseId from Course where courseDepartName=?)",departName);
+            template.update("update courseschedule set isEnable='T' where sch_courseId in (select courseId from Course where courseDepartName=?)", departName);
             //恢复Course
-            template.update("update Course set isEnable='T' where coursedepartName=?",departName);
+            template.update("update Course set isEnable='T' where coursedepartName=?", departName);
             //恢复学院。
             template.update("update Department set isEnable='T' where departName=?", departName);
             return true;
@@ -81,56 +81,56 @@ public class DepartRepository {
         return false;
     }
 
-    public boolean modifyDepart(Department department){
+    public boolean modifyDepart(Department department) {
         try {
             //修改Department
             template.update("update Department set departName=?,departCreateTime=?,departDescription=? where departId=?"
-                    ,department.getDepartName(),department.getDepartCreateTime(),department.getDepartDescription(),department.getDepartId());
+                    , department.getDepartName(), department.getDepartCreateTime(), department.getDepartDescription(), department.getDepartId());
             //修改Course表
-            template.update("update Course set courseDepartName=? where courseDepartId=?",department.getDepartName(),department.getDepartId());
+            template.update("update Course set courseDepartName=? where courseDepartId=?", department.getDepartName(), department.getDepartId());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
 
     //查
-    public Department selectDepartByName(String departName){
-        try{
-            List<Department> departments=template.query("select * from Department where departName=?",departRowMapper,departName);
-            return departments.get(0);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public Department selectDepartById(int departId){
-        try{
-            List<Department> departments=template.query("select * from Department where departId=?",departRowMapper,departId);
-            return departments.get(0);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public List<Department> selectDeparts(String isEnable,String order_by,String order){
+    public Department selectDepartByName(String departName) {
         try {
-            String sql="select * from Department ";
-            if("on".equals(isEnable))
-                sql+="where isEnable='T' ";
-            else if("off".equals(isEnable))
-                sql+="where isEnable='F' ";
+            List<Department> departments = template.query("select * from Department where departName=?", departRowMapper, departName);
+            return departments.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
-            sql+="order by ";
-            sql+=order_by;
-            if("0".equals(order))
-                sql+=" desc";
-            List<Department> departments=template.query(sql,departRowMapper);
+    public Department selectDepartById(int departId) {
+        try {
+            List<Department> departments = template.query("select * from Department where departId=?", departRowMapper, departId);
+            return departments.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Department> selectDeparts(String isEnable, String order_by, String order) {
+        try {
+            String sql = "select * from Department ";
+            if ("on".equals(isEnable))
+                sql += "where isEnable='T' ";
+            else if ("off".equals(isEnable))
+                sql += "where isEnable='F' ";
+
+            sql += "order by ";
+            sql += order_by;
+            if ("0".equals(order))
+                sql += " desc";
+            List<Department> departments = template.query(sql, departRowMapper);
             return departments;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
