@@ -28,7 +28,7 @@ public class AdminController{
     }
 
     //删
-    @PostMapping("Admin/removeAdmin")
+    @RequestMapping("Admin/removeAdmin")
     public boolean removeAdmin(@RequestBody List<Integer> adminIds) {
         for (int adminId : adminIds) {
             if (!adminService.removeAdmin(adminId)) {

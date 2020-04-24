@@ -1,5 +1,7 @@
 package com.controller;
 
+import com.bean.Register;
+import com.bean.Schedule;
 import com.bean.Student;
 import com.bean.Teacher;
 import com.service.TeacherService;
@@ -28,6 +30,36 @@ public class TeacherController{
             }
         }
         return true;
+    }
+
+    //改
+    //注销教师
+    @PostMapping("Teacher/dropTeacher")
+    public boolean dropTeacher(@RequestBody List<Integer> teacherIds) {
+        for (int teacherId : teacherIds) {
+            if (teacherService.getTeacherById(teacherId) == null || !teacherService.dropTeacher(teacherId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    //恢复教师
+    @PostMapping("Teacher/dropTeacher")
+    public boolean restoreTeacher(@RequestBody List<Integer> teacherIds) {
+        for (int teacherId : teacherIds) {
+            if (teacherService.getTeacherById(teacherId) == null || !teacherService.restoreTeacher(teacherId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    //修改教师信息
+    @PostMapping("Teacher/dropTeacher")
+    public boolean modifyTeacher(@ModelAttribute(value = "teacherId") Teacher teacher, Schedule schedule) {
+        Teacher teacher_find = teacherService.getTeacherById(teacher.getTeacherId());
+        if (teacher_find == null)
+            return false;//要修改的teacher不存在。
+        return teacherService.modifyTeacher(teacher,schedule);
     }
 
     //查

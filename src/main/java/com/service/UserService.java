@@ -17,6 +17,11 @@ public class UserService{
         return userRepository.insertANewUser(newUser) ;
     }
 
+    //删
+    public boolean removeUser(int userId) {
+        return userRepository.deleteUser(userId);
+    }
+
     //查
     public User getUserById(int userId) {
         return userRepository.selectUserById(userId);

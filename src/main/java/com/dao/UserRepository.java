@@ -30,6 +30,17 @@ public class UserRepository{
         }
     }
 
+    //删
+    public boolean deleteUser(int userId) {
+        try {
+            template.update("delete from User where userId=?",userId);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     //查
     public User selectUserById(int userId) {
         try {
@@ -40,6 +51,5 @@ public class UserRepository{
         }
         return null;
     }
-
 
 }
