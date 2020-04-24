@@ -34,6 +34,17 @@ public class AdminRepository{
         }
     }
 
+    //删
+    public boolean deleteAdmin(int adminId) {
+        try {
+            template.update("delete from Admin where adminId=?",adminId);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     //查
     public Admin selectAdminById(int adminId) {
         try {

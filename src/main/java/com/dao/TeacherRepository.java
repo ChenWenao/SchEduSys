@@ -37,9 +37,9 @@ public class TeacherRepository {
     //删
     public boolean deleteTeacher(int teacherId) {
         try {
-            //删除TeacherSchedule
+            //删除授课
             template.update("delete from courseSchedule where sch_teacherId=?", teacherId);
-            //删除Teacher
+            //删除teacher
             template.update("delete from Teacher where teacherId=?", teacherId);
             return true;
         } catch (Exception e) {

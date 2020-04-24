@@ -8,6 +8,8 @@ import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class AdminController{
     @Autowired
@@ -20,13 +22,24 @@ public class AdminController{
     //adminCode(其实就是userCode),adminNativePlace,adminGender,adminPoliticeStatus,adminPhoneNumber,adminRealName(其实就是user的userRealName),
     //adminIdCard(其实就是user的userIdCard),adminNote
     //Ps:adminCreateTime不用管，数据库默认插入新建用户的时间。
-    @PostMapping("/SchEduSys/Admin/newAdmin")
+    @PostMapping("Admin/newAdmin")
     public boolean addNewAdmin(@ModelAttribute(value = "newAdmin") Admin newAdmin, @ModelAttribute(value="newUser") User newUser) {
         return adminService.addNewAdmin(newAdmin)&&userService.addNewUser(newUser);
     }
 
+    //删
+    @PostMapping("Admin/removeAdmin")
+    public boolean removeAdmin(@RequestBody List<Integer> adminIds) {
+        for (int adminId : adminIds) {
+            if (!adminService.removeAdmin(adminId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //查
-    @RequestMapping("/SchEduSys/Admin/adminById/{adminId}")
+    @RequestMapping("Admin/adminById/{adminId}")
     public Admin getAdminById(@PathVariable("adminId") int adminId){
         return adminService.getAdminById(adminId);
     }

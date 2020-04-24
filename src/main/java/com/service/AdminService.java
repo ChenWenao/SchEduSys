@@ -17,6 +17,11 @@ public class AdminService{
         return adminRepository.insertANewAdmin(newAdmin);
     }
 
+    //删
+    public boolean removeAdmin(int adminId) {
+        return adminRepository.deleteAdmin(adminId);
+    }
+
     //查
     public Admin getAdminById(int adminId) {
         return adminRepository.selectAdminById(adminId);

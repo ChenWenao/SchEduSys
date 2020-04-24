@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController{
     @Autowired
-    UserService userService;
+     private UserService userService;
 
     //查
-    @RequestMapping("/SchEduSys/User/userById/{userId}")
+    @RequestMapping("User/userById/{userId}")
     public User getUserById(@PathVariable("userId") int userId){
         return userService.getUserById(userId);
     }
