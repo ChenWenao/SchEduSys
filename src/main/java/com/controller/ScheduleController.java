@@ -27,11 +27,11 @@ public class ScheduleController {
     //增
     //由管理员调用，为一门课程分配一个教师。
     @RequestMapping("Schedule/newSchedule/{courseId}/{teacherId}")
-    public String addNewSchedule(@PathVariable("courseId") int sch_courseId, @PathVariable("teacherId") int sch_teacherId){
-        Course sch_course=courseService.getCourseById(sch_courseId);
-        Teacher sch_teacher=teacherService.getTeacherById(sch_teacherId);
-        if(sch_course!=null&&sch_teacher!=null)
-            if("F".equals(sch_course.getHaveTeacher())&& scheduleService.addNewSchedule(sch_courseId,sch_teacherId))
+    public String addNewSchedule(@PathVariable("courseId") int sch_courseId, @PathVariable("teacherId") int sch_teacherId) {
+        Course sch_course = courseService.getCourseById(sch_courseId);
+        Teacher sch_teacher = teacherService.getTeacherById(sch_teacherId);
+        if (sch_course != null && sch_teacher != null)
+            if ("F".equals(sch_course.getHaveTeacher()) && scheduleService.addNewSchedule(sch_courseId, sch_teacherId))
                 return "课程分配教师完成！";
             else
                 return "课程已有教师！";
@@ -41,9 +41,9 @@ public class ScheduleController {
     //删
     //硬删除，由管理员调用，删除课程的教师分配。同时删除选择这个授课的选课相关信息。并将课程设置为没有老师的状态。
     @PostMapping("Schedule/removeSchedule")
-    public boolean removeSchedule(@RequestBody List<Integer> sch_courseIds){
-        for (int sch_courseId:sch_courseIds) {
-            if(!scheduleService.removeSchedule(sch_courseId)){
+    public boolean removeSchedule(@RequestBody List<Integer> sch_courseIds) {
+        for (int sch_courseId : sch_courseIds) {
+            if (!scheduleService.removeSchedule(sch_courseId)) {
                 return false;
             }
         }
@@ -53,9 +53,9 @@ public class ScheduleController {
     //改
     //软删除，由管理员调用，下架一门课程的授课信息，同时会下架该授课的学生选课的数据。
     @PostMapping("Schedule/dropSchedule")
-    public boolean dropSchedule(@RequestBody List<Integer> sch_courseIds){
-        for (int sch_courseId:sch_courseIds) {
-            if(!scheduleService.dropSchedule(sch_courseId)){
+    public boolean dropSchedule(@RequestBody List<Integer> sch_courseIds) {
+        for (int sch_courseId : sch_courseIds) {
+            if (!scheduleService.dropSchedule(sch_courseId)) {
                 return false;
             }
         }
@@ -64,9 +64,9 @@ public class ScheduleController {
 
     //上架（恢复）授课信息。
     @PostMapping("Schedule/restoreSchedule")
-    public boolean restoreSchedule(@RequestBody List<Integer> sch_courseIds){
-        for (int sch_courseId:sch_courseIds) {
-            if(!scheduleService.restoreSchedule(sch_courseId)){
+    public boolean restoreSchedule(@RequestBody List<Integer> sch_courseIds) {
+        for (int sch_courseId : sch_courseIds) {
+            if (!scheduleService.restoreSchedule(sch_courseId)) {
                 return false;
             }
         }
@@ -75,13 +75,13 @@ public class ScheduleController {
 
     //发布分数。
     @RequestMapping("Schedule/publishScore/{courseId}")
-    public boolean publishScore(@PathVariable("courseId") int courseId){
+    public boolean publishScore(@PathVariable("courseId") int courseId) {
         return scheduleService.publishScore(courseId);
     }
 
     //停止发布分数
     @RequestMapping("Schedule/publishScoreOff/{courseId}")
-    public boolean publishScoreOff(@PathVariable("courseId") int courseId){
+    public boolean publishScoreOff(@PathVariable("courseId") int courseId) {
         return scheduleService.publishScoreOff(courseId);
     }
 
@@ -91,7 +91,7 @@ public class ScheduleController {
 
     //查询某个课程的授课数据，单条，一个课程只能有一条授课信息（即一个课程只能有一个老师），学生查询选课详细信息时用
     @RequestMapping("Schedule/scheduleByCourseId/{courseId}")
-    public Schedule getScheduleByCourseId(@PathVariable("courseId") int courseId){
+    public Schedule getScheduleByCourseId(@PathVariable("courseId") int courseId) {
         return scheduleService.getScheduleByCourseId(courseId);
     }
 
@@ -99,12 +99,12 @@ public class ScheduleController {
 
     //查询某个老师的授课数据，多条（可能一个老师教n门课）
     @RequestMapping("Schedule/mySchedule")
-    public List<Schedule> getScheduleByTeacherId(HttpSession session){
+    public List<Schedule> getScheduleByTeacherId(HttpSession session) {
 
         //暂时建立一个session，登陆做完后删除
-        User loginUser_pre=new User();
+        User loginUser_pre = new User();
         loginUser_pre.setUserCode("201722111920129");
-        session.setAttribute("loginUser",loginUser_pre);
+        session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 
         return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode());
@@ -116,7 +116,7 @@ public class ScheduleController {
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // PS：两个order主要实现根据某个字段排序的功能
     @RequestMapping("Schedule/schedules/{isEnable}/{order_by}/{order}")
-    public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable,@PathVariable("order_by")String order_by,@PathVariable("order")String order){
-        return scheduleService.getSchedules(isEnable,order_by,order);
+    public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
+        return scheduleService.getSchedules(isEnable, order_by, order);
     }
 }

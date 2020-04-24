@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class RegisterRowMapper implements RowMapper<Register> {
     @Override
     public Register mapRow(ResultSet resultSet, int i) throws SQLException {
-        Register register=new Register();
+        Register register = new Register();
         register.setReg_teacherId(resultSet.getInt("reg_teacherId"));
         register.setReg_studentId(resultSet.getInt("reg_studentId"));
         register.setReg_courseId(resultSet.getInt("reg_courseId"));

@@ -40,7 +40,6 @@ public class Schedule {
     private Date teacherEntryTime;
 
 
-
     public int getSch_courseId() {
         return sch_courseId;
     }

@@ -24,29 +24,29 @@ public class CourseService {
         return courseRepository.deleteCourse(courseId);
     }
 
-
     //改
     public boolean dropCourse(int courseId) {
         return courseRepository.dropCourse(courseId);
     }
 
-    public boolean restoreCourse(int courseId){
+    public boolean restoreCourse(int courseId) {
         return courseRepository.restoreCourse(courseId);
     }
 
-    public boolean modifyCourse(Course course){
+    public boolean modifyCourse(Course course) {
         return courseRepository.modifyCourse(course);
     }
 
-    public boolean modifyCourseInfo(Course courseInfo){return courseRepository.modifyCourseInfo(courseInfo);}
+    public boolean modifyCourseInfo(Course courseInfo) {
+        return courseRepository.modifyCourseInfo(courseInfo);
+    }
+
     //查
     public Course getCourseById(int courseId) {
         return courseRepository.selectCourseById(courseId);
     }
 
-    public List<Course> getCourses(String isEnable,String haveTeacher,String order_by,String order){
-        return courseRepository.selectCourses(isEnable,haveTeacher,order_by,order);
+    public List<Course> getCourses(String isEnable, String haveTeacher, String order_by, String order) {
+        return courseRepository.selectCourses(isEnable, haveTeacher, order_by, order);
     }
-
-
 }

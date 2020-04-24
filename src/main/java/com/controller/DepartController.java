@@ -25,8 +25,8 @@ public class DepartController {
     //删除学院
     @PostMapping("Depart/removeDepart")
     public boolean removeDepartment(@RequestBody List<String> departNames) {
-        for (String departName:departNames) {
-            if (departService.getDepartmentByName(departName) == null||!departService.removeDepartment(departName)){
+        for (String departName : departNames) {
+            if (departService.getDepartmentByName(departName) == null || !departService.removeDepartment(departName)) {
                 return false;
             }
         }
@@ -38,8 +38,8 @@ public class DepartController {
     //下架学院
     @PostMapping("Depart/dropDepart")
     public boolean dropDepartment(@RequestBody List<String> departNames) {
-        for (String departName:departNames) {
-            if (departService.getDepartmentByName(departName) == null||!departService.dropDepartment(departName)){
+        for (String departName : departNames) {
+            if (departService.getDepartmentByName(departName) == null || !departService.dropDepartment(departName)) {
                 return false;
             }
         }
@@ -48,9 +48,9 @@ public class DepartController {
 
     //上架学院
     @PostMapping("Depart/restoreDepart")
-    public boolean restoreDepartment(@RequestBody List<String> departNames){
-        for (String departName:departNames) {
-            if (departService.getDepartmentByName(departName) == null||!departService.restoreDepartment(departName)){
+    public boolean restoreDepartment(@RequestBody List<String> departNames) {
+        for (String departName : departNames) {
+            if (departService.getDepartmentByName(departName) == null || !departService.restoreDepartment(departName)) {
                 return false;
             }
         }
@@ -59,9 +59,9 @@ public class DepartController {
 
     //修改学院的全部信息
     @RequestMapping("Depart/modifyDepart/")
-    public boolean modifyDepartment(@ModelAttribute(value = "Department") Department department){
-        Department department_find=departService.getDepartmentById(department.getDepartId());
-        if(department_find==null)
+    public boolean modifyDepartment(@ModelAttribute(value = "Department") Department department) {
+        Department department_find = departService.getDepartmentById(department.getDepartId());
+        if (department_find == null)
             return false;//要修改的department不存在。
         return departService.modifyDepartment(department);
     }
@@ -81,7 +81,7 @@ public class DepartController {
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的学院，off表示查询未启用的学院，all表示查询所有学院
     @RequestMapping("Depart/departments/{isEnable}/{order_by}/{order}")
-    public List<Department> getDepartments(@PathVariable("isEnable")String isEnable,@PathVariable("order_by") String order_by, @PathVariable("order") String order) {
-        return departService.getDepartments(isEnable,order_by, order);
+    public List<Department> getDepartments(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
+        return departService.getDepartments(isEnable, order_by, order);
     }
 }

@@ -18,5 +18,4 @@ public class DepartRowMapper implements RowMapper<Department> {
         department.setDepartDescription(resultSet.getString("departDescription"));
         return department;
     }
-
 }
