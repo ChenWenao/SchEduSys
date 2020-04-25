@@ -28,13 +28,17 @@ public class TeacherService{
 
     public boolean restoreTeacher(int teacherId) { return teacherRepository.restoreTeacher(teacherId); }
 
-    public boolean modifyTeacher(Teacher teacher, Schedule schedule) {
-        return teacherRepository.modifyTeacher(teacher, schedule);
+    public boolean modifyTeacher(Teacher modifyTeacher) {
+        return teacherRepository.modifyTeacher(modifyTeacher);
     }
 
     //查
     public Teacher getTeacherById(int teacherId) {
         return teacherRepository.selectTeacherById(teacherId);
+    }
+
+    public Teacher getTeacherByCode(String teacherCode) {
+        return teacherRepository.selectTeacherByCode(teacherCode);
     }
 
 

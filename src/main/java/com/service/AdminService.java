@@ -22,9 +22,21 @@ public class AdminService{
         return adminRepository.deleteAdmin(adminId);
     }
 
+    //改
+    public boolean dropAdmin(int adminId){
+        return adminRepository.dropAdmin(adminId);
+    }
+
+    public boolean restoreAdmin(int adminId){
+        return adminRepository.restoreAdmin(adminId);
+    }
     //查
     public Admin getAdminById(int adminId) {
         return adminRepository.selectAdminById(adminId);
+    }
+
+    public Admin getAdminByCode(String adminCode) {
+        return adminRepository.selectAdminByCode(adminCode);
     }
 
 

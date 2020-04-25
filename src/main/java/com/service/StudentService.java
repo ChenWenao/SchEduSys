@@ -33,8 +33,8 @@ public class StudentService{
         return studentRepository.restoreStudent(studentId);
     }
 
-    public boolean modifyStudent(Student student, Register register) {
-        return studentRepository.modifyStudent(student, register);
+    public boolean modifyStudent(Student modifyStudent) {
+        return studentRepository.modifyStudent(modifyStudent);
     }
 
     //查

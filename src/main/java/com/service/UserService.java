@@ -22,9 +22,14 @@ public class UserService{
         return userRepository.deleteUser(userId);
     }
 
+    public boolean removeUserByCode(String userCode){
+        return userRepository.deleteUserByCode(userCode);
+    }
+
     //查
     public User getUserById(int userId) {
         return userRepository.selectUserById(userId);
     }
 
+    public User getUserByCode(String  userCode){return  userRepository.selectUserByCode(userCode);}
 }

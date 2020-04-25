@@ -1,9 +1,6 @@
 package com.dao;
 
 
-import com.bean.Admin;
-import com.bean.Department;
-import com.bean.Register;
 import com.bean.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,7 +17,7 @@ public class StudentRepository{
     //增
     public boolean insertANewStudent(Student newStudent) {
         try {
-            template.update("insert into Student(studentCode,studentDepartId,studentDepartName,studentGender,studentNativePlace,studentPoliticsStatus,studentPhoneNumber,studentRealName,studentIdCard,studentEntryTime,studentNote) values (?,?,?,?,?,?,?,?,?,?,?)"
+            template.update("insert into Student(studentCode,studentDepartId,studentDepartName,studentGender,studentNativePlace,studentPoliticsStatus,studentPhoneNumber,studentRealName,studentIdCard,studentNote) values (?,?,?,?,?,?,?,?,?,?)"
                     , newStudent.getStudentCode()
                     , newStudent.getStudentDepartId()
                     , newStudent.getStudentDepartName()
@@ -30,7 +27,6 @@ public class StudentRepository{
                     , newStudent.getStudentPhoneNumber()
                     , newStudent.getStudentRealName()
                     , newStudent.getStudentIdCard()
-                    , newStudent.getStudentEntryTime()
                     , newStudent.getStudentNote());
             return true;
         } catch (Exception e) {
@@ -43,9 +39,12 @@ public class StudentRepository{
     public boolean deleteStudent(int studentId) {
         try {
             //删除选课
-            template.update("delete from courseregister where reg_studentId=?", studentId);
+            template.update("delete from courseRegister where reg_studentId=?", studentId);
+            List<Student> students=template.query("select * from Student where studentId=?",studentRowMapper,studentId);
             //删除student
             template.update("delete from Student where studentId=?", studentId);
+            //删除User
+            template.update("delete from SchEduSys.User where userCode =?",students.get(0).getStudentCode());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -58,9 +57,10 @@ public class StudentRepository{
     public boolean dropStudent(int studentId) {
         try {
             //删除选课
-            template.update("update courseRegister set isEnable='F' where reg_studentId =?)", studentId);
-            //删除student
-            template.update("update Student set isEnable='F' where studentId=?", studentId);
+            template.update("update courseRegister set isEnable='F' where reg_studentId =?", studentId);
+            List<Student> students=template.query("select * from Student where studentId=?",studentRowMapper,studentId);
+            //删除User
+            template.update("update User set isEnable='F' where userCode =?", students.get(0).getStudentCode());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -71,9 +71,10 @@ public class StudentRepository{
     public boolean restoreStudent(int studentId) {
         try {
             //恢复选课
-            template.update("update courseRegister set isEnable='T' where reg_studentId =?)", studentId);
-            //恢复student
-            template.update("update Student set isEnable='T' where studentId =?", studentId);
+            template.update("update courseRegister set isEnable='T' where reg_studentId =?", studentId);
+            List<Student> students=template.query("select * from Student where studentId=?",studentRowMapper,studentId);
+            //恢复User
+            template.update("update User set isEnable='T' where userCode =?", students.get(0).getStudentCode());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -81,11 +82,16 @@ public class StudentRepository{
         return false;
     }
 
-    public boolean modifyStudent(Student student, Register register) {
+    public boolean modifyStudent(Student modifyStudent) {
         try {
+            //修改User
+            template.update("update User set " +
+                    "userRealName=? " +
+                    "where userCode=? "
+                    ,modifyStudent.getStudentRealName()
+                    ,modifyStudent.getStudentCode());
             //修改Student
             template.update("update Student set " +
-                            "studentCode=?,"+
                             "studentDepartId=?,"+
                             "studentDepartName=?,"+
                             "studentGender=?,"+
@@ -93,27 +99,18 @@ public class StudentRepository{
                             "studentPoliticsStatus=?,"+
                             "studentPhoneNumber=?,"+
                             "studentRealName=?,"+
-                            "studentIdCard=?,"+
-                            "studentEntryTime=?,"+
                             "studentNote=? "+
                             "where studentId=?"
-                    , student.getStudentCode()
-                    , student.getStudentDepartId()
-                    , student.getStudentDepartName()
-                    , student.getStudentGender()
-                    , student.getStudentNativePlace()
-                    , student.getStudentPoliticsStatus()
-                    , student.getStudentPhoneNumber()
-                    , student.getStudentRealName()
-                    , student.getStudentIdCard()
-                    , student.getStudentEntryTime()
-                    , student.getStudentNote()
-                    , student.getStudentId()
+                    , modifyStudent.getStudentDepartId()
+                    , modifyStudent.getStudentDepartName()
+                    , modifyStudent.getStudentGender()
+                    , modifyStudent.getStudentNativePlace()
+                    , modifyStudent.getStudentPoliticsStatus()
+                    , modifyStudent.getStudentPhoneNumber()
+                    , modifyStudent.getStudentRealName()
+                    , modifyStudent.getStudentNote()
+                    , modifyStudent.getStudentId()
             );
-            //修改Register
-            template.update("update Register set reg_studentId=? where studentId=?"
-                    , register.getReg_studentId()
-                    , student.getStudentId());
             return true;
         } catch (Exception e) {
             System.out.println(e);

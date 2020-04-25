@@ -1,14 +1,17 @@
 package com.controller;
 
 
-import com.bean.*;
+import com.bean.Department;
+import com.bean.Student;
+import com.bean.User;
+import com.service.DepartService;
 import com.service.StudentService;
+import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,14 +19,58 @@ public class StudentController{
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private DepartService departService;
+
     //增
-    @RequestMapping("Student/newStudent")
-    public boolean addNewStudent(@ModelAttribute(value = "newStudent") Student newStudent) {
-        return studentService.addNewStudent(newStudent);
+    //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
+    //studentDepartName,studentGender,studentNativePlace,studentPoliticsStatus,studentPhoneNumber,studentNote
+    //Ps:studentEntryTime不用管，数据库默认插入新建用户的时间。
+    @PostMapping("Student/newStudent")
+    public String addNewStudent(@ModelAttribute(value = "newStudent") Student newStudent, @ModelAttribute(value="newUser") User newUser) {
+        //将user的数据同步到Student
+        newStudent.setStudentIdCard(newUser.getUserIdCard());
+        newStudent.setStudentRealName(newUser.getUserRealName());
+        newUser.setUserIdentity("学生");
+        //获取学院id
+        Department department_find=departService.getDepartmentByName(newStudent.getStudentDepartName());
+        if(department_find==null)
+            return "学院不存在！";
+        newStudent.setStudentDepartId(department_find.getDepartId());
+
+        //生成学号
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd");
+        String code=formatter.format(new Date(System.currentTimeMillis()));//code开头为日期
+        code+=newStudent.getStudentIdCard().substring(newStudent.getStudentIdCard().length()-8);//code接下来为身份证后八位
+        if("男".equals(newStudent.getStudentGender()))
+            code+="0";
+        else if("女".equals(newStudent.getStudentGender()))
+            code+="1";
+
+        //管理员尾数为0，教师尾数为1，学生尾数为2
+        if("管理员".equals(newUser.getUserIdentity()))
+            code+="0";
+        else if ("教师".equals(newUser.getUserIdentity()))
+            code+="1";
+        else
+            code+="2";
+        newUser.setUserCode(code);
+        newStudent.setStudentCode(code);
+        if(userService.addNewUser(newUser)) {
+            if (studentService.addNewStudent(newStudent))
+                return "学生创建成功！";
+            else
+                userService.removeUserByCode(newUser.getUserCode());
+        }
+        return "用户创建失败！";
     }
 
     //删
-    @RequestMapping("Student/removeStudent")
+    //硬删
+    @PostMapping("Student/removeStudent")
     public boolean removeStudent(@RequestBody List<Integer> studentIds) {
         for (int studentId : studentIds) {
             if (!studentService.removeStudent(studentId)) {
@@ -34,7 +81,7 @@ public class StudentController{
     }
 
     //改
-    //注销学生
+    //软删
     @PostMapping("Student/dropStudent")
     public boolean dropStudent(@RequestBody List<Integer> studentIds) {
         for (int studentId : studentIds) {
@@ -44,7 +91,8 @@ public class StudentController{
         }
         return true;
     }
-    //恢复学生
+
+    //恢复
     @PostMapping("Student/restoreStudent")
     public boolean restoreStudent(@RequestBody List<Integer> studentIds) {
         for (int studentId : studentIds) {
@@ -55,12 +103,22 @@ public class StudentController{
         return true;
     }
     //修改学生信息
+    //传入的modifyStudent表单，需要包含以下字段：studentId，studentDepartName，studentGender，studentNativePlace，studentPoliticsStatus
+    //，studentPhoneNumber，studentRealName，studentNote
+    //也就是说，只能修改以上字段
     @PostMapping("Student/modifyStudent")
-    public boolean modifyStudent(@ModelAttribute(value = "studentId") Student student, Register register) {
-        Student student_find = studentService.getStudentById(student.getStudentId());
+    public String modifyStudent(@ModelAttribute(value = "modifyStudent") Student modifyStudent) {
+        Student student_find = studentService.getStudentById(modifyStudent.getStudentId());
         if (student_find == null)
-            return false;//要修改的student不存在。
-        return studentService.modifyStudent(student,register);
+            return "学生不存在！";//要修改的student不存在。
+        Department department_find=departService.getDepartmentByName(modifyStudent.getStudentDepartName());
+        if(department_find==null){
+            return "要修改的学院不存在！";
+        }
+        modifyStudent.setStudentDepartId(department_find.getDepartId());
+        if(studentService.modifyStudent(modifyStudent))
+            return "修改成功！";
+        return "修改失败！";
     }
 
     //查

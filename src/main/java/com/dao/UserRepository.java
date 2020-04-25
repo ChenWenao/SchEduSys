@@ -1,7 +1,5 @@
 package com.dao;
 
-
-import com.bean.Admin;
 import com.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserRepository{
+public class UserRepository {
     @Autowired
     private JdbcTemplate template;
-    private UserRowMapper userRowMapper=new UserRowMapper();
+    private UserRowMapper userRowMapper = new UserRowMapper();
 
     //增
     public boolean insertANewUser(User newUser) {
@@ -33,7 +31,17 @@ public class UserRepository{
     //删
     public boolean deleteUser(int userId) {
         try {
-            template.update("delete from User where userId=?",userId);
+            template.update("delete from User where userId=?", userId);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean deleteUserByCode(String userCode) {
+        try {
+            template.update("delete from User where userCode=?", userCode);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -52,4 +60,13 @@ public class UserRepository{
         return null;
     }
 
+    public User selectUserByCode(String userCode) {
+        try {
+            List<User> users = template.query("select * from User where userCode =?", userRowMapper, userCode);
+            return users.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

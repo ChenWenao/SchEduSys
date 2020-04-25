@@ -4,7 +4,6 @@ import com.bean.Student;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 public class StudentRowMapper implements RowMapper<Student> {
     @Override
