@@ -4,13 +4,16 @@ import com.bean.*;
 import com.service.CourseService;
 import com.service.RegisterService;
 import com.service.ScheduleService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RegisterController {
@@ -69,7 +72,15 @@ public class RegisterController {
     //根据课程id查询某门课程的选课数据，可以用来查所有选择某门课的学生。
     @RequestMapping("Register/registerByCourseId/{courseId}")
     public List<Register> getRegisterByCourseId(@PathVariable("courseId") int reg_courseId) {
+
         return registerService.getRegisterByCourseId(reg_courseId);
+//        List<Register> registers = registerService.getRegisterByCourseId(reg_courseId);
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        result.put("code", 0);
+//        result.put("msg", "查询成功");
+//        result.put("count", registers.size());
+//        result.put("data", registers);
+//        return result;
     }
 
     //学生调用，查询当前登陆的学生的所有选课数据。无需参数，后台通过session自动获取学生id。

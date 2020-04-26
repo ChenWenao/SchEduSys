@@ -42,4 +42,8 @@ public class StudentService{
         return studentRepository.selectStudentById(studentId);
     }
 
+    public Student getStudentByCode(String studentCode) {
+        return studentRepository.selectStudentByCode(studentCode);
+    }
+
 }

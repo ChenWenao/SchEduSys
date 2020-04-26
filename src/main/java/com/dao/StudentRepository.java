@@ -128,4 +128,16 @@ public class StudentRepository{
         }
         return null;
     }
+
+    public Student selectStudentByCode(String studentCode) {
+        try {
+            List<Student> students = template.query("select * from Student where studentCode =?", studentRowMapper, studentCode);
+            return students.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+
 }

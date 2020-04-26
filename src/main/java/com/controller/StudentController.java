@@ -69,7 +69,7 @@ public class StudentController{
     }
 
     //删
-    //硬删
+    //真删
     @PostMapping("Student/removeStudent")
     public boolean removeStudent(@RequestBody List<Integer> studentIds) {
         for (int studentId : studentIds) {
@@ -125,6 +125,11 @@ public class StudentController{
     @RequestMapping("Student/studentById/{studentId}")
     public Student getStudentById(@PathVariable("studentId") int studentId){
         return studentService.getStudentById(studentId);
+    }
+
+    @RequestMapping("Student/studentByCode/{studentCode}")
+    public Student getStudentByCode(@PathVariable("studentCode")String studentCode){
+        return studentService.getStudentByCode(studentCode);
     }
 
 }
