@@ -9,6 +9,7 @@ import com.service.TeacherService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +23,16 @@ public class TeacherController{
     private DepartService departService;
     @Autowired
     private UserService userService;
+
+
+    //暂时用这个url来返回teacher页面，在登陆做完后，可以由登陆来返回teacher页面，到那时候，这个接口可以删掉。
+    @GetMapping("Teacher/teacher")
+    public ModelAndView teacherHome(){
+        ModelAndView mav=new ModelAndView("teacher");
+        return mav;
+    }
+
+
 
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
@@ -120,13 +131,17 @@ public class TeacherController{
     //查
     @RequestMapping("Teacher/teacherById/{teacherId}")
     public Teacher getTeacherById(@PathVariable("teacherId") int teacherId){
+        System.out.println("true");
         return teacherService.getTeacherById(teacherId);
     }
+
 
     @RequestMapping("Teacher/teacherByCode/{teacherCode}")
     public Teacher getTeacherByCode(@PathVariable("teacherCode") String teacherCode){
         return teacherService.getTeacherByCode(teacherCode);
     }
+
+
 
 
 }

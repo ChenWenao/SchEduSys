@@ -4,16 +4,13 @@ import com.bean.*;
 import com.service.CourseService;
 import com.service.RegisterService;
 import com.service.ScheduleService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class RegisterController {
