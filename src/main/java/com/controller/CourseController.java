@@ -203,7 +203,7 @@ public class CourseController {
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
-    // 示例：/SchEduSys/Course/courses/on/have/courseId/0
+    // 示例：Course/courses/on/have/courseId/0
     @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
     public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return courseService.getCourses(isEnable, haveTeacher, order_by, order);

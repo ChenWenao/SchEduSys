@@ -124,10 +124,11 @@ public class ScheduleRepository {
                     "where courseId=sch_courseId " +
                     "and teacherId=sch_teacherId ";
             if ("on".equals(isEnable))
-                sql += "and courseSchedule.isEnable='T' ";
+                sql += "and courseSchedule.isEnable='T' order by ";
             else if ("off".equals(isEnable))
-                sql += "and courseSchedule.isEnable='F' ";
-            sql += "order by ";
+                sql += "and courseSchedule.isEnable='F' order by ";
+            else
+                sql+="order by ";
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";

@@ -7,6 +7,8 @@ import com.dao.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminService{
     @Autowired
@@ -39,6 +41,8 @@ public class AdminService{
         return adminRepository.selectAdminByCode(adminCode);
     }
 
-
+    public List<Admin> getAdmins(String isEnable,String order_by,String order){
+        return adminRepository.selectAdmins(isEnable, order_by, order);
+    }
 
 }

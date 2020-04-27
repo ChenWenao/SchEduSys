@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.bean.Admin;
+import com.bean.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -90,4 +91,25 @@ public class AdminRepository{
         }
         return null;
     }
+
+    public List<Admin> selectAdmins(String isEnable, String order_by, String order) {
+        try {
+            String sql = "select * from Admin,User where adminCode=userCode  ";
+            if ("on".equals(isEnable))
+                sql += "and isEnable='T' order by ";
+            else if ("off".equals(isEnable))
+                sql += "and isEnable='F' order by ";
+            else
+                sql+="order by ";
+            sql +=order_by;
+            if ("0".equals(order))
+                sql += " desc";
+            List<Admin> admins = template.query(sql, adminRowMapper);
+            return admins;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }

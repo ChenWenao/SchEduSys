@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.bean.Student;
 import com.bean.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -140,4 +141,25 @@ public class TeacherRepository {
         }
         return null;
     }
+
+    public List<Teacher> selectTeachers(String isEnable, String order_by, String order) {
+        try {
+            String sql = "select * from Teacher,User where teacherCode=userCode  ";
+            if ("on".equals(isEnable))
+                sql += "and isEnable='T' order by ";
+            else if ("off".equals(isEnable))
+                sql += "and isEnable='F' order by ";
+            else
+                sql+="order by ";
+            sql +=order_by;
+            if ("0".equals(order))
+                sql += " desc";
+            List<Teacher> teachers = template.query(sql, teacherRowMapper);
+            return teachers;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }

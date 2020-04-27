@@ -2,6 +2,7 @@ package com.controller;
 
 
 import com.bean.Department;
+import com.bean.Student;
 import com.bean.Teacher;
 import com.bean.User;
 import com.service.DepartService;
@@ -135,13 +136,20 @@ public class TeacherController{
         return teacherService.getTeacherById(teacherId);
     }
 
-
     @GetMapping("Teacher/teacherByCode/{teacherCode}")
     public Teacher getTeacherByCode(@PathVariable("teacherCode") String teacherCode){
         return teacherService.getTeacherByCode(teacherCode);
     }
 
-
+    //批量查询
+    //查询所有教师
+    // isEnable表示是否启用，on表示查询启用的教师，off表示查询未启用的教师，all表示查询所有
+    // order_by表示根据哪个字段查询
+    // order表示正序还是倒序查询，order为0表示逆序，1表示正序
+    @RequestMapping("Teacher/teachers/{isEnable}/{order_by}/{order}")
+    public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by")String order_by, @PathVariable("order")String order){
+        return teacherService.getTeachers(isEnable, order_by, order);
+    }
 
 
 }

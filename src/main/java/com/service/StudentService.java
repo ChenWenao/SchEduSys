@@ -9,8 +9,10 @@ import com.dao.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class StudentService{
+public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
@@ -46,4 +48,7 @@ public class StudentService{
         return studentRepository.selectStudentByCode(studentCode);
     }
 
+    public List<Student> getStudents(String isEnable, String order_by, String order) {
+        return studentRepository.selectStudents(isEnable, order_by, order);
+    }
 }

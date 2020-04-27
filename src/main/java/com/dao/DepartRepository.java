@@ -120,11 +120,11 @@ public class DepartRepository {
         try {
             String sql = "select * from Department ";
             if ("on".equals(isEnable))
-                sql += "where isEnable='T' ";
+                sql += "where isEnable='T' order by ";
             else if ("off".equals(isEnable))
-                sql += "where isEnable='F' ";
-
-            sql += "order by ";
+                sql += "where isEnable='F' order by ";
+            else
+                sql += "order by ";
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
