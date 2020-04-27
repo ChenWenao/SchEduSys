@@ -102,11 +102,11 @@ public class AdminController{
     }
 
     //批量查询
-    //查询所有教师
+    //查询所有管理员
     // isEnable表示是否启用，on表示查询启用的管理员，off表示查询未启用的管理员，all表示查询所有
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
-    @RequestMapping("Admin/admins/{isEnable}/{order_by}/{order}")
+    @GetMapping("Admin/admins/{isEnable}/{order_by}/{order}")
     public List<Admin> getAdmins(@PathVariable("isEnable") String isEnable, @PathVariable("order_by")String order_by, @PathVariable("order")String order){
         return adminService.getAdmins(isEnable, order_by, order);
     }

@@ -146,7 +146,7 @@ public class TeacherController{
     // isEnable表示是否启用，on表示查询启用的教师，off表示查询未启用的教师，all表示查询所有
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
-    @RequestMapping("Teacher/teachers/{isEnable}/{order_by}/{order}")
+    @GetMapping("Teacher/teachers/{isEnable}/{order_by}/{order}")
     public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by")String order_by, @PathVariable("order")String order){
         return teacherService.getTeachers(isEnable, order_by, order);
     }
