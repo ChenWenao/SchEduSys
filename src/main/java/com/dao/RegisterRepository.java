@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.bean.Register;
+import com.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,6 +13,7 @@ public class RegisterRepository {
     @Autowired
     private JdbcTemplate template;
     private RegisterRowMapper registerRowMapper = new RegisterRowMapper();
+    private StudentRowMapper studentRowMapper=new StudentRowMapper();
 
     //增
     public boolean insertANewRegister(int reg_teacherId, int reg_studentId, int reg_courseId) {
@@ -20,6 +21,19 @@ public class RegisterRepository {
             template.update("insert into courseRegister(reg_teacherId,reg_studentId,reg_courseId) values(?,?,?)", reg_teacherId, reg_studentId, reg_courseId);
             return true;
         } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean insertCompulsory(Course comCourse, Teacher comTeacher){
+        try {
+            List<Student> students=template.query("select * from Student where studentDepartId=?",studentRowMapper,comCourse.getCourseDepartId());
+            for (Student student:students) {
+                template.update("insert into courseRegister(reg_teacherId,reg_studentId,reg_courseId) values(?,?,?)", comTeacher.getTeacherId(), student.getStudentId(), comCourse.getCourseId());
+            }
+            return true;
+        }catch (Exception e){
             System.out.println(e);
         }
         return false;
@@ -48,7 +62,7 @@ public class RegisterRepository {
     }
 
     //查
-    public List<Register> selectScheduleByCourseId(int reg_courseId) {
+    public List<Register> selectRegisterByCourseId(int reg_courseId) {
         try {
             List<Register> registers = template.query("select * from Course,Teacher,Student,courseRegister " +
                     "where courseId=reg_courseId " +
@@ -62,7 +76,7 @@ public class RegisterRepository {
         return null;
     }
 
-    public List<Register> selectScheduleByStudentId(int studentId) {
+    public List<Register> selectRegisterByStudentId(int studentId) {
         try {
             List<Register> registers = template.query("select * from Course,Student,Teacher,courseRegister " +
                     "where reg_studentId=studentId " +

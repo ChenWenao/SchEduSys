@@ -84,8 +84,8 @@ public class RegisterController {
     public List<Register> getMyRegister(HttpSession session) {
         //暂时新建一个学生，登陆做完后删除。
         User loginUser_pre = new User();
-        loginUser_pre.setUserId(1);
-        loginUser_pre.setUserCode("201722111920129");
+        loginUser_pre.setUserId(4);
+        loginUser_pre.setUserCode("420683199903262824");
         session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 

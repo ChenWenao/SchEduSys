@@ -4,6 +4,7 @@ package com.dao;
 import com.bean.Schedule;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,7 +16,10 @@ public class ScheduleRowMapper implements RowMapper<Schedule> {
         schedule.setSch_teacherId(resultSet.getInt("sch_teacherId"));
         schedule.setIsEnable(resultSet.getString("isEnable"));
         schedule.setPublishScore(resultSet.getString("publishScore"));
-
+        schedule.setSelectStartTime(resultSet.getDate("selectStartTime"));
+        schedule.setSelectEndTime(resultSet.getDate("selectEndTime"));
+        schedule.setScoreStartTime(resultSet.getDate("scoreStartTime"));
+        schedule.setScoreEndTime(resultSet.getDate("scoreEndTime"));
         //以下为附加字段：
         //Course
         schedule.setCourseName(resultSet.getString("courseName"));

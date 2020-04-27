@@ -1,7 +1,9 @@
 package com.bean;
 
-import java.sql.Date;
-import java.sql.Time;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 
 public class Department {
     private int departId;

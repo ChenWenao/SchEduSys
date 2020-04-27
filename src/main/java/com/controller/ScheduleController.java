@@ -5,6 +5,7 @@ import com.bean.Schedule;
 import com.bean.Teacher;
 import com.bean.User;
 import com.service.CourseService;
+import com.service.RegisterService;
 import com.service.ScheduleService;
 import com.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,31 @@ public class ScheduleController {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private RegisterService registerService;
+
     //增
-    //由管理员调用，为一门课程分配一个教师。
-    @GetMapping("Schedule/newSchedule/{courseId}/{teacherId}")
-    public String addNewSchedule(@PathVariable("courseId") int sch_courseId, @PathVariable("teacherId") int sch_teacherId) {
-        Course sch_course = courseService.getCourseById(sch_courseId);
-        Teacher sch_teacher = teacherService.getTeacherById(sch_teacherId);
+
+    //由管理员调用，安排授课数据。
+    //传入的表单名为newSchedule
+    //要求有如下字段：sch_courseId，sch_teacherId，selectStartTime，selectEndTime，scoreStartTime，scoreEndTime
+    //所有时间若无设置，默认为当前时间
+    @PostMapping("Schedule/newSchedule")
+    public String addNewSchedule(@ModelAttribute(value = "newSchedule")Schedule newSchedule) {
+        Course sch_course = courseService.getCourseById(newSchedule.getSch_courseId());
+        Teacher sch_teacher = teacherService.getTeacherById(newSchedule.getSch_teacherId());
         if (sch_course != null && sch_teacher != null)
-            if ("F".equals(sch_course.getHaveTeacher()) && scheduleService.addNewSchedule(sch_courseId, sch_teacherId))
+            if ("F".equals(sch_course.getHaveTeacher()) && scheduleService.addNewSchedule(newSchedule)){
+                if("必修".equals(sch_course.getCourseType()))
+                    registerService.addCompulsory(sch_course,sch_teacher);//若为必修，插入所有该学院的学生的选课数据。
                 return "课程分配教师完成！";
+            }
             else
                 return "课程已有教师！";
         return "课程或教师不存在！";
     }
+
+
 
     //删
     //硬删除，由管理员调用，删除课程的教师分配。同时删除选择这个授课的选课相关信息。并将课程设置为没有老师的状态。
@@ -97,17 +110,20 @@ public class ScheduleController {
 
     //查询多条数据。
 
-    //查询某个老师的授课数据，多条（可能一个老师教n门课）
-    @GetMapping("Schedule/mySchedule")
-    public List<Schedule> getScheduleByTeacherId(HttpSession session) {
+    //查询当前老师的授课数据，多条（可能一个老师教n门课）
+    //giveScore为on表示查询自己教的课程中，已经可以打分的课程
+    //为off表示查询还不可打分的课程。
+    //all表示查询自己教的所有课程
+    @GetMapping("Schedule/mySchedule/{giveScore}")
+    public List<Schedule> getScheduleByTeacherId(HttpSession session,@PathVariable("giveScore") String giveScore) {
 
         //暂时建立一个session，登陆做完后删除
         User loginUser_pre = new User();
-        loginUser_pre.setUserCode("201722111920129");
+        loginUser_pre.setUserCode("202004270326282401");
         session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 
-        return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode());
+        return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode(),giveScore);
     }
 
     //查询所有的授课数据。
@@ -119,4 +135,11 @@ public class ScheduleController {
     public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return scheduleService.getSchedules(isEnable, order_by, order);
     }
+
+    //学生调用，查询所有可以选的课程。（查询已经开放选课的课程）
+    @GetMapping("Schedule/schedulesOn/{order_by}/{order}")
+    public List<Schedule> getSelectSchedules(@PathVariable("order_by") String order_by, @PathVariable("order") String order){
+        return scheduleService.getOnSchedules(order_by, order);
+    }
+
 }

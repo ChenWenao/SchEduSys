@@ -13,8 +13,8 @@ public class ScheduleService {
     private ScheduleRepository scheduleRepository;
 
     //增
-    public boolean addNewSchedule(int sch_courseId, int sch_teacherId) {
-        return scheduleRepository.insertANewSchedule(sch_courseId, sch_teacherId);
+    public boolean addNewSchedule(Schedule newSchedule) {
+        return scheduleRepository.insertANewSchedule(newSchedule);
     }
 
     //删
@@ -44,11 +44,15 @@ public class ScheduleService {
         return scheduleRepository.selectScheduleByCourseId(courseId);
     }
 
-    public List<Schedule> getScheduleByTeacherId(String teacherCode) {
-        return scheduleRepository.selectScheduleByTeacherId(teacherCode);
+    public List<Schedule> getScheduleByTeacherId(String teacherCode,String giveScore) {
+        return scheduleRepository.selectScheduleByTeacherId(teacherCode,giveScore);
     }
 
     public List<Schedule> getSchedules(String isEnable, String order_by, String order) {
         return scheduleRepository.selectSchedules(isEnable, order_by, order);
+    }
+
+    public List<Schedule> getOnSchedules(String order_by, String order){
+        return scheduleRepository.selectOnSchedules(order_by, order);
     }
 }

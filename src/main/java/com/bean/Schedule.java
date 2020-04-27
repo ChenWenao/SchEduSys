@@ -1,12 +1,17 @@
 package com.bean;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class Schedule {
     private int sch_courseId;
     private int sch_teacherId;
     private String isEnable;
     private String publishScore;
+    private Date selectStartTime;
+    private Date selectEndTime;
+    private Date scoreStartTime;
+    private Date scoreEndTime;
 
     //以下为附带字段：
     //Course
@@ -71,6 +76,40 @@ public class Schedule {
     public void setPublishScore(String publishScore) {
         this.publishScore = publishScore;
     }
+
+
+    public Date getSelectStartTime() {
+        return selectStartTime;
+    }
+
+    public void setSelectStartTime(Date selectStartTime) {
+        this.selectStartTime = selectStartTime;
+    }
+
+    public Date getSelectEndTime() {
+        return selectEndTime;
+    }
+
+    public void setSelectEndTime(Date selectEndTime) {
+        this.selectEndTime = selectEndTime;
+    }
+
+    public Date getScoreStartTime() {
+        return scoreStartTime;
+    }
+
+    public void setScoreStartTime(Date scoreStartTime) {
+        this.scoreStartTime = scoreStartTime;
+    }
+
+    public Date getScoreEndTime() {
+        return scoreEndTime;
+    }
+
+    public void setScoreEndTime(Date scoreEndTime) {
+        this.scoreEndTime = scoreEndTime;
+    }
+
 
     public String getCourseName() {
         return courseName;

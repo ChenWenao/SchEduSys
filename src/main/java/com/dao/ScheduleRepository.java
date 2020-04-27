@@ -15,13 +15,33 @@ public class ScheduleRepository {
     private JdbcTemplate template;
     private ScheduleRowMapper scheduleRowMapper = new ScheduleRowMapper();
 
+//    //增
+//    public boolean insertANewSchedule(int sch_courseId, int sch_teacherId) {
+//        try {
+//            //将课程置为有教师的状态。
+//            template.update("update Course set haveTeacher='T' where courseId=?", sch_courseId);
+//            //新建教师与课程的联系。
+//            template.update("insert into CourseSchedule(sch_courseId,sch_teacherId) values (?,?)", sch_courseId, sch_teacherId);
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return false;
+//    }
+
     //增
-    public boolean insertANewSchedule(int sch_courseId, int sch_teacherId) {
+    public boolean insertANewSchedule(Schedule newSchedule) {
         try {
             //将课程置为有教师的状态。
-            template.update("update Course set haveTeacher='T' where courseId=?", sch_courseId);
+            template.update("update Course set haveTeacher='T' where courseId=?", newSchedule.getSch_courseId());
             //新建教师与课程的联系。
-            template.update("insert into CourseSchedule(sch_courseId,sch_teacherId) values (?,?)", sch_courseId, sch_teacherId);
+            template.update("insert into CourseSchedule(sch_courseId,sch_teacherId,selectStartTime,selectEndTime,scoreStartTime,scoreEndTime) values (?,?,?,?,?,?)"
+                    , newSchedule.getSch_courseId()
+                    , newSchedule.getSch_teacherId()
+                    , newSchedule.getSelectStartTime()
+                    , newSchedule.getSelectEndTime()
+                    , newSchedule.getScoreStartTime()
+                    , newSchedule.getScoreEndTime());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -105,11 +125,20 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectScheduleByTeacherId(String teacherCode) {
+    public List<Schedule> selectScheduleByTeacherId(String teacherCode,String giveScore) {
         try {
+            String sql="select * from Course,Teacher,courseSchedule " +
+                    "where courseId = sch_courseId " +
+                    "and teacherId = sch_teacherId " +
+                    "and courseSchedule.isEnable='T' " +
+                    "and teacherCode= "+teacherCode;
+            if("on".equals(giveScore))
+                sql+=" and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
+            else if("off".equals(giveScore))
+                sql+=" and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
 
-            List<Schedule> schedules = template.query("select * from Course,Teacher,courseSchedule where courseId = sch_courseId and teacherId = sch_teacherId and courseSchedule.isEnable='T' and teacherCode=? "
-                    , scheduleRowMapper, teacherCode);
+            List<Schedule> schedules = template.query(sql
+                    , scheduleRowMapper);
             return schedules;
         } catch (Exception e) {
             System.out.println(e);
@@ -129,6 +158,25 @@ public class ScheduleRepository {
                 sql += "and courseSchedule.isEnable='F' order by ";
             else
                 sql+="order by ";
+            sql += order_by;
+            if ("0".equals(order))
+                sql += " desc";
+            List<Schedule> schedules = template.query(sql, scheduleRowMapper);
+            return schedules;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Schedule> selectOnSchedules(String order_by, String order) {
+        try {
+            String sql = "select * from Course,Teacher,courseSchedule " +
+                    "where courseId=sch_courseId " +
+                    "and teacherId=sch_teacherId " +
+                    "and current_timestamp > selectStartTime " +
+                    "and current_timestamp < selectEndTime " +
+                    "order by ";
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
