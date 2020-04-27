@@ -129,14 +129,14 @@ public class TeacherController{
     }
 
     //查
-    @RequestMapping("Teacher/teacherById/{teacherId}")
+    @GetMapping("Teacher/teacherById/{teacherId}")
     public Teacher getTeacherById(@PathVariable("teacherId") int teacherId){
         System.out.println("true");
         return teacherService.getTeacherById(teacherId);
     }
 
 
-    @RequestMapping("Teacher/teacherByCode/{teacherCode}")
+    @GetMapping("Teacher/teacherByCode/{teacherCode}")
     public Teacher getTeacherByCode(@PathVariable("teacherCode") String teacherCode){
         return teacherService.getTeacherByCode(teacherCode);
     }

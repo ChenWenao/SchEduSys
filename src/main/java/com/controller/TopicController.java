@@ -4,10 +4,7 @@ import com.bean.Topic;
 import com.service.TopicService;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class TopicController {
     //增
 
     //新建课程类型
-    @RequestMapping("Topic/newTopic/{topicName}")
+    @GetMapping("Topic/newTopic/{topicName}")
     public boolean addNewTopic(@PathVariable("topicName") String topicName) {
         return topicService.addNewTopic(topicName);
     }
@@ -27,7 +24,7 @@ public class TopicController {
     //删
 
     //删除课程类型，同时会删除课程
-    @RequestMapping("Topic/removeTopic")
+    @PostMapping("Topic/removeTopic")
     public boolean removeTopic(@RequestBody List<String> topicNames) {
         for (String topicName : topicNames) {
             if (topicService.getTopicByName(topicName) == null || !topicService.removeTopic(topicName))
@@ -39,7 +36,7 @@ public class TopicController {
     //改
 
     //修改课程类型
-    @RequestMapping("Topic/modifyTopic/{oldTopicName}/{newTopicName}")
+    @GetMapping("Topic/modifyTopic/{oldTopicName}/{newTopicName}")
     public boolean modifyTopic(@PathVariable("oldTopicName") String oldTopicName, @PathVariable("newTopicName") String newTopicName) {
         if (topicService.getTopicByName(oldTopicName) != null) {
             return topicService.modifyTopic(oldTopicName, newTopicName);
@@ -48,17 +45,17 @@ public class TopicController {
     }
 
     //查
-    @RequestMapping("Topic/topicByName/{topicName}")
+    @GetMapping("Topic/topicByName/{topicName}")
     public Topic getTopicByName(@PathVariable("topicName") String topicName) {
         return topicService.getTopicByName(topicName);
     }
 
-    @RequestMapping("Topic/topicById/{topicId}")
+    @GetMapping("Topic/topicById/{topicId}")
     public Topic getTopicById(@PathVariable("topicId") int topicId) {
         return topicService.getTopicById(topicId);
     }
 
-    @RequestMapping("Topic/allTopics")
+    @GetMapping("Topic/allTopics")
     public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
     }

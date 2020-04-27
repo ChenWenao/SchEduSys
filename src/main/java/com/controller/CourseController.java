@@ -91,7 +91,7 @@ public class CourseController {
 
     //删
     //删除课程
-    @RequestMapping("Course/removeCourse")
+    @PostMapping("Course/removeCourse")
     public boolean removeCourse(@RequestBody List<Integer> courseIds) {
         try {
             for (int courseId : courseIds) {
@@ -194,7 +194,7 @@ public class CourseController {
     }
 
     //查
-    @RequestMapping("Course/courseById/{courseId}")
+    @GetMapping("Course/courseById/{courseId}")
     public Course getCourseById(@PathVariable("courseId") int courseId) {
         return courseService.getCourseById(courseId);
     }
@@ -204,7 +204,7 @@ public class CourseController {
     // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
     // 示例：/SchEduSys/Course/courses/on/have/courseId/0
-    @RequestMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
+    @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
     public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return courseService.getCourses(isEnable, haveTeacher, order_by, order);
     }

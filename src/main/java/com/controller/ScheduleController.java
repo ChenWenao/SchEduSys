@@ -26,7 +26,7 @@ public class ScheduleController {
 
     //增
     //由管理员调用，为一门课程分配一个教师。
-    @RequestMapping("Schedule/newSchedule/{courseId}/{teacherId}")
+    @GetMapping("Schedule/newSchedule/{courseId}/{teacherId}")
     public String addNewSchedule(@PathVariable("courseId") int sch_courseId, @PathVariable("teacherId") int sch_teacherId) {
         Course sch_course = courseService.getCourseById(sch_courseId);
         Teacher sch_teacher = teacherService.getTeacherById(sch_teacherId);
@@ -74,13 +74,13 @@ public class ScheduleController {
     }
 
     //发布分数。
-    @RequestMapping("Schedule/publishScore/{courseId}")
+    @GetMapping("Schedule/publishScore/{courseId}")
     public boolean publishScore(@PathVariable("courseId") int courseId) {
         return scheduleService.publishScore(courseId);
     }
 
     //停止发布分数
-    @RequestMapping("Schedule/publishScoreOff/{courseId}")
+    @GetMapping("Schedule/publishScoreOff/{courseId}")
     public boolean publishScoreOff(@PathVariable("courseId") int courseId) {
         return scheduleService.publishScoreOff(courseId);
     }
@@ -90,7 +90,7 @@ public class ScheduleController {
     //查询单个数据。
 
     //查询某个课程的授课数据，单条，一个课程只能有一条授课信息（即一个课程只能有一个老师），学生查询选课详细信息时用
-    @RequestMapping("Schedule/scheduleByCourseId/{courseId}")
+    @GetMapping("Schedule/scheduleByCourseId/{courseId}")
     public Schedule getScheduleByCourseId(@PathVariable("courseId") int courseId) {
         return scheduleService.getScheduleByCourseId(courseId);
     }
@@ -98,7 +98,7 @@ public class ScheduleController {
     //查询多条数据。
 
     //查询某个老师的授课数据，多条（可能一个老师教n门课）
-    @RequestMapping("Schedule/mySchedule")
+    @GetMapping("Schedule/mySchedule")
     public List<Schedule> getScheduleByTeacherId(HttpSession session) {
 
         //暂时建立一个session，登陆做完后删除
@@ -115,7 +115,7 @@ public class ScheduleController {
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // PS：两个order主要实现根据某个字段排序的功能
-    @RequestMapping("Schedule/schedules/{isEnable}/{order_by}/{order}")
+    @GetMapping("Schedule/schedules/{isEnable}/{order_by}/{order}")
     public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return scheduleService.getSchedules(isEnable, order_by, order);
     }

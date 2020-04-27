@@ -90,12 +90,12 @@ public class AdminController{
     }
 
     //查
-    @RequestMapping("Admin/adminById/{adminId}")
+    @GetMapping("Admin/adminById/{adminId}")
     public Admin getAdminById(@PathVariable("adminId") int adminId){
         return adminService.getAdminById(adminId);
     }
 
-    @RequestMapping("Admin/adminByCode/{adminCode}")
+    @GetMapping("Admin/adminByCode/{adminCode}")
     public Admin getAdminByCode(@PathVariable("adminCode") String adminCode){
         return adminService.getAdminByCode(adminCode);
     }

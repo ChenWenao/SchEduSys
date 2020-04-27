@@ -122,14 +122,17 @@ public class StudentController{
     }
 
     //查
-    @RequestMapping("Student/studentById/{studentId}")
+    @GetMapping("Student/studentById/{studentId}")
     public Student getStudentById(@PathVariable("studentId") int studentId){
         return studentService.getStudentById(studentId);
     }
 
-    @RequestMapping("Student/studentByCode/{studentCode}")
+    @GetMapping("Student/studentByCode/{studentCode}")
     public Student getStudentByCode(@PathVariable("studentCode")String studentCode){
         return studentService.getStudentByCode(studentCode);
     }
+
+    //
+//    @RequestMapping("")
 
 }
