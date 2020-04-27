@@ -1,65 +1,87 @@
 package com.controller;
 
 
-import com.bean.Register;
-import com.bean.Student;
-import com.bean.Teacher;
-import com.bean.User;
+import com.bean.*;
+import com.service.AdminService;
 import com.service.StudentService;
 import com.service.TeacherService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.List;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 @RestController
-public class UserController{
+public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
     private StudentService studentService;
+    @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private AdminService adminService;
+
+
+    //返回登陆页面
+    @GetMapping("User/login")
+    public ModelAndView login(){
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("login");
+        return mav;
+    }
+
+
+
 
     //查
     @GetMapping("User/userById/{userId}")
-    public User getUserById(@PathVariable("userId") int userId){
+    public User getUserById(@PathVariable("userId") int userId) {
         return userService.getUserById(userId);
     }
 
     @GetMapping("User/userByCode/{userCode}")
-    public User getUserByCode(@PathVariable("userCode") String userCode){
+    public User getUserByCode(@PathVariable("userCode") String userCode) {
         return userService.getUserByCode(userCode);
     }
 
     //登录
-    @PostMapping("User/login/{userCode}/{userPassword}")
-    public User login_in(HttpServletRequest req, HttpServletResponse resp,HttpSession session, @PathVariable("userCode") String userCode, @PathVariable("userPassword") String userPassword) throws ServletException, IOException {
-        if(!"".equals(userCode) && !"".equals(userPassword)) {
-            User user = userService.login(userCode, userPassword);
-            if (user != null) {
-                if (user.getUserIdentity() == "学生") {
-                    Student loginUser = studentService.getStudentByCode(userCode);
-                    session.setAttribute("loginUser", loginUser);
-                    req.getRequestDispatcher("Student.jsp").forward(req, resp);
-                }
-                else if (user.getUserIdentity() == "教师") {
-                    Teacher loginUser = teacherService.getTeacherByCode(userCode);
-                    session.setAttribute("loginUser", loginUser);
-                    req.getRequestDispatcher("Teacher.jsp").forward(req, resp);
-                }
-                else System.out.println("账号或密码错误！");
+    //为了信息安全，采用post方法
+    //传入的表单名称为loginUser
+    //表单需要包含字段：userCode,userPassword
+    @PostMapping("User/login")
+    public ModelAndView login_in(HttpSession session, @ModelAttribute(value = "loginUser") User loginUser) throws NoSuchAlgorithmException {
+        ModelAndView mav=new ModelAndView();//新建要返回的页面。
+        //加密密码
+        MessageDigest md5=MessageDigest.getInstance("MD5");
+        md5.update(loginUser.getUserPassword().getBytes());
+        String password_MD5=new BigInteger(1,md5.digest()).toString(16);
+        loginUser.setUserPassword(password_MD5);
+        //验证登录
+        User user_find = userService.login(loginUser.getUserCode(), loginUser.getUserPassword());
+        if (user_find != null) {
+            if ("学生".equals(user_find.getUserIdentity())) {
+                Student loginStudent = studentService.getStudentByCode(user_find.getUserCode());
+                user_find.setUserId(loginStudent.getStudentId());
+                session.setAttribute("loginUser", user_find);
+                mav.setViewName("student");   //设置学生主页。
+            } else if ("教师".equals(user_find.getUserIdentity())) {
+                Teacher loginTeacher = teacherService.getTeacherByCode(user_find.getUserCode());
+                user_find.setUserId(loginTeacher.getTeacherId());
+                session.setAttribute("loginUser", user_find);
+                mav.setViewName("teacher");   //设置教师主页。
+            } else if ("管理员".equals(user_find.getUserIdentity())) {
+                Admin loginAdmin=adminService.getAdminByCode(loginUser.getUserCode());
+                user_find.setUserId(loginAdmin.getAdminId());
+                session.setAttribute("loginUser", user_find);
+                mav.setViewName("admin");   //设置管理员主页。
             }
-        }
-        else System.out.println("账号或密码为空！");
-        return null;
+            return mav;
+        } else
+            return null;
     }
 }

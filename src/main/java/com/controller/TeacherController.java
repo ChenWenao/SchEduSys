@@ -132,7 +132,6 @@ public class TeacherController{
     //查
     @GetMapping("Teacher/teacherById/{teacherId}")
     public Teacher getTeacherById(@PathVariable("teacherId") int teacherId){
-        System.out.println("true");
         return teacherService.getTeacherById(teacherId);
     }
 
