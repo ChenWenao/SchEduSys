@@ -7,6 +7,9 @@ import com.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.sql.SQLException;
+
 @Service
 public class UserService{
     @Autowired
@@ -31,5 +34,8 @@ public class UserService{
         return userRepository.selectUserById(userId);
     }
 
-    public User getUserByCode(String  userCode){return  userRepository.selectUserByCode(userCode);}
+    public User getUserByCode(String  userCode){ return  userRepository.selectUserByCode(userCode);}
+
+    //登录
+    public User login(String userCode, String userPassword) { return userRepository.findUser(userCode,userPassword); }
 }

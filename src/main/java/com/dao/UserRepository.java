@@ -1,10 +1,15 @@
 package com.dao;
 
 import com.bean.User;
+import com.sun.net.httpserver.HttpsServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Repository
@@ -63,6 +68,17 @@ public class UserRepository {
     public User selectUserByCode(String userCode) {
         try {
             List<User> users = template.query("select * from User where userCode =?", userRowMapper, userCode);
+            return users.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    //登录
+    public User findUser(String userCode, String userPassword){
+        try {
+            List<User> users = template.query("select * from User where userCode =? and userPassword=?", userRowMapper, userCode,userPassword);
             return users.get(0);
         } catch (Exception e) {
             System.out.println(e);
