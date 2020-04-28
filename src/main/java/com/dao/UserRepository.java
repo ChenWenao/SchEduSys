@@ -61,9 +61,9 @@ public class UserRepository {
             //修改User
             template.update("update User set " +
                             "userPassword=? " +
-                            "where userRealName=? "
+                            "where userCode=? "
                     , modifyUser.getUserPassword()
-                    , modifyUser.getUserRealName());
+                    , modifyUser.getUserCode());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -104,9 +104,13 @@ public class UserRepository {
     }
 
     //找回密码
-    public User findRpUser(String userRealName, String userIdCard){
+    public User findResetUser(String userIdCard,String userRealName,String userIdentity ){
         try {
-            List<User> users = template.query("select * from User where userRealName =? and userIdCard=?", userRowMapper, userRealName,userIdCard);
+            List<User> users = template.query("select * from User where userRealName =? and userIdCard=? and userIdentity=?"
+                    , userRowMapper
+                    , userRealName
+                    ,userIdCard,
+                    userIdentity);
             return users.get(0);
         } catch (Exception e) {
             System.out.println(e);

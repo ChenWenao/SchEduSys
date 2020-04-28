@@ -9,6 +9,7 @@ import com.service.StudentService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,16 @@ public class StudentController{
 
     @Autowired
     private DepartService departService;
+
+    @GetMapping("Student/student")
+    public ModelAndView studentHome(){
+        ModelAndView mav=new ModelAndView("student");
+        return mav;
+    }
+
+
+
+
 
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。

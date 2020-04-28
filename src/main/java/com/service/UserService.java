@@ -43,7 +43,7 @@ public class UserService{
     public User login(String userCode, String userPassword) { return userRepository.findUser(userCode,userPassword); }
 
     //找回密码
-    public User retrievePassword(String userRealName, String userIdCard){
-        return userRepository.findRpUser(userRealName, userIdCard);
+    public User resetPasswordCheck( String userIdCard,String userRealName,String userIdentity){
+        return userRepository.findResetUser( userIdCard,userRealName,userIdentity);
     }
 }

@@ -30,8 +30,14 @@ public class UserController {
     //返回登陆页面
     @GetMapping("User/login")
     public ModelAndView login(){
-        ModelAndView mav=new ModelAndView();
-        mav.setViewName("login");
+        ModelAndView mav=new ModelAndView("login");
+        return mav;
+    }
+
+    //返回找回密码验证页面
+    @GetMapping("User/authentication")
+    public ModelAndView authentication(){
+        ModelAndView mav=new ModelAndView("authentication");
         return mav;
     }
 
@@ -68,53 +74,61 @@ public class UserController {
                 Student loginStudent = studentService.getStudentByCode(user_find.getUserCode());
                 user_find.setUserId(loginStudent.getStudentId());
                 session.setAttribute("loginUser", user_find);
-                mav.setViewName("student");   //设置学生主页。
+                mav.setViewName("redirect:/Student/student");   //设置学生主页。
             } else if ("教师".equals(user_find.getUserIdentity())) {
                 Teacher loginTeacher = teacherService.getTeacherByCode(user_find.getUserCode());
                 user_find.setUserId(loginTeacher.getTeacherId());
                 session.setAttribute("loginUser", user_find);
-                mav.setViewName("teacher");   //设置教师主页。
+                mav.setViewName("redirect:/Teacher/teacher");   //设置教师主页。
             } else if ("管理员".equals(user_find.getUserIdentity())) {
                 Admin loginAdmin=adminService.getAdminByCode(loginUser.getUserCode());
                 user_find.setUserId(loginAdmin.getAdminId());
                 session.setAttribute("loginUser", user_find);
-                mav.setViewName("manage");   //设置管理员主页。
+                mav.setViewName("redirect:/Admin/manage");   //设置管理员主页。
             }
             return mav;
         } else
             return null;
     }
 
-    //找回密码
+    //找回密码验证，验证要修改密码的人的身份，验证成功会跳转到修改密码的页面，失败则会返回一个新的找回密码验证页面。
+    //如有需要，可以改为返回boolean，前端来做页面跳转
     //为了信息安全，采用post方法
-    //传入的表单名称为rpUser
-    //表单需要包含字段：userRealName,userIdCard
-    @PostMapping("User/retrievePassword")
-    public ModelAndView retrievePassword(HttpSession session, @ModelAttribute(value = "rpUser") User rpUser) throws NoSuchAlgorithmException{
+    //传入的表单名称为resetUser
+    //表单需要包含字段：userRealName,userIdCard,userIdentity
+    @PostMapping("User/resetPasswordCheck")
+    public ModelAndView resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser){
         ModelAndView mav=new ModelAndView();
-        User user_find = userService.retrievePassword(rpUser.getUserRealName(), rpUser.getUserIdCard());
-        if(user_find != null){
-            if ("学生".equals(user_find.getUserIdentity())) {
-                Student rpStudent = studentService.getStudentByCode(user_find.getUserCode());
-                user_find.setUserId(rpStudent.getStudentId());
-                userService.modifyPassword(user_find);
-                session.setAttribute("rpUser", user_find);
-                mav.setViewName("login");   //设置登录主页。
-            } else if ("教师".equals(user_find.getUserIdentity())) {
-                Teacher rpTeacher = teacherService.getTeacherByCode(user_find.getUserCode());
-                user_find.setUserId(rpTeacher.getTeacherId());
-                userService.modifyPassword(user_find);
-                session.setAttribute("rpUser", user_find);
-                mav.setViewName("login");   //设置登录主页。
-            } else if ("管理员".equals(user_find.getUserIdentity())) {
-                Admin rpAdmin=adminService.getAdminByCode(user_find.getUserCode());
-                user_find.setUserId(rpAdmin.getAdminId());
-                userService.modifyPassword(user_find);
-                session.setAttribute("rpUser", user_find);
-                mav.setViewName("login");   //设置登录主页。
-            }
-            return mav;
-        }else
-            return null;
+        User user_find = userService.resetPasswordCheck( resetUser.getUserIdCard(),resetUser.getUserRealName(),resetUser.getUserIdentity());
+        if(user_find!=null){
+            session.setAttribute("resetUser",user_find);
+            mav.setViewName("resetPassword");//若身份验证成功，跳转到修改密码页面
+        }
+        else {
+            mav.setViewName("redirect:authentication");//若身份验证失败，重新加载身份验证页面
+        }
+        return mav;
     }
+
+    //重置密码
+    //Post方法，传入字段名称为：newPassword
+    @PostMapping("User/resetPassword")
+    public ModelAndView resetPassword(HttpSession session, @ModelAttribute(value = "newPassword") String newPassword) throws NoSuchAlgorithmException {
+        ModelAndView mav=new ModelAndView();
+        User resetUser= (User) session.getAttribute("resetUser");//拿到前面验证时添加的用户。
+        session.removeAttribute("resetUser");//拿完用户后，关闭session，节省系统资源。
+
+        MessageDigest md5=MessageDigest.getInstance("MD5");
+        md5.update(newPassword.getBytes());
+        String newPassword_MD5=new BigInteger(1,md5.digest()).toString(16);
+        resetUser.setUserPassword(newPassword_MD5);
+
+        if(userService.modifyPassword(resetUser)){
+            mav.setViewName("redirect:login");
+        }else{
+            return null;
+        }
+        return mav;
+    }
+
 }

@@ -8,6 +8,7 @@ import com.service.AdminService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +20,15 @@ public class AdminController{
     private AdminService adminService;
     @Autowired
     private UserService userService;
+
+    @GetMapping("/Admin/manage")
+    public ModelAndView adminHome(){
+        ModelAndView mav=new ModelAndView("manage");
+        return mav;
+    }
+
+
+
 
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
