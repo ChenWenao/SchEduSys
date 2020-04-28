@@ -29,6 +29,9 @@ public class UserService{
         return userRepository.deleteUserByCode(userCode);
     }
 
+    //改
+    public boolean modifyPassword(User modifyUser){ return userRepository.modifyPassword(modifyUser);};
+
     //查
     public User getUserById(int userId) {
         return userRepository.selectUserById(userId);
@@ -38,4 +41,9 @@ public class UserService{
 
     //登录
     public User login(String userCode, String userPassword) { return userRepository.findUser(userCode,userPassword); }
+
+    //找回密码
+    public User retrievePassword(String userRealName, String userIdCard){
+        return userRepository.findRpUser(userRealName, userIdCard);
+    }
 }

@@ -54,7 +54,7 @@ public class UserController {
     //传入的表单名称为loginUser
     //表单需要包含字段：userCode,userPassword
     @PostMapping("User/login")
-    public ModelAndView login_in(HttpSession session, @ModelAttribute(value = "loginUser") User loginUser) throws NoSuchAlgorithmException {
+    public ModelAndView login(HttpSession session, @ModelAttribute(value = "loginUser") User loginUser) throws NoSuchAlgorithmException {
         ModelAndView mav=new ModelAndView();//新建要返回的页面。
         //加密密码
         MessageDigest md5=MessageDigest.getInstance("MD5");
@@ -82,6 +82,36 @@ public class UserController {
             }
             return mav;
         } else
+            return null;
+    }
+
+    //找回密码
+    @PostMapping("User/retrievePassword")
+    public ModelAndView retrievePassword(HttpSession session, @ModelAttribute(value = "rpUser") User rpUser) throws NoSuchAlgorithmException{
+        ModelAndView mav=new ModelAndView();
+        User user_find = userService.retrievePassword(rpUser.getUserRealName(), rpUser.getUserIdCard());
+        if(user_find != null){
+            if ("学生".equals(user_find.getUserIdentity())) {
+                Student rpStudent = studentService.getStudentByCode(user_find.getUserCode());
+                user_find.setUserId(rpStudent.getStudentId());
+                userService.modifyPassword(user_find);
+                session.setAttribute("rpUser", user_find);
+                mav.setViewName("login");   //设置登录主页。
+            } else if ("教师".equals(user_find.getUserIdentity())) {
+                Teacher rpTeacher = teacherService.getTeacherByCode(user_find.getUserCode());
+                user_find.setUserId(rpTeacher.getTeacherId());
+                userService.modifyPassword(user_find);
+                session.setAttribute("rpUser", user_find);
+                mav.setViewName("login");   //设置登录主页。
+            } else if ("管理员".equals(user_find.getUserIdentity())) {
+                Admin rpAdmin=adminService.getAdminByCode(user_find.getUserCode());
+                user_find.setUserId(rpAdmin.getAdminId());
+                userService.modifyPassword(user_find);
+                session.setAttribute("rpUser", user_find);
+                mav.setViewName("login");   //设置登录主页。
+            }
+            return mav;
+        }else
             return null;
     }
 }

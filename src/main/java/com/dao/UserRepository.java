@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.bean.Student;
 import com.bean.User;
 import com.sun.net.httpserver.HttpsServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,22 @@ public class UserRepository {
         return false;
     }
 
+    //改
+    public boolean modifyPassword(User modifyUser) {
+        try {
+            //修改User
+            template.update("update User set " +
+                            "userPassword=? " +
+                            "where userRealName=? "
+                    , modifyUser.getUserPassword()
+                    , modifyUser.getUserRealName());
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     //查
     public User selectUserById(int userId) {
         try {
@@ -79,6 +96,17 @@ public class UserRepository {
     public User findUser(String userCode, String userPassword){
         try {
             List<User> users = template.query("select * from User where userCode =? and userPassword=?", userRowMapper, userCode,userPassword);
+            return users.get(0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    //找回密码
+    public User findRpUser(String userRealName, String userIdCard){
+        try {
+            List<User> users = template.query("select * from User where userRealName =? and userIdCard=?", userRowMapper, userRealName,userIdCard);
             return users.get(0);
         } catch (Exception e) {
             System.out.println(e);
