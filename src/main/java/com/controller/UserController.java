@@ -86,6 +86,9 @@ public class UserController {
     }
 
     //找回密码
+    //为了信息安全，采用post方法
+    //传入的表单名称为rpUser
+    //表单需要包含字段：userRealName,userIdCard
     @PostMapping("User/retrievePassword")
     public ModelAndView retrievePassword(HttpSession session, @ModelAttribute(value = "rpUser") User rpUser) throws NoSuchAlgorithmException{
         ModelAndView mav=new ModelAndView();
