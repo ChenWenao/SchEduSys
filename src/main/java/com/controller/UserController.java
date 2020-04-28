@@ -78,7 +78,7 @@ public class UserController {
                 Admin loginAdmin=adminService.getAdminByCode(loginUser.getUserCode());
                 user_find.setUserId(loginAdmin.getAdminId());
                 session.setAttribute("loginUser", user_find);
-                mav.setViewName("admin");   //设置管理员主页。
+                mav.setViewName("manage");   //设置管理员主页。
             }
             return mav;
         } else
