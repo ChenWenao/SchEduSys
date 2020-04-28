@@ -32,7 +32,7 @@ public class AdminController{
 
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
-    //adminNativePlace,adminGender,adminPoliticeStatus,adminPhoneNumber,adminNote
+    //adminNativePlace,adminGender,adminPoliticsStatus,adminPhoneNumber,adminNote
     //Ps:adminCreateTime不用管，数据库默认插入新建用户的时间。
     @PostMapping("Admin/newAdmin")
     public boolean addNewAdmin(@ModelAttribute(value = "newAdmin") Admin newAdmin, @ModelAttribute(value="newUser") User newUser) {
