@@ -107,7 +107,7 @@ public class UserController {
             session.setAttribute("resetUser", user_find);
             mav.setViewName("resetPassword");//若身份验证成功，跳转到修改密码页面
         } else {
-            mav.setViewName("redirect:authentication");//若身份验证失败，重新加载身份验证页面
+            mav.setViewName("redirect:/User/authentication");//若身份验证失败，重新加载身份验证页面
         }
         return mav;
     }
@@ -126,7 +126,7 @@ public class UserController {
         resetUser.setUserPassword(newPassword_MD5);
 
         if (userService.modifyPassword(resetUser)) {
-            mav.setViewName("redirect:login");
+            mav.setViewName("redirect:/User/login");
         } else {
             return null;
         }

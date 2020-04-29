@@ -5,9 +5,10 @@ import java.util.Date;
 public class News {
 
     private int newsId;
+    private String newsTitle;
     private String isEnable;
     private String newsURL;
-    private Date newsCreateTime;
+    private Date newsReleaseTime;
 
     public int getNewsId() {
         return newsId;
@@ -15,6 +16,14 @@ public class News {
 
     public void setNewsId(int newsId) {
         this.newsId = newsId;
+    }
+
+    public String getNewsTitle() {
+        return newsTitle;
+    }
+
+    public void setNewsTitle(String newsTitle) {
+        this.newsTitle = newsTitle;
     }
 
     public String getIsEnable() {
@@ -33,11 +42,13 @@ public class News {
         this.newsURL = newsURL;
     }
 
-    public Date getNewsCreateTime() {
-        return newsCreateTime;
+    public Date getNewsReleaseTime() {
+        return newsReleaseTime;
     }
 
-    public void setNewsCreateTime(Date newsCreateTime) {
-        this.newsCreateTime = newsCreateTime;
+    public void setNewsReleaseTime(Date newsReleaseTime) {
+        this.newsReleaseTime = newsReleaseTime;
     }
+
+
 }

@@ -24,6 +24,7 @@ public class CourseController {
     @Autowired
     private TopicService topicService;
 
+    //测试用的，整合的时候要删掉
     @GetMapping("Course/index")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
@@ -63,7 +64,7 @@ public class CourseController {
         //设置imgName。
         String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
         //获取课程图片存储文件夹，若不存在，就创建文件夹。
-        String fileDirPath = new String("src/main/resources/img/courseImg");
+        String fileDirPath = "src/main/resources/img/courseImg";
         File fileDir = new File(fileDirPath);
         if (!fileDir.exists()) {
             // 递归生成文件夹
@@ -165,7 +166,7 @@ public class CourseController {
             //设置imgName。
             String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
             //获取课程图片存储文件夹，若不存在，就创建文件夹。
-            String fileDirPath = new String("src/main/resources/img/courseImg");
+            String fileDirPath = "src/main/resources/img/courseImg";
             File fileDir = new File(fileDirPath);
             try {
                 // 构建真实的文件路径

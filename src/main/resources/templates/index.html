@@ -79,6 +79,28 @@
     <input type="text" name="courseRequirement"><br>
     <button type="submit">上传</button><br>
 </form>
+</form>
+添加新闻
+<form enctype="multipart/form-data" method="post"
+      action="/News/newNews">
+    文件：
+    <input type="file" name="newNewsFile"/><br>
+    标题：
+    <input type="text" name="newsTitle"><br>
+    <button type="submit">上传</button><br>
+</form>
+
+修改新闻
+<form enctype="multipart/form-data" method="post"
+      action="/News/modifyNews">
+    文件：
+    <input type="file" name="modifyNewsFile"/><br>
+    Id：
+    <input type="text" name="newsId"><br>
+    Title
+    <input type="text" name="newsTitle"><br>
+    <button type="submit">上传</button><br>
+</form>
 
 </body>
 </html>
