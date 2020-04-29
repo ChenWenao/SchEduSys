@@ -150,9 +150,10 @@ public class StudentController {
     // isEnable表示是否启用，on表示查询启用的学生，off表示查询未启用的学生，all表示查询所有
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
-    @GetMapping("Student/students/{isEnable}/{order_by}/{order}")
-    public List<Student> getStudents(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
-        return studentService.getStudents(isEnable, order_by, order);
+    // page表示第几页，pageSize表示每页几条数据
+    @GetMapping("Student/students/{isEnable}/{order_by}/{order}/{page}/{pageSize}")
+    public List<Student> getStudents(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
+        return studentService.getStudents(isEnable, order_by, order,page,pageSize);
     }
 
 }

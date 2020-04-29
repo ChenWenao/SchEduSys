@@ -91,7 +91,7 @@ public class AdminRepository {
         return null;
     }
 
-    public List<Admin> selectAdmins(String isEnable, String order_by, String order) {
+    public List<Admin> selectAdmins(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Admin,User where adminCode=userCode  ";
             if ("on".equals(isEnable))
@@ -103,6 +103,7 @@ public class AdminRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Admin> admins = template.query(sql, adminRowMapper);
             return admins;
         } catch (Exception e) {

@@ -80,7 +80,7 @@ public class NewsRepository {
         return null;
     }
 
-    public List<News> selectNews(String isEnable, String order_by, String order) {
+    public List<News> selectNews(String isEnable, String order_by, String order,int page,int pageSize) {
         try {
             String sql = "select * from News ";
             if ("Release".equals(isEnable))
@@ -92,6 +92,7 @@ public class NewsRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<News> news = template.query(sql, newsRowMapper);
             return news;
         } catch (Exception e) {

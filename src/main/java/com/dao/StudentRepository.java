@@ -138,7 +138,7 @@ public class StudentRepository {
         return null;
     }
 
-    public List<Student> selectStudents(String isEnable, String order_by, String order) {
+    public List<Student> selectStudents(String isEnable, String order_by, String order,int page,int pageSize) {
         try {
             String sql = "select * from Student,User where studentCode=userCode  ";
             if ("on".equals(isEnable))
@@ -150,6 +150,7 @@ public class StudentRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Student> students = template.query(sql, studentRowMapper);
             return students;
         } catch (Exception e) {

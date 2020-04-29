@@ -123,7 +123,7 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectScheduleByTeacherId(String teacherCode, String giveScore) {
+    public List<Schedule> selectScheduleByTeacherId(String teacherCode, String giveScore,int page,int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId = sch_courseId " +
@@ -134,7 +134,7 @@ public class ScheduleRepository {
                 sql += " and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
             else if ("off".equals(giveScore))
                 sql += " and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
-
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Schedule> schedules = template.query(sql
                     , scheduleRowMapper);
             return schedules;
@@ -145,7 +145,7 @@ public class ScheduleRepository {
     }
 
 
-    public List<Schedule> selectSchedules(String isEnable, String order_by, String order) {
+    public List<Schedule> selectSchedules(String isEnable, String order_by, String order,int page,int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId=sch_courseId " +
@@ -159,6 +159,7 @@ public class ScheduleRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Schedule> schedules = template.query(sql, scheduleRowMapper);
             return schedules;
         } catch (Exception e) {
@@ -167,7 +168,7 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectOnSchedules(String order_by, String order) {
+    public List<Schedule> selectOnSchedules(String order_by, String order,int page,int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId=sch_courseId " +
@@ -178,6 +179,7 @@ public class ScheduleRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Schedule> schedules = template.query(sql, scheduleRowMapper);
             return schedules;
         } catch (Exception e) {

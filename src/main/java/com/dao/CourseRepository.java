@@ -142,7 +142,7 @@ public class CourseRepository {
         return null;
     }
 
-    public List<Course> selectCourses(String isEnable, String haveTeacher, String order_by, String order) {
+    public List<Course> selectCourses(String isEnable, String haveTeacher, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Course ";
             if ("on".equals(isEnable)) {
@@ -172,6 +172,7 @@ public class CourseRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Course> courses = template.query(sql, courseRowMapper);
             return courses;
         } catch (Exception e) {

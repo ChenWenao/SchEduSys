@@ -13,7 +13,7 @@ public class RegisterRepository {
     private JdbcTemplate template;
     private RegisterRowMapper registerRowMapper = new RegisterRowMapper();
     private StudentRowMapper studentRowMapper = new StudentRowMapper();
-    private CourseRowMapper courseRowMapper=new CourseRowMapper();
+    private CourseRowMapper courseRowMapper = new CourseRowMapper();
 
     //增
     public boolean insertANewRegister(int reg_teacherId, int reg_studentId, int reg_courseId) {
@@ -53,9 +53,9 @@ public class RegisterRepository {
     //改
     public boolean updateGrade(int courseId, int studentId, float grade, float testScore, float finalScore) {
         try {
-            if(finalScore>60) {
-                List<Course> courses=template.query("select * from Course where courseId=?",courseRowMapper,courseId);
-                template.update("update Student set studentCreditSum=studentCreditSum+? where studentId=?",courses.get(0).getCourseCredit(),studentId);
+            if (finalScore > 60) {
+                List<Course> courses = template.query("select * from Course where courseId=?", courseRowMapper, courseId);
+                template.update("update Student set studentCreditSum=studentCreditSum+? where studentId=?", courses.get(0).getCourseCredit(), studentId);
             }
             template.update("update courseRegister set grade=? , testScore=? , finalScore=? where reg_courseId=? and reg_studentId=?", grade, testScore, finalScore, courseId, studentId);
             return true;
@@ -66,13 +66,13 @@ public class RegisterRepository {
     }
 
     //查
-    public List<Register> selectRegisterByCourseId(int reg_courseId) {
+    public List<Register> selectRegisterByCourseId(int reg_courseId, int page, int pageSize) {
         try {
             List<Register> registers = template.query("select * from Course,Teacher,Student,courseRegister " +
                     "where courseId=reg_courseId " +
                     "and teacherId=reg_teacherId " +
                     "and studentId=reg_studentId " +
-                    "and courseId=?", registerRowMapper, reg_courseId);
+                    "and courseId=? limit ?,?", registerRowMapper, reg_courseId, (page - 1) * pageSize, pageSize);
             return registers;
         } catch (Exception e) {
             System.out.println(e);
@@ -80,14 +80,14 @@ public class RegisterRepository {
         return null;
     }
 
-    public List<Register> selectRegisterByStudentId(int studentId) {
+    public List<Register> selectRegisterByStudentId(int studentId, int page, int pageSize) {
         try {
             List<Register> registers = template.query("select * from Course,Student,Teacher,courseRegister " +
                     "where reg_studentId=studentId " +
                     "and reg_courseId=courseId " +
                     "and reg_teacherId=teacherId " +
                     "and courseRegister.isEnable='T' " +
-                    "and studentId=?", registerRowMapper, studentId);
+                    "and studentId=? limit ?,?", registerRowMapper, studentId, (page - 1) * pageSize, pageSize);
             return registers;
 
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class RegisterRepository {
         return null;
     }
 
-    public List<Register> selectRegisters(String order_by, String order) {
+    public List<Register> selectRegisters(String order_by, String order, int page, int pageSize) {
         try {
 
             String sql = "select * from Course,Teacher,Student,courseRegister " +
@@ -105,6 +105,7 @@ public class RegisterRepository {
                     "and reg_studentId=studentId order by " + order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Register> registers = template.query(sql, registerRowMapper);
             return registers;
         } catch (Exception e) {

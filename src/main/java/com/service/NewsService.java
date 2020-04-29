@@ -39,8 +39,8 @@ public class NewsService {
         return newsRepository.selectNewsById(newsId);
     }
 
-    public List<News> getNews(String isEnable,String order_by,String order){
-        return newsRepository.selectNews(isEnable, order_by, order);
+    public List<News> getNews(String isEnable,String order_by,String order,int page,int pageSize){
+        return newsRepository.selectNews(isEnable, order_by, order,page,pageSize);
     }
 
 
