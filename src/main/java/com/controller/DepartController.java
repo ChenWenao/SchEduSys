@@ -13,11 +13,6 @@ public class DepartController {
     private DepartService departService;
 
 
-
-
-
-
-
     //增
     //新建学院
     @PostMapping("Depart/newDepart")
@@ -85,7 +80,7 @@ public class DepartController {
     // isEnable表示是否启用，on表示查询启用的学院，off表示查询未启用的学院，all表示查询所有学院
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Depart/departments/{isEnable}/{order_by}/{order}/{page}/{pageSize}")
-    public List<Department> getDepartments(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return departService.getDepartments(isEnable, order_by, order,page,pageSize);
+    public List<Department> getDepartments(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return departService.getDepartments(isEnable, order_by, order, page, pageSize);
     }
 }

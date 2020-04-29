@@ -43,10 +43,6 @@ public class UserController {
     }
 
 
-
-
-
-
     //查
     @GetMapping("User/userById/{userId}")
     public User getUserById(@PathVariable("userId") int userId) {

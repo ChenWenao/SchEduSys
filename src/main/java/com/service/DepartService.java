@@ -44,7 +44,7 @@ public class DepartService {
         return departRepository.selectDepartById(departId);
     }
 
-    public List<Department> getDepartments(String isEnable, String order_by, String order,int page,int pageSize) {
-        return departRepository.selectDeparts(isEnable, order_by, order,page,pageSize);
+    public List<Department> getDepartments(String isEnable, String order_by, String order, int page, int pageSize) {
+        return departRepository.selectDeparts(isEnable, order_by, order, page, pageSize);
     }
 }

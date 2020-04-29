@@ -44,15 +44,15 @@ public class ScheduleService {
         return scheduleRepository.selectScheduleByCourseId(courseId);
     }
 
-    public List<Schedule> getScheduleByTeacherId(String teacherCode, String giveScore,int page,int pageSize) {
-        return scheduleRepository.selectScheduleByTeacherId(teacherCode, giveScore,page,pageSize);
+    public List<Schedule> getScheduleByTeacherId(String teacherCode, String giveScore, int page, int pageSize) {
+        return scheduleRepository.selectScheduleByTeacherId(teacherCode, giveScore, page, pageSize);
     }
 
-    public List<Schedule> getSchedules(String isEnable, String order_by, String order,int page,int pageSize) {
-        return scheduleRepository.selectSchedules(isEnable, order_by, order,page, pageSize);
+    public List<Schedule> getSchedules(String isEnable, String order_by, String order, int page, int pageSize) {
+        return scheduleRepository.selectSchedules(isEnable, order_by, order, page, pageSize);
     }
 
-    public List<Schedule> getOnSchedules(String order_by, String order,int page,int pageSize) {
-        return scheduleRepository.selectOnSchedules(order_by, order,page,pageSize);
+    public List<Schedule> getOnSchedules(String order_by, String order, int page, int pageSize) {
+        return scheduleRepository.selectOnSchedules(order_by, order, page, pageSize);
     }
 }

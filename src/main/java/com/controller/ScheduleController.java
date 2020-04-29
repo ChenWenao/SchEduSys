@@ -29,11 +29,6 @@ public class ScheduleController {
     private RegisterService registerService;
 
 
-
-
-
-
-
     //增
 
     //由管理员调用，安排授课数据。
@@ -120,7 +115,7 @@ public class ScheduleController {
     //all表示查询自己教的所有课程
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/mySchedule/{giveScore}/{page}/{pageSize}")
-    public List<Schedule> getScheduleByTeacherId(HttpSession session, @PathVariable("giveScore") String giveScore,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
+    public List<Schedule> getScheduleByTeacherId(HttpSession session, @PathVariable("giveScore") String giveScore, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
 
         //暂时建立一个session，登陆做完后删除
         User loginUser_pre = new User();
@@ -129,7 +124,7 @@ public class ScheduleController {
         session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 
-        return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode(), giveScore,page,pageSize);
+        return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode(), giveScore, page, pageSize);
     }
 
     //查询所有的授课数据。
@@ -139,15 +134,15 @@ public class ScheduleController {
     // page表示第几页，pageSize表示每页几条数据
     // PS：两个order主要实现根据某个字段排序的功能
     @GetMapping("Schedule/schedules/{isEnable}/{order_by}/{order}/{page}/{pageSize}")
-    public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return scheduleService.getSchedules(isEnable, order_by, order,page,pageSize);
+    public List<Schedule> getSchedules(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return scheduleService.getSchedules(isEnable, order_by, order, page, pageSize);
     }
 
     //学生调用，查询所有可以选的课程。（查询已经开放选课的课程）
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/schedulesOn/{order_by}/{order}/{page}/{pageSize}")
-    public List<Schedule> getSelectSchedules(@PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return scheduleService.getOnSchedules(order_by, order,page,pageSize);
+    public List<Schedule> getSelectSchedules(@PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return scheduleService.getOnSchedules(order_by, order, page, pageSize);
     }
 
 }

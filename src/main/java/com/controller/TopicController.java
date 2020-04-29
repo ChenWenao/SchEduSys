@@ -57,8 +57,8 @@ public class TopicController {
 
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Topic/allTopics/{page}/{pageSize}")
-    public List<Topic> getAllTopics(@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return topicService.getAllTopics(page,pageSize);
+    public List<Topic> getAllTopics(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return topicService.getAllTopics(page, pageSize);
     }
 
 }

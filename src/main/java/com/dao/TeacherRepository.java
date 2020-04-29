@@ -142,7 +142,7 @@ public class TeacherRepository {
         return null;
     }
 
-    public List<Teacher> selectTeachers(String isEnable, String order_by, String order,int page,int pageSize) {
+    public List<Teacher> selectTeachers(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Teacher,User where teacherCode=userCode  ";
             if ("on".equals(isEnable))

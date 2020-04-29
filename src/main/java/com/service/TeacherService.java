@@ -44,8 +44,8 @@ public class TeacherService {
         return teacherRepository.selectTeacherByCode(teacherCode);
     }
 
-    public List<Teacher> getTeachers(String isEnable, String order_by, String order,int page,int pageSize) {
-        return teacherRepository.selectTeachers(isEnable, order_by, order,page,pageSize);
+    public List<Teacher> getTeachers(String isEnable, String order_by, String order, int page, int pageSize) {
+        return teacherRepository.selectTeachers(isEnable, order_by, order, page, pageSize);
     }
 
 

@@ -38,11 +38,11 @@ public class NewsRepository {
     }
 
     //改
-    public boolean modifyNews(News modifyNews){
+    public boolean modifyNews(News modifyNews) {
         try {
-            template.update("update News set newsTitle=?,newsURL=? where newsId=?",modifyNews.getNewsTitle(),modifyNews.getNewsURL(),modifyNews.getNewsId());
+            template.update("update News set newsTitle=?,newsURL=? where newsId=?", modifyNews.getNewsTitle(), modifyNews.getNewsURL(), modifyNews.getNewsId());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
@@ -80,7 +80,7 @@ public class NewsRepository {
         return null;
     }
 
-    public List<News> selectNews(String isEnable, String order_by, String order,int page,int pageSize) {
+    public List<News> selectNews(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from News ";
             if ("Release".equals(isEnable))

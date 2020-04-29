@@ -33,10 +33,6 @@ public class CourseController {
     }
 
 
-
-
-
-
     //增
 
     //此处为新建课程，需要课程字段：name，topicName，departName，Period，Credit，StartTime
@@ -211,8 +207,8 @@ public class CourseController {
     // page表示第几页，pageSize表示每页几条数据
     // 示例：Course/courses/on/have/courseId/0
     @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}/{page}/{pageSize}")
-    public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return courseService.getCourses(isEnable, haveTeacher, order_by, order,page,pageSize);
+    public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return courseService.getCourses(isEnable, haveTeacher, order_by, order, page, pageSize);
     }
 }
 

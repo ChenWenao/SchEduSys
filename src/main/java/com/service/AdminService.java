@@ -40,8 +40,8 @@ public class AdminService {
         return adminRepository.selectAdminByCode(adminCode);
     }
 
-    public List<Admin> getAdmins(String isEnable, String order_by, String order,int page,int pageSize) {
-        return adminRepository.selectAdmins(isEnable, order_by, order,page,pageSize);
+    public List<Admin> getAdmins(String isEnable, String order_by, String order, int page, int pageSize) {
+        return adminRepository.selectAdmins(isEnable, order_by, order, page, pageSize);
     }
 
 }

@@ -20,10 +20,6 @@ public class RegisterController {
     private CourseService courseService;
 
 
-
-
-
-
     //增
     //学生选课，只需要传入课程id，后台通过session自动获取学生id
     @GetMapping("Register/newRegister/{courseId}")
@@ -72,9 +68,9 @@ public class RegisterController {
     //根据课程id查询某门课程的选课数据，可以用来查所有选择某门课的学生。
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Register/registerByCourseId/{courseId}/{page}/{pageSize}")
-    public List<Register> getRegisterByCourseId(@PathVariable("courseId") int reg_courseId,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
+    public List<Register> getRegisterByCourseId(@PathVariable("courseId") int reg_courseId, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
 
-        return registerService.getRegisterByCourseId(reg_courseId,page,pageSize);
+        return registerService.getRegisterByCourseId(reg_courseId, page, pageSize);
 //        List<Register> registers = registerService.getRegisterByCourseId(reg_courseId);
 //        Map<String, Object> result = new HashMap<String, Object>();
 //        result.put("code", 0);
@@ -88,7 +84,7 @@ public class RegisterController {
     //Ps:只能查询到启用的选课数据，假如这个学生选了课a，b，c，但是管理员软删掉了课程a，那么学生只能查到b，c
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Register/myRegister/{page}/{pageSize}")
-    public List<Register> getMyRegister(HttpSession session,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
+    public List<Register> getMyRegister(HttpSession session, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
         //暂时新建一个学生，登陆做完后删除。
         User loginUser_pre = new User();
         loginUser_pre.setUserId(2);
@@ -96,7 +92,7 @@ public class RegisterController {
         session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 
-        return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId(),page,pageSize);
+        return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId(), page, pageSize);
     }
 
     //查询所有的选课数据。
@@ -105,8 +101,8 @@ public class RegisterController {
     // page表示第几页，pageSize表示每页几条数据
     // PS：两个order主要实现根据某个字段排序的功能
     @GetMapping("Register/registers/{order_by}/{order}/{page}/{pageSize}")
-    public List<Register> getRegisters(@PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return registerService.getRegisters(order_by, order,page,pageSize);
+    public List<Register> getRegisters(@PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return registerService.getRegisters(order_by, order, page, pageSize);
     }
 
 }

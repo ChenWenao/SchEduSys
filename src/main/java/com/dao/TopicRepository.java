@@ -77,9 +77,9 @@ public class TopicRepository {
         return null;
     }
 
-    public List<Topic> selectAllTopics(int page,int pageSize) {
+    public List<Topic> selectAllTopics(int page, int pageSize) {
         try {
-            List<Topic> topics = template.query("select * from Topic limit ?,?", topicRowMapper,(page - 1) * pageSize,pageSize);
+            List<Topic> topics = template.query("select * from Topic limit ?,?", topicRowMapper, (page - 1) * pageSize, pageSize);
             return topics;
         } catch (Exception e) {
             System.out.println(e);

@@ -36,7 +36,7 @@ public class TopicService {
         return topicRepository.selectTopicById(topicId);
     }
 
-    public List<Topic> getAllTopics(int page,int pageSize) {
-        return topicRepository.selectAllTopics(page,pageSize);
+    public List<Topic> getAllTopics(int page, int pageSize) {
+        return topicRepository.selectAllTopics(page, pageSize);
     }
 }

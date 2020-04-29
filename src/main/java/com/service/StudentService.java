@@ -44,7 +44,7 @@ public class StudentService {
         return studentRepository.selectStudentByCode(studentCode);
     }
 
-    public List<Student> getStudents(String isEnable, String order_by, String order,int page,int pageSize) {
-        return studentRepository.selectStudents(isEnable, order_by, order,page,pageSize);
+    public List<Student> getStudents(String isEnable, String order_by, String order, int page, int pageSize) {
+        return studentRepository.selectStudents(isEnable, order_by, order, page, pageSize);
     }
 }

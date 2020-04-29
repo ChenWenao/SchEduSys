@@ -34,10 +34,6 @@ public class TeacherController {
     }
 
 
-
-
-
-
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
     //teacherDepartName,teacherGender,teacherNativePlace,teacherPoliticsStatus,teacherPhoneNumber,teacherDescription
@@ -152,8 +148,8 @@ public class TeacherController {
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Teacher/teachers/{isEnable}/{order_by}/{order}/{page}/{pageSize}")
-    public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order,@PathVariable("page")int page,@PathVariable("pageSize")int pageSize) {
-        return teacherService.getTeachers(isEnable, order_by, order,page,pageSize);
+    public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return teacherService.getTeachers(isEnable, order_by, order, page, pageSize);
     }
 
 

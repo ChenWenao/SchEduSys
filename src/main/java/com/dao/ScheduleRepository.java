@@ -123,7 +123,7 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectScheduleByTeacherId(String teacherCode, String giveScore,int page,int pageSize) {
+    public List<Schedule> selectScheduleByTeacherId(String teacherCode, String giveScore, int page, int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId = sch_courseId " +
@@ -145,7 +145,7 @@ public class ScheduleRepository {
     }
 
 
-    public List<Schedule> selectSchedules(String isEnable, String order_by, String order,int page,int pageSize) {
+    public List<Schedule> selectSchedules(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId=sch_courseId " +
@@ -168,7 +168,7 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectOnSchedules(String order_by, String order,int page,int pageSize) {
+    public List<Schedule> selectOnSchedules(String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId=sch_courseId " +

@@ -30,15 +30,15 @@ public class RegisterService {
         return registerRepository.updateGrade(courseId, studentId, grade, testScore, finalScore);
     }
 
-    public List<Register> getRegisterByCourseId(int reg_courseId,int page,int pageSize) {
-        return registerRepository.selectRegisterByCourseId(reg_courseId,page,pageSize);
+    public List<Register> getRegisterByCourseId(int reg_courseId, int page, int pageSize) {
+        return registerRepository.selectRegisterByCourseId(reg_courseId, page, pageSize);
     }
 
-    public List<Register> getMyRegister(int studentId,int page,int pageSize) {
-        return registerRepository.selectRegisterByStudentId(studentId,page,pageSize);
+    public List<Register> getMyRegister(int studentId, int page, int pageSize) {
+        return registerRepository.selectRegisterByStudentId(studentId, page, pageSize);
     }
 
-    public List<Register> getRegisters(String order_by, String order,int page,int pageSize) {
-        return registerRepository.selectRegisters(order_by, order,page,pageSize);
+    public List<Register> getRegisters(String order_by, String order, int page, int pageSize) {
+        return registerRepository.selectRegisters(order_by, order, page, pageSize);
     }
 }

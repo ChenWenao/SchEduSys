@@ -11,36 +11,37 @@ import java.util.List;
 public class NewsService {
     @Autowired
     private NewsRepository newsRepository;
+
     //增
-    public boolean addNewNews(String newsTitle,String newsURL){
-        return newsRepository.insertANewNews(newsTitle,newsURL);
+    public boolean addNewNews(String newsTitle, String newsURL) {
+        return newsRepository.insertANewNews(newsTitle, newsURL);
     }
 
     //删
-    public boolean removeNews(int newsId){
+    public boolean removeNews(int newsId) {
         return newsRepository.deleteNews(newsId);
     }
 
     //改
-    public boolean modifyNews(News modifyNews){
+    public boolean modifyNews(News modifyNews) {
         return newsRepository.modifyNews(modifyNews);
     }
 
-    public boolean restoreNews(int newsId){
+    public boolean restoreNews(int newsId) {
         return newsRepository.restoreNews(newsId);
     }
 
-    public boolean dropNews(int newsId){
+    public boolean dropNews(int newsId) {
         return newsRepository.dropNews(newsId);
     }
 
     //查
-    public News getNewsById(int newsId){
+    public News getNewsById(int newsId) {
         return newsRepository.selectNewsById(newsId);
     }
 
-    public List<News> getNews(String isEnable,String order_by,String order,int page,int pageSize){
-        return newsRepository.selectNews(isEnable, order_by, order,page,pageSize);
+    public List<News> getNews(String isEnable, String order_by, String order, int page, int pageSize) {
+        return newsRepository.selectNews(isEnable, order_by, order, page, pageSize);
     }
 
 
