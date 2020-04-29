@@ -85,9 +85,10 @@ public class UserController {
                 session.setAttribute("loginUser", user_find);
                 mav.setViewName("redirect:/Admin/manage");   //设置管理员主页。
             }
-            return mav;
-        } else
-            return null;
+        } else {
+            mav.setViewName("redirect:/User/login");
+        }
+        return mav;
     }
 
     //找回密码验证，验证要修改密码的人的身份，验证成功会跳转到修改密码的页面，失败则会返回一个新的找回密码验证页面。
