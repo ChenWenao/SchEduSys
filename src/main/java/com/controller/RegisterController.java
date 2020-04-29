@@ -6,6 +6,7 @@ import com.service.RegisterService;
 import com.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -18,6 +19,16 @@ public class RegisterController {
     private ScheduleService scheduleService;
     @Autowired
     private CourseService courseService;
+
+
+
+    //返回某门课程的选课数据页面。
+    @GetMapping("Teacher/register/{courseId}")
+    public ModelAndView registerPage(@PathVariable("courseId")int courseId){
+        ModelAndView mav=new ModelAndView("register");
+        mav.addObject("courseId",courseId);
+        return mav;
+    }
 
 
     //增
