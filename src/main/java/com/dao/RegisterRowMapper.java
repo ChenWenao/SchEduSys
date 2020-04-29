@@ -45,6 +45,7 @@ public class RegisterRowMapper implements RowMapper<Register> {
         register.setStudentIdCard(resultSet.getString("studentIdCard"));
         register.setStudentEntryTime(resultSet.getDate("studentEntryTime"));
         register.setStudentNote(resultSet.getString("studentNote"));
+        register.setStudentCreditSum(resultSet.getFloat("studentCreditSum"));
 
         //Course
         register.setCourseName(resultSet.getString("courseName"));

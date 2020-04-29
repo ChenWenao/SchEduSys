@@ -26,7 +26,7 @@ public class RegisterController {
 
     //增
     //学生选课，只需要传入课程id，后台通过session自动获取学生id
-    @RequestMapping("Register/newRegister/{courseId}")
+    @GetMapping("Register/newRegister/{courseId}")
     public String addNewRegister(HttpSession session, @PathVariable("courseId") int courseId) {
         //暂时新建一个学生，登陆做完后删除。
         User loginUser_pre = new User();
@@ -46,7 +46,7 @@ public class RegisterController {
 
     //删
     //学生调用，退选课程。
-    @RequestMapping("Register/removeRegister/{courseId}")
+    @GetMapping("Register/removeRegister/{courseId}")
     public boolean removeRegister(HttpSession session, @PathVariable("courseId") int courseId) {
         //暂时新建一个学生，登陆做完后删除。
         User loginUser_pre = new User();
@@ -60,7 +60,7 @@ public class RegisterController {
 
     //改
     //教师调用，打分。
-    @RequestMapping("Register/giveGrade/{courseId}/{studentId}/{grade}/{testScore}")
+    @GetMapping("Register/giveGrade/{courseId}/{studentId}/{grade}/{testScore}")
     public boolean giveGrade(@PathVariable("courseId") int courseId, @PathVariable("studentId") int studentId, @PathVariable("grade") float grade, @PathVariable("testScore") float testScore) {
         Course course = courseService.getCourseById(courseId);
         String[] gradePolicy = course.getCourseGradingPolicy().split("\\n");
@@ -70,7 +70,7 @@ public class RegisterController {
 
     //查
     //根据课程id查询某门课程的选课数据，可以用来查所有选择某门课的学生。
-    @RequestMapping("Register/registerByCourseId/{courseId}")
+    @GetMapping("Register/registerByCourseId/{courseId}")
     public List<Register> getRegisterByCourseId(@PathVariable("courseId") int reg_courseId) {
 
         return registerService.getRegisterByCourseId(reg_courseId);

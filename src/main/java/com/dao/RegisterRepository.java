@@ -13,6 +13,7 @@ public class RegisterRepository {
     private JdbcTemplate template;
     private RegisterRowMapper registerRowMapper = new RegisterRowMapper();
     private StudentRowMapper studentRowMapper = new StudentRowMapper();
+    private CourseRowMapper courseRowMapper=new CourseRowMapper();
 
     //增
     public boolean insertANewRegister(int reg_teacherId, int reg_studentId, int reg_courseId) {
@@ -52,6 +53,10 @@ public class RegisterRepository {
     //改
     public boolean updateGrade(int courseId, int studentId, float grade, float testScore, float finalScore) {
         try {
+            if(finalScore>60) {
+                List<Course> courses=template.query("select * from Course where courseId=?",courseRowMapper,courseId);
+                template.update("update Student set studentCreditSum=studentCreditSum+? where studentId=?",courses.get(0).getCourseCredit(),studentId);
+            }
             template.update("update courseRegister set grade=? , testScore=? , finalScore=? where reg_courseId=? and reg_studentId=?", grade, testScore, finalScore, courseId, studentId);
             return true;
         } catch (Exception e) {

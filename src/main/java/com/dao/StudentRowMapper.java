@@ -22,6 +22,7 @@ public class StudentRowMapper implements RowMapper<Student> {
         student.setStudentIdCard(resultSet.getString("studentIdCard"));
         student.setStudentEntryTime(resultSet.getDate("studentEntryTime"));
         student.setStudentNote(resultSet.getString("studentNote"));
+        student.setStudentCreditSum(resultSet.getFloat("studentCreditSum"));
         return student;
     }
 }

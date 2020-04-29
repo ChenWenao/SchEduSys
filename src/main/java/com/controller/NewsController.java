@@ -76,7 +76,7 @@ public class NewsController {
         return true;
     }
 
-    //取消发布新闻（下架新闻）.
+    //取消发布新闻（下架新闻）。
     @PostMapping("News/unReleaseNews")
     public boolean dropNews(@RequestBody List<Integer> newsIds) {
         for (int newsId : newsIds) {

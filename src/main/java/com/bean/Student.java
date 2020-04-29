@@ -15,6 +15,8 @@ public class Student {
     private String studentIdCard;
     private Date studentEntryTime;
     private String studentNote;
+    private float studentCreditSum;
+
 
     public int getStudentId() {
         return studentId;
@@ -112,5 +114,12 @@ public class Student {
         this.studentNote = studentNote;
     }
 
+    public float getStudentCreditSum() {
+        return studentCreditSum;
+    }
+
+    public void setStudentCreditSum(float studentCreditSum) {
+        this.studentCreditSum = studentCreditSum;
+    }
 
 }
