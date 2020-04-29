@@ -4,7 +4,6 @@ import com.bean.Course;
 import com.bean.Register;
 import com.bean.Teacher;
 import com.dao.RegisterRepository;
-import com.dao.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class RegisterService {
         return registerRepository.insertANewRegister(reg_teacherId, reg_studentId, reg_courseId);
     }
 
-    public boolean addCompulsory(Course comCourse, Teacher comTeacher){
+    public boolean addCompulsory(Course comCourse, Teacher comTeacher) {
         return registerRepository.insertCompulsory(comCourse, comTeacher);
     }
 

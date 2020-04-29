@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.bean.Admin;
-import com.bean.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AdminRepository{
+public class AdminRepository {
     @Autowired
     private JdbcTemplate template;
-    private AdminRowMapper adminRowMapper=new AdminRowMapper();
+    private AdminRowMapper adminRowMapper = new AdminRowMapper();
 
     //增
     public boolean insertANewAdmin(Admin newAdmin) {
@@ -36,9 +35,9 @@ public class AdminRepository{
     //删
     public boolean deleteAdmin(int adminId) {
         try {
-            List<Admin> admins=template.query("select * from Admin where adminId=?",adminRowMapper,adminId);
-            template.update("delete from Admin where adminId=?",adminId);
-            template.update("delete from User where userCode=?",admins.get(0).getAdminCode());
+            List<Admin> admins = template.query("select * from Admin where adminId=?", adminRowMapper, adminId);
+            template.update("delete from Admin where adminId=?", adminId);
+            template.update("delete from User where userCode=?", admins.get(0).getAdminCode());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -47,25 +46,25 @@ public class AdminRepository{
     }
 
     //改
-    public boolean dropAdmin(int adminId){
+    public boolean dropAdmin(int adminId) {
         try {
             //删除User
-            List<Admin> admins=template.query("select * from Admin where adminId=?",adminRowMapper,adminId);
+            List<Admin> admins = template.query("select * from Admin where adminId=?", adminRowMapper, adminId);
             template.update("update User set isEnable='F' where userCode =?", admins.get(0).getAdminCode());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
 
-    public boolean restoreAdmin(int adminId){
+    public boolean restoreAdmin(int adminId) {
         try {
             //恢复User
-            List<Admin> admins=template.query("select * from Admin where adminId=?",adminRowMapper,adminId);
+            List<Admin> admins = template.query("select * from Admin where adminId=?", adminRowMapper, adminId);
             template.update("update User set isEnable='T' where userCode =?", admins.get(0).getAdminCode());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
@@ -100,8 +99,8 @@ public class AdminRepository{
             else if ("off".equals(isEnable))
                 sql += "and isEnable='F' order by ";
             else
-                sql+="order by ";
-            sql +=order_by;
+                sql += "order by ";
+            sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
             List<Admin> admins = template.query(sql, adminRowMapper);

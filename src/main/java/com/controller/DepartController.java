@@ -12,8 +12,13 @@ public class DepartController {
     @Autowired
     private DepartService departService;
 
-    //增
 
+
+
+
+
+
+    //增
     //新建学院
     @PostMapping("Depart/newDepart")
     public boolean addNewDepartment(@ModelAttribute(value = "newDepartment") Department newDepartment) {
@@ -21,7 +26,6 @@ public class DepartController {
     }
 
     //删
-
     //删除学院
     @PostMapping("Depart/removeDepart")
     public boolean removeDepartment(@RequestBody List<String> departNames) {
@@ -34,7 +38,6 @@ public class DepartController {
     }
 
     //改
-
     //下架学院
     @PostMapping("Depart/dropDepart")
     public boolean dropDepartment(@RequestBody List<String> departNames) {

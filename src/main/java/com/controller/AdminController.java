@@ -15,17 +15,19 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-public class AdminController{
+public class AdminController {
     @Autowired
     private AdminService adminService;
     @Autowired
     private UserService userService;
 
     @GetMapping("/Admin/manage")
-    public ModelAndView adminHome(){
-        ModelAndView mav=new ModelAndView("manage");
+    public ModelAndView adminHome() {
+        ModelAndView mav = new ModelAndView("manage");
         return mav;
     }
+
+
 
 
 
@@ -35,30 +37,30 @@ public class AdminController{
     //adminNativePlace,adminGender,adminPoliticeStatus,adminPhoneNumber,adminNote
     //Ps:adminCreateTime不用管，数据库默认插入新建用户的时间。
     @PostMapping("Admin/newAdmin")
-    public boolean addNewAdmin(@ModelAttribute(value = "newAdmin") Admin newAdmin, @ModelAttribute(value="newUser") User newUser) {
+    public boolean addNewAdmin(@ModelAttribute(value = "newAdmin") Admin newAdmin, @ModelAttribute(value = "newUser") User newUser) {
         //将user的数据同步到admin
         newAdmin.setAdminIdCard(newUser.getUserIdCard());
         newAdmin.setAdminRealName(newUser.getUserRealName());
         newUser.setUserIdentity("管理员");
         //生成管理员号
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd");
-        String code=formatter.format(new Date(System.currentTimeMillis()));//code开头为日期
-        code+=newAdmin.getAdminIdCard().substring(newAdmin.getAdminIdCard().length()-8);//code接下来为身份证后八位
-        if("男".equals(newAdmin.getAdminGender()))
-            code+="0";
-        else if("女".equals(newAdmin.getAdminGender()))
-            code+="1";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String code = formatter.format(new Date(System.currentTimeMillis()));//code开头为日期
+        code += newAdmin.getAdminIdCard().substring(newAdmin.getAdminIdCard().length() - 8);//code接下来为身份证后八位
+        if ("男".equals(newAdmin.getAdminGender()))
+            code += "0";
+        else if ("女".equals(newAdmin.getAdminGender()))
+            code += "1";
 
         //管理员尾数为0，教师尾数为1，学生尾数为2
-        if("管理员".equals(newUser.getUserIdentity()))
-            code+="0";
+        if ("管理员".equals(newUser.getUserIdentity()))
+            code += "0";
         else if ("教师".equals(newUser.getUserIdentity()))
-            code+="1";
+            code += "1";
         else
-            code+="2";
+            code += "2";
         newUser.setUserCode(code);
         newAdmin.setAdminCode(code);
-        if(userService.addNewUser(newUser)) {
+        if (userService.addNewUser(newUser)) {
             if (adminService.addNewAdmin(newAdmin))
                 return true;
             else
@@ -78,6 +80,7 @@ public class AdminController{
         }
         return true;
     }
+
     //改
     //软删
     @PostMapping("Admin/dropAdmin")
@@ -89,6 +92,7 @@ public class AdminController{
         }
         return true;
     }
+
     //恢复
     @PostMapping("Admin/restoreAdmin")
     public boolean restoreAdmin(@RequestBody List<Integer> adminIds) {
@@ -102,12 +106,12 @@ public class AdminController{
 
     //查
     @GetMapping("Admin/adminById/{adminId}")
-    public Admin getAdminById(@PathVariable("adminId") int adminId){
+    public Admin getAdminById(@PathVariable("adminId") int adminId) {
         return adminService.getAdminById(adminId);
     }
 
     @GetMapping("Admin/adminByCode/{adminCode}")
-    public Admin getAdminByCode(@PathVariable("adminCode") String adminCode){
+    public Admin getAdminByCode(@PathVariable("adminCode") String adminCode) {
         return adminService.getAdminByCode(adminCode);
     }
 
@@ -117,7 +121,7 @@ public class AdminController{
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     @GetMapping("Admin/admins/{isEnable}/{order_by}/{order}")
-    public List<Admin> getAdmins(@PathVariable("isEnable") String isEnable, @PathVariable("order_by")String order_by, @PathVariable("order")String order){
+    public List<Admin> getAdmins(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
         return adminService.getAdmins(isEnable, order_by, order);
     }
 

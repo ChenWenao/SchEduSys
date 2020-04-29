@@ -1,9 +1,5 @@
 package com.service;
 
-
-import com.bean.Admin;
-import com.bean.Course;
-import com.bean.Register;
 import com.bean.Student;
 import com.dao.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

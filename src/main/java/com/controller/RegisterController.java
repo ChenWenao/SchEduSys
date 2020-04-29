@@ -19,6 +19,11 @@ public class RegisterController {
     @Autowired
     private CourseService courseService;
 
+
+
+
+
+
     //增
     //学生选课，只需要传入课程id，后台通过session自动获取学生id
     @RequestMapping("Register/newRegister/{courseId}")

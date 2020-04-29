@@ -1,7 +1,5 @@
 package com.dao;
 
-
-import com.bean.Course;
 import com.bean.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -148,8 +146,8 @@ public class StudentRepository {
             else if ("off".equals(isEnable))
                 sql += "and isEnable='F' order by ";
             else
-                sql+="order by ";
-            sql +=order_by;
+                sql += "order by ";
+            sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
             List<Student> students = template.query(sql, studentRowMapper);

@@ -1,10 +1,8 @@
 package com.dao;
 
-
 import com.bean.Schedule;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

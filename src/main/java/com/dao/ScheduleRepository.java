@@ -1,12 +1,10 @@
 package com.dao;
 
-import com.bean.Course;
 import com.bean.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -125,17 +123,17 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectScheduleByTeacherId(String teacherCode,String giveScore) {
+    public List<Schedule> selectScheduleByTeacherId(String teacherCode, String giveScore) {
         try {
-            String sql="select * from Course,Teacher,courseSchedule " +
+            String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId = sch_courseId " +
                     "and teacherId = sch_teacherId " +
                     "and courseSchedule.isEnable='T' " +
-                    "and teacherCode= "+teacherCode;
-            if("on".equals(giveScore))
-                sql+=" and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
-            else if("off".equals(giveScore))
-                sql+=" and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
+                    "and teacherCode= " + teacherCode;
+            if ("on".equals(giveScore))
+                sql += " and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
+            else if ("off".equals(giveScore))
+                sql += " and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
 
             List<Schedule> schedules = template.query(sql
                     , scheduleRowMapper);
@@ -157,7 +155,7 @@ public class ScheduleRepository {
             else if ("off".equals(isEnable))
                 sql += "and courseSchedule.isEnable='F' order by ";
             else
-                sql+="order by ";
+                sql += "order by ";
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";

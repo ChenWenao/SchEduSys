@@ -1,6 +1,5 @@
 package com.dao;
 
-import com.bean.Student;
 import com.bean.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,7 +41,7 @@ public class TeacherRepository {
             template.update("delete from courseRegister where reg_teacherId=?", teacherId);
             //删除授课
             template.update("delete from courseSchedule where sch_teacherId=?", teacherId);
-            List<Teacher> teachers=template.query("select * from Teacher where teacherId=?",teacherRowMapper,teacherId);
+            List<Teacher> teachers = template.query("select * from Teacher where teacherId=?", teacherRowMapper, teacherId);
             //删除teacher
             template.update("delete from Teacher where teacherId=?", teacherId);
             //删除User
@@ -63,7 +62,7 @@ public class TeacherRepository {
             //删除授课
             template.update("update courseSchedule set isEnable='F' where sch_teacherId =?", teacherId);
             //删除User
-            List<Teacher> teachers=template.query("select * from Teacher where teacherId=?",teacherRowMapper,teacherId);
+            List<Teacher> teachers = template.query("select * from Teacher where teacherId=?", teacherRowMapper, teacherId);
             template.update("update User set isEnable='F' where userCode=?", teachers.get(0).getTeacherCode());
             return true;
         } catch (Exception e) {
@@ -79,7 +78,7 @@ public class TeacherRepository {
             //恢复授课
             template.update("update courseSchedule set isEnable='T' where sch_teacherId =?", teacherId);
             //删除User
-            List<Teacher> teachers=template.query("select * from Teacher where teacherId=?",teacherRowMapper,teacherId);
+            List<Teacher> teachers = template.query("select * from Teacher where teacherId=?", teacherRowMapper, teacherId);
             template.update("update User set isEnable='T' where userCode =?", teachers.get(0).getTeacherCode());
             return true;
         } catch (Exception e) {
@@ -132,6 +131,7 @@ public class TeacherRepository {
         }
         return null;
     }
+
     public Teacher selectTeacherByCode(String teacherCode) {
         try {
             List<Teacher> teachers = template.query("select * from Teacher where teacherCode =?", teacherRowMapper, teacherCode);
@@ -150,8 +150,8 @@ public class TeacherRepository {
             else if ("off".equals(isEnable))
                 sql += "and isEnable='F' order by ";
             else
-                sql+="order by ";
-            sql +=order_by;
+                sql += "order by ";
+            sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
             List<Teacher> teachers = template.query(sql, teacherRowMapper);

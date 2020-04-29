@@ -1,6 +1,5 @@
 package com.bean;
 
-
 import java.util.Date;
 
 public class Schedule {
@@ -43,7 +42,6 @@ public class Schedule {
     private String teacherRealName;
     private String teacherIdCard;
     private Date teacherEntryTime;
-
 
     public int getSch_courseId() {
         return sch_courseId;

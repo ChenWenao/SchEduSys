@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.bean.Register;
-
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

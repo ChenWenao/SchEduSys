@@ -1,6 +1,5 @@
 package com.bean;
 
-
 import java.util.Date;
 
 public class Register {

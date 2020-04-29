@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>authentication</title>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post"
+      action="/User/resetPasswordCheck"
+      th:object="${resetUser}">
+    身份证
+    <input type="text" name="userIdCard"><br>
+    真实姓名
+    <input type="text" name="userRealName"><br>
+    身份
+    <input type="text" name="userIdentity"><br>
+    <button type="submit">上传</button><br>
+</form>
+</body>
+</html>

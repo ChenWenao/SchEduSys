@@ -1,6 +1,5 @@
 package com.dao;
 
-import com.bean.Course;
 import com.bean.Department;
 import org.springframework.jdbc.core.RowMapper;
 

@@ -2,9 +2,9 @@ package com.dao;
 
 import com.bean.Admin;
 import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 public class AdminRowMapper implements RowMapper<Admin> {
     @Override

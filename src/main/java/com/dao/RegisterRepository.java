@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.security.spec.ECField;
 import java.util.List;
 
 @Repository
@@ -13,7 +12,7 @@ public class RegisterRepository {
     @Autowired
     private JdbcTemplate template;
     private RegisterRowMapper registerRowMapper = new RegisterRowMapper();
-    private StudentRowMapper studentRowMapper=new StudentRowMapper();
+    private StudentRowMapper studentRowMapper = new StudentRowMapper();
 
     //增
     public boolean insertANewRegister(int reg_teacherId, int reg_studentId, int reg_courseId) {
@@ -26,14 +25,14 @@ public class RegisterRepository {
         return false;
     }
 
-    public boolean insertCompulsory(Course comCourse, Teacher comTeacher){
+    public boolean insertCompulsory(Course comCourse, Teacher comTeacher) {
         try {
-            List<Student> students=template.query("select * from Student where studentDepartId=?",studentRowMapper,comCourse.getCourseDepartId());
-            for (Student student:students) {
+            List<Student> students = template.query("select * from Student where studentDepartId=?", studentRowMapper, comCourse.getCourseDepartId());
+            for (Student student : students) {
                 template.update("insert into courseRegister(reg_teacherId,reg_studentId,reg_courseId) values(?,?,?)", comTeacher.getTeacherId(), student.getStudentId(), comCourse.getCourseId());
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
