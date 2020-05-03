@@ -9,6 +9,7 @@ import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -29,19 +30,17 @@ public class UserController {
 
     //返回登陆页面
     @GetMapping("User/login")
-    public ModelAndView login(){
-        ModelAndView mav=new ModelAndView("login");
+    public ModelAndView login() {
+        ModelAndView mav = new ModelAndView("login");
         return mav;
     }
 
     //返回找回密码验证页面
     @GetMapping("User/authentication")
-    public ModelAndView authentication(){
-        ModelAndView mav=new ModelAndView("authentication");
+    public ModelAndView authentication() {
+        ModelAndView mav = new ModelAndView("authentication");
         return mav;
     }
-
-
 
 
     //查
@@ -61,11 +60,11 @@ public class UserController {
     //表单需要包含字段：userCode,userPassword
     @PostMapping("User/login")
     public ModelAndView login(HttpSession session, @ModelAttribute(value = "loginUser") User loginUser) throws NoSuchAlgorithmException {
-        ModelAndView mav=new ModelAndView();//新建要返回的页面。
+        ModelAndView mav = new ModelAndView();//新建要返回的页面。
         //加密密码
-        MessageDigest md5=MessageDigest.getInstance("MD5");
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
         md5.update(loginUser.getUserPassword().getBytes());
-        String password_MD5=new BigInteger(1,md5.digest()).toString(16);
+        String password_MD5 = new BigInteger(1, md5.digest()).toString(16);
         loginUser.setUserPassword(password_MD5);
         //验证登录
         User user_find = userService.login(loginUser.getUserCode(), loginUser.getUserPassword());
@@ -81,14 +80,15 @@ public class UserController {
                 session.setAttribute("loginUser", user_find);
                 mav.setViewName("redirect:/Teacher/teacher");   //设置教师主页。
             } else if ("管理员".equals(user_find.getUserIdentity())) {
-                Admin loginAdmin=adminService.getAdminByCode(loginUser.getUserCode());
+                Admin loginAdmin = adminService.getAdminByCode(loginUser.getUserCode());
                 user_find.setUserId(loginAdmin.getAdminId());
                 session.setAttribute("loginUser", user_find);
                 mav.setViewName("redirect:/Admin/manage");   //设置管理员主页。
             }
-            return mav;
-        } else
-            return null;
+        } else {
+            mav.setViewName("redirect:/User/login");
+        }
+        return mav;
     }
 
     //找回密码验证，验证要修改密码的人的身份，验证成功会跳转到修改密码的页面，失败则会返回一个新的找回密码验证页面。
@@ -97,15 +97,14 @@ public class UserController {
     //传入的表单名称为resetUser
     //表单需要包含字段：userRealName,userIdCard,userIdentity
     @PostMapping("User/resetPasswordCheck")
-    public ModelAndView resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser){
-        ModelAndView mav=new ModelAndView();
-        User user_find = userService.resetPasswordCheck( resetUser.getUserIdCard(),resetUser.getUserRealName(),resetUser.getUserIdentity());
-        if(user_find!=null){
-            session.setAttribute("resetUser",user_find);
+    public ModelAndView resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser) {
+        ModelAndView mav = new ModelAndView();
+        User user_find = userService.resetPasswordCheck(resetUser.getUserIdCard(), resetUser.getUserRealName(), resetUser.getUserIdentity());
+        if (user_find != null) {
+            session.setAttribute("resetUser", user_find);
             mav.setViewName("resetPassword");//若身份验证成功，跳转到修改密码页面
-        }
-        else {
-            mav.setViewName("redirect:authentication");//若身份验证失败，重新加载身份验证页面
+        } else {
+            mav.setViewName("redirect:/User/authentication");//若身份验证失败，重新加载身份验证页面
         }
         return mav;
     }
@@ -114,18 +113,18 @@ public class UserController {
     //Post方法，传入字段名称为：newPassword
     @PostMapping("User/resetPassword")
     public ModelAndView resetPassword(HttpSession session, @ModelAttribute(value = "newPassword") String newPassword) throws NoSuchAlgorithmException {
-        ModelAndView mav=new ModelAndView();
-        User resetUser= (User) session.getAttribute("resetUser");//拿到前面验证时添加的用户。
+        ModelAndView mav = new ModelAndView();
+        User resetUser = (User) session.getAttribute("resetUser");//拿到前面验证时添加的用户。
         session.removeAttribute("resetUser");//拿完用户后，关闭session，节省系统资源。
 
-        MessageDigest md5=MessageDigest.getInstance("MD5");
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
         md5.update(newPassword.getBytes());
-        String newPassword_MD5=new BigInteger(1,md5.digest()).toString(16);
+        String newPassword_MD5 = new BigInteger(1, md5.digest()).toString(16);
         resetUser.setUserPassword(newPassword_MD5);
 
-        if(userService.modifyPassword(resetUser)){
-            mav.setViewName("redirect:login");
-        }else{
+        if (userService.modifyPassword(resetUser)) {
+            mav.setViewName("redirect:/User/login");
+        } else {
             return null;
         }
         return mav;

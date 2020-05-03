@@ -116,7 +116,7 @@ public class DepartRepository {
         return null;
     }
 
-    public List<Department> selectDeparts(String isEnable, String order_by, String order) {
+    public List<Department> selectDeparts(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Department ";
             if ("on".equals(isEnable))
@@ -128,6 +128,7 @@ public class DepartRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Department> departments = template.query(sql, departRowMapper);
             return departments;
         } catch (Exception e) {

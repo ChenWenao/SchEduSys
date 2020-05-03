@@ -24,6 +24,7 @@ public class CourseController {
     @Autowired
     private TopicService topicService;
 
+    //测试用的，整合的时候要删掉
     @GetMapping("Course/index")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
@@ -59,7 +60,7 @@ public class CourseController {
         //设置imgName。
         String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
         //获取课程图片存储文件夹，若不存在，就创建文件夹。
-        String fileDirPath = new String("src/main/resources/img/courseImg");
+        String fileDirPath = "src/main/resources/img/courseImg";
         File fileDir = new File(fileDirPath);
         if (!fileDir.exists()) {
             // 递归生成文件夹
@@ -161,7 +162,7 @@ public class CourseController {
             //设置imgName。
             String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
             //获取课程图片存储文件夹，若不存在，就创建文件夹。
-            String fileDirPath = new String("src/main/resources/img/courseImg");
+            String fileDirPath = "src/main/resources/img/courseImg";
             File fileDir = new File(fileDirPath);
             try {
                 // 构建真实的文件路径
@@ -203,10 +204,11 @@ public class CourseController {
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
+    // page表示第几页，pageSize表示每页几条数据
     // 示例：Course/courses/on/have/courseId/0
-    @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}")
-    public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order) {
-        return courseService.getCourses(isEnable, haveTeacher, order_by, order);
+    @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}/{page}/{pageSize}")
+    public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return courseService.getCourses(isEnable, haveTeacher, order_by, order, page, pageSize);
     }
 }
 

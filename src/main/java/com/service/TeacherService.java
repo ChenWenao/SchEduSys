@@ -1,6 +1,5 @@
 package com.service;
 
-
 import com.bean.*;
 import com.dao.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeacherService{
+public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
 
@@ -28,7 +27,9 @@ public class TeacherService{
         return teacherRepository.dropTeacher(teacherId);
     }
 
-    public boolean restoreTeacher(int teacherId) { return teacherRepository.restoreTeacher(teacherId); }
+    public boolean restoreTeacher(int teacherId) {
+        return teacherRepository.restoreTeacher(teacherId);
+    }
 
     public boolean modifyTeacher(Teacher modifyTeacher) {
         return teacherRepository.modifyTeacher(modifyTeacher);
@@ -43,8 +44,8 @@ public class TeacherService{
         return teacherRepository.selectTeacherByCode(teacherCode);
     }
 
-    public List<Teacher> getTeachers(String isEnable,String order_by,String order){
-        return teacherRepository.selectTeachers(isEnable, order_by, order);
+    public List<Teacher> getTeachers(String isEnable, String order_by, String order, int page, int pageSize) {
+        return teacherRepository.selectTeachers(isEnable, order_by, order, page, pageSize);
     }
 
 

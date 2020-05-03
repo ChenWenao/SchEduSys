@@ -1,9 +1,5 @@
 package com.service;
 
-
-import com.bean.Admin;
-import com.bean.Course;
-import com.bean.Register;
 import com.bean.Student;
 import com.dao.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +44,7 @@ public class StudentService {
         return studentRepository.selectStudentByCode(studentCode);
     }
 
-    public List<Student> getStudents(String isEnable, String order_by, String order) {
-        return studentRepository.selectStudents(isEnable, order_by, order);
+    public List<Student> getStudents(String isEnable, String order_by, String order, int page, int pageSize) {
+        return studentRepository.selectStudents(isEnable, order_by, order, page, pageSize);
     }
 }

@@ -1,11 +1,9 @@
 package com.service;
 
-
 import com.bean.Course;
 import com.dao.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class CourseService {
         return courseRepository.selectCourseById(courseId);
     }
 
-    public List<Course> getCourses(String isEnable, String haveTeacher, String order_by, String order) {
-        return courseRepository.selectCourses(isEnable, haveTeacher, order_by, order);
+    public List<Course> getCourses(String isEnable, String haveTeacher, String order_by, String order, int page, int pageSize) {
+        return courseRepository.selectCourses(isEnable, haveTeacher, order_by, order, page, pageSize);
     }
 }

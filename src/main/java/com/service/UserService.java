@@ -1,23 +1,18 @@
 package com.service;
 
-
-import com.bean.Admin;
 import com.bean.User;
 import com.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.sql.SQLException;
-
 @Service
-public class UserService{
+public class UserService {
     @Autowired
     private UserRepository userRepository;
 
     //增
     public boolean addNewUser(User newUser) {
-        return userRepository.insertANewUser(newUser) ;
+        return userRepository.insertANewUser(newUser);
     }
 
     //删
@@ -25,25 +20,33 @@ public class UserService{
         return userRepository.deleteUser(userId);
     }
 
-    public boolean removeUserByCode(String userCode){
+    public boolean removeUserByCode(String userCode) {
         return userRepository.deleteUserByCode(userCode);
     }
 
     //改
-    public boolean modifyPassword(User modifyUser){ return userRepository.modifyPassword(modifyUser);};
+    public boolean modifyPassword(User modifyUser) {
+        return userRepository.modifyPassword(modifyUser);
+    }
+
+    ;
 
     //查
     public User getUserById(int userId) {
         return userRepository.selectUserById(userId);
     }
 
-    public User getUserByCode(String  userCode){ return  userRepository.selectUserByCode(userCode);}
+    public User getUserByCode(String userCode) {
+        return userRepository.selectUserByCode(userCode);
+    }
 
     //登录
-    public User login(String userCode, String userPassword) { return userRepository.findUser(userCode,userPassword); }
+    public User login(String userCode, String userPassword) {
+        return userRepository.findUser(userCode, userPassword);
+    }
 
     //找回密码
-    public User resetPasswordCheck( String userIdCard,String userRealName,String userIdentity){
-        return userRepository.findResetUser( userIdCard,userRealName,userIdentity);
+    public User resetPasswordCheck(String userIdCard, String userRealName, String userIdentity) {
+        return userRepository.findResetUser(userIdCard, userRealName, userIdentity);
     }
 }

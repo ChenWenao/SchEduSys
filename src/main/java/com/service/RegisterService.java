@@ -4,7 +4,6 @@ import com.bean.Course;
 import com.bean.Register;
 import com.bean.Teacher;
 import com.dao.RegisterRepository;
-import com.dao.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class RegisterService {
         return registerRepository.insertANewRegister(reg_teacherId, reg_studentId, reg_courseId);
     }
 
-    public boolean addCompulsory(Course comCourse, Teacher comTeacher){
+    public boolean addCompulsory(Course comCourse, Teacher comTeacher) {
         return registerRepository.insertCompulsory(comCourse, comTeacher);
     }
 
@@ -31,15 +30,15 @@ public class RegisterService {
         return registerRepository.updateGrade(courseId, studentId, grade, testScore, finalScore);
     }
 
-    public List<Register> getRegisterByCourseId(int reg_courseId) {
-        return registerRepository.selectRegisterByCourseId(reg_courseId);
+    public List<Register> getRegisterByCourseId(int reg_courseId, int page, int pageSize) {
+        return registerRepository.selectRegisterByCourseId(reg_courseId, page, pageSize);
     }
 
-    public List<Register> getMyRegister(int studentId) {
-        return registerRepository.selectRegisterByStudentId(studentId);
+    public List<Register> getMyRegister(int studentId, int page, int pageSize) {
+        return registerRepository.selectRegisterByStudentId(studentId, page, pageSize);
     }
 
-    public List<Register> getRegisters(String order_by, String order) {
-        return registerRepository.selectRegisters(order_by, order);
+    public List<Register> getRegisters(String order_by, String order, int page, int pageSize) {
+        return registerRepository.selectRegisters(order_by, order, page, pageSize);
     }
 }

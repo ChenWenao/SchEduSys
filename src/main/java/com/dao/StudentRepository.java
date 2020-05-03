@@ -1,7 +1,5 @@
 package com.dao;
 
-
-import com.bean.Course;
 import com.bean.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -140,7 +138,7 @@ public class StudentRepository {
         return null;
     }
 
-    public List<Student> selectStudents(String isEnable, String order_by, String order) {
+    public List<Student> selectStudents(String isEnable, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Student,User where studentCode=userCode  ";
             if ("on".equals(isEnable))
@@ -148,10 +146,11 @@ public class StudentRepository {
             else if ("off".equals(isEnable))
                 sql += "and isEnable='F' order by ";
             else
-                sql+="order by ";
-            sql +=order_by;
+                sql += "order by ";
+            sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
+            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Student> students = template.query(sql, studentRowMapper);
             return students;
         } catch (Exception e) {

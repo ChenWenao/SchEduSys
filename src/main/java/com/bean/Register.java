@@ -1,6 +1,5 @@
 package com.bean;
 
-
 import java.util.Date;
 
 public class Register {
@@ -55,6 +54,7 @@ public class Register {
     private String studentIdCard;
     private Date studentEntryTime;
     private String studentNote;
+    private float studentCreditSum;
 
     public int getReg_studentId() {
         return reg_studentId;
@@ -406,5 +406,13 @@ public class Register {
 
     public void setStudentNote(String studentNote) {
         this.studentNote = studentNote;
+    }
+
+    public float getStudentCreditSum() {
+        return studentCreditSum;
+    }
+
+    public void setStudentCreditSum(float studentCreditSum) {
+        this.studentCreditSum = studentCreditSum;
     }
 }

@@ -1,8 +1,6 @@
 package com.service;
 
-
 import com.bean.Admin;
-import com.bean.Course;
 import com.dao.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AdminService{
+public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
@@ -25,13 +23,14 @@ public class AdminService{
     }
 
     //改
-    public boolean dropAdmin(int adminId){
+    public boolean dropAdmin(int adminId) {
         return adminRepository.dropAdmin(adminId);
     }
 
-    public boolean restoreAdmin(int adminId){
+    public boolean restoreAdmin(int adminId) {
         return adminRepository.restoreAdmin(adminId);
     }
+
     //查
     public Admin getAdminById(int adminId) {
         return adminRepository.selectAdminById(adminId);
@@ -41,8 +40,8 @@ public class AdminService{
         return adminRepository.selectAdminByCode(adminCode);
     }
 
-    public List<Admin> getAdmins(String isEnable,String order_by,String order){
-        return adminRepository.selectAdmins(isEnable, order_by, order);
+    public List<Admin> getAdmins(String isEnable, String order_by, String order, int page, int pageSize) {
+        return adminRepository.selectAdmins(isEnable, order_by, order, page, pageSize);
     }
 
 }

@@ -2,6 +2,7 @@ package com.dao;
 
 import com.bean.Student;
 import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,6 +22,7 @@ public class StudentRowMapper implements RowMapper<Student> {
         student.setStudentIdCard(resultSet.getString("studentIdCard"));
         student.setStudentEntryTime(resultSet.getDate("studentEntryTime"));
         student.setStudentNote(resultSet.getString("studentNote"));
+        student.setStudentCreditSum(resultSet.getFloat("studentCreditSum"));
         return student;
     }
 }

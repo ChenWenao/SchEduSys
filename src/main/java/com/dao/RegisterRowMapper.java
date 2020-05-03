@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.bean.Register;
-
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -46,6 +45,7 @@ public class RegisterRowMapper implements RowMapper<Register> {
         register.setStudentIdCard(resultSet.getString("studentIdCard"));
         register.setStudentEntryTime(resultSet.getDate("studentEntryTime"));
         register.setStudentNote(resultSet.getString("studentNote"));
+        register.setStudentCreditSum(resultSet.getFloat("studentCreditSum"));
 
         //Course
         register.setCourseName(resultSet.getString("courseName"));

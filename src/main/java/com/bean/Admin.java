@@ -1,9 +1,6 @@
 package com.bean;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
-
 
 public class Admin {
     private int adminId;

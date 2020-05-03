@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-public class TeacherController{
+public class TeacherController {
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -28,11 +28,10 @@ public class TeacherController{
 
     //暂时用这个url来返回teacher页面，在登陆做完后，可以由登陆来返回teacher页面，到那时候，这个接口可以删掉。
     @GetMapping("Teacher/teacher")
-    public ModelAndView teacherHome(){
-        ModelAndView mav=new ModelAndView("teacher");
+    public ModelAndView teacherHome() {
+        ModelAndView mav = new ModelAndView("teacher");
         return mav;
     }
-
 
 
     //增
@@ -40,36 +39,36 @@ public class TeacherController{
     //teacherDepartName,teacherGender,teacherNativePlace,teacherPoliticsStatus,teacherPhoneNumber,teacherDescription
     //Ps:studentEntryTime不用管，数据库默认插入新建用户的时间。
     @PostMapping("Teacher/newTeacher")
-    public String addNewTeacher(@ModelAttribute(value = "newTeacher") Teacher newTeacher,@ModelAttribute(value="newUser") User newUser) {
+    public String addNewTeacher(@ModelAttribute(value = "newTeacher") Teacher newTeacher, @ModelAttribute(value = "newUser") User newUser) {
         //将user的数据同步到admin
         newTeacher.setTeacherIdCard(newUser.getUserIdCard());
         newTeacher.setTeacherRealName(newUser.getUserRealName());
         newUser.setUserIdentity("教师");
         //获取学院id
-        Department department_find=departService.getDepartmentByName(newTeacher.getTeacherDepartName());
-        if(department_find==null)
+        Department department_find = departService.getDepartmentByName(newTeacher.getTeacherDepartName());
+        if (department_find == null)
             return "学院不存在！";
         newTeacher.setTeacherDepartId(department_find.getDepartId());
 
         //生成学号
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd");
-        String code=formatter.format(new Date(System.currentTimeMillis()));//code开头为日期
-        code+=newTeacher.getTeacherIdCard().substring(newTeacher.getTeacherIdCard().length()-8);//code接下来为身份证后八位
-        if("男".equals(newTeacher.getTeacherGender()))
-            code+="0";
-        else if("女".equals(newTeacher.getTeacherGender()))
-            code+="1";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String code = formatter.format(new Date(System.currentTimeMillis()));//code开头为日期
+        code += newTeacher.getTeacherIdCard().substring(newTeacher.getTeacherIdCard().length() - 8);//code接下来为身份证后八位
+        if ("男".equals(newTeacher.getTeacherGender()))
+            code += "0";
+        else if ("女".equals(newTeacher.getTeacherGender()))
+            code += "1";
 
         //管理员尾数为0，教师尾数为1，学生尾数为2
-        if("管理员".equals(newUser.getUserIdentity()))
-            code+="0";
+        if ("管理员".equals(newUser.getUserIdentity()))
+            code += "0";
         else if ("教师".equals(newUser.getUserIdentity()))
-            code+="1";
+            code += "1";
         else
-            code+="2";
+            code += "2";
         newUser.setUserCode(code);
         newTeacher.setTeacherCode(code);
-        if(userService.addNewUser(newUser)) {
+        if (userService.addNewUser(newUser)) {
             if (teacherService.addNewTeacher(newTeacher))
                 return "教师创建成功！";
             else
@@ -100,6 +99,7 @@ public class TeacherController{
         }
         return true;
     }
+
     //恢复教师
     @PostMapping("Teacher/restoreTeacher")
     public boolean restoreTeacher(@RequestBody List<Integer> teacherIds) {
@@ -110,6 +110,7 @@ public class TeacherController{
         }
         return true;
     }
+
     //修改教师信息
     //传入的modifyTeacher表单，需要包含以下字段：teacherId，teacherDepartName，teacherGender，teacherNativePlace，teacherPoliticsStatus
     //，teacherPhoneNumber，teacherRealName
@@ -119,24 +120,24 @@ public class TeacherController{
         Teacher student_find = teacherService.getTeacherById(modifyTeacher.getTeacherId());
         if (student_find == null)
             return "教师不存在！";//要修改的student不存在。
-        Department department_find=departService.getDepartmentByName(modifyTeacher.getTeacherDepartName());
-        if(department_find==null){
+        Department department_find = departService.getDepartmentByName(modifyTeacher.getTeacherDepartName());
+        if (department_find == null) {
             return "要修改的学院不存在！";
         }
         modifyTeacher.setTeacherDepartId(department_find.getDepartId());
-        if(teacherService.modifyTeacher(modifyTeacher))
+        if (teacherService.modifyTeacher(modifyTeacher))
             return "修改成功！";
         return "修改失败！";
     }
 
     //查
     @GetMapping("Teacher/teacherById/{teacherId}")
-    public Teacher getTeacherById(@PathVariable("teacherId") int teacherId){
+    public Teacher getTeacherById(@PathVariable("teacherId") int teacherId) {
         return teacherService.getTeacherById(teacherId);
     }
 
     @GetMapping("Teacher/teacherByCode/{teacherCode}")
-    public Teacher getTeacherByCode(@PathVariable("teacherCode") String teacherCode){
+    public Teacher getTeacherByCode(@PathVariable("teacherCode") String teacherCode) {
         return teacherService.getTeacherByCode(teacherCode);
     }
 
@@ -145,9 +146,10 @@ public class TeacherController{
     // isEnable表示是否启用，on表示查询启用的教师，off表示查询未启用的教师，all表示查询所有
     // order_by表示根据哪个字段查询
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
-    @GetMapping("Teacher/teachers/{isEnable}/{order_by}/{order}")
-    public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by")String order_by, @PathVariable("order")String order){
-        return teacherService.getTeachers(isEnable, order_by, order);
+    // page表示第几页，pageSize表示每页几条数据
+    @GetMapping("Teacher/teachers/{isEnable}/{order_by}/{order}/{page}/{pageSize}")
+    public List<Teacher> getTeachers(@PathVariable("isEnable") String isEnable, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        return teacherService.getTeachers(isEnable, order_by, order, page, pageSize);
     }
 
 
