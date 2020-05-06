@@ -73,7 +73,7 @@ public class RegisterRepository {
                     "and teacherId=reg_teacherId " +
                     "and studentId=reg_studentId " +
                     "and courseId = "+ reg_courseId;
-            if (page != 0 && pageSize != 0)
+            if (page != 0 || pageSize != 0)
                 sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Register> registers = template.query(sql, registerRowMapper);
             return registers;

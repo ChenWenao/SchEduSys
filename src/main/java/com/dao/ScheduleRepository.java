@@ -134,7 +134,8 @@ public class ScheduleRepository {
                 sql += " and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
             else if ("off".equals(giveScore))
                 sql += " and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Schedule> schedules = template.query(sql
                     , scheduleRowMapper);
             return schedules;
