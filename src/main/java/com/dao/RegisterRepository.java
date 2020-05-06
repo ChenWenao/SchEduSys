@@ -68,11 +68,14 @@ public class RegisterRepository {
     //查
     public List<Register> selectRegisterByCourseId(int reg_courseId, int page, int pageSize) {
         try {
-            List<Register> registers = template.query("select * from Course,Teacher,Student,courseRegister " +
+            String sql="select * from Course,Teacher,Student,courseRegister " +
                     "where courseId=reg_courseId " +
                     "and teacherId=reg_teacherId " +
                     "and studentId=reg_studentId " +
-                    "and courseId=? limit ?,?", registerRowMapper, reg_courseId, (page - 1) * pageSize, pageSize);
+                    "and courseId = "+ reg_courseId;
+            if (page != 0 && pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            List<Register> registers = template.query(sql, registerRowMapper);
             return registers;
         } catch (Exception e) {
             System.out.println(e);
