@@ -184,7 +184,9 @@ public class CourseRepository {
 
     public List<Course> selectAll(String param, String value) {
         try {
-            List<Course> courses = template.query("select * from Course where ? = ?", courseRowMapper, param, value);
+            String sql="select * from Course where "+param+" = "+value;
+            System.out.println(sql);
+            List<Course> courses = template.query(sql, courseRowMapper);
             return courses;
         } catch (Exception e) {
             System.out.println(e);
