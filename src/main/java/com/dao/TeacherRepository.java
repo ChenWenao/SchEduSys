@@ -154,7 +154,8 @@ public class TeacherRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Teacher> teachers = template.query(sql, teacherRowMapper);
             return teachers;
         } catch (Exception e) {

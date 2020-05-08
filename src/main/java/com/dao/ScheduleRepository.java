@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.bean.Register;
 import com.bean.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -185,6 +186,20 @@ public class ScheduleRepository {
             List<Schedule> schedules = template.query(sql, scheduleRowMapper);
             return schedules;
         } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Schedule> selectAll(String param,String value){
+        try {
+            String sql="select * from Course,Teacher,courseSchedule " +
+                    "where sch_courseId=courseId " +
+                    "and sch_teacherId=teacherId " +
+                    "and "+param+" = "+value;
+            List<Schedule> schedules=template.query(sql,scheduleRowMapper);
+            return schedules;
+        }catch (Exception e){
             System.out.println(e);
         }
         return null;

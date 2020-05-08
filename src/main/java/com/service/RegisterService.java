@@ -41,4 +41,8 @@ public class RegisterService {
     public List<Register> getRegisters(String order_by, String order, int page, int pageSize) {
         return registerRepository.selectRegisters(order_by, order, page, pageSize);
     }
+
+    public List<Register> getAll(String param,String value){
+        return registerRepository.selectAll(param,value);
+    }
 }

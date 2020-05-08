@@ -68,10 +68,12 @@ public class RegisterRepository {
     //查
     public List<Register> selectRegisterByCourseId(int reg_courseId, int page, int pageSize) {
         try {
-            String sql="select * from Course,Teacher,Student,courseRegister " +
+            String sql="select * from Course,Teacher,Student,courseSchedule,courseRegister " +
                     "where courseId=reg_courseId " +
                     "and teacherId=reg_teacherId " +
                     "and studentId=reg_studentId " +
+                    "and courseId=sch_courseId " +
+                    "and teacherId=sch_teacherId " +
                     "and courseId = "+ reg_courseId;
             if (page != 0 || pageSize != 0)
                 sql += " limit " + (page - 1) * pageSize + "," + pageSize;
@@ -85,10 +87,12 @@ public class RegisterRepository {
 
     public List<Register> selectRegisterByStudentId(int studentId, int page, int pageSize) {
         try {
-            List<Register> registers = template.query("select * from Course,Student,Teacher,courseRegister " +
+            List<Register> registers = template.query("select * from Course,Student,Teacher,courseSchedule,courseRegister " +
                     "where reg_studentId=studentId " +
                     "and reg_courseId=courseId " +
                     "and reg_teacherId=teacherId " +
+                    "and sch_courseId=courseId " +
+                    "and sch_teacherId=teacherId " +
                     "and courseRegister.isEnable='T' " +
                     "and studentId=? limit ?,?", registerRowMapper, studentId, (page - 1) * pageSize, pageSize);
             return registers;
@@ -102,16 +106,35 @@ public class RegisterRepository {
     public List<Register> selectRegisters(String order_by, String order, int page, int pageSize) {
         try {
 
-            String sql = "select * from Course,Teacher,Student,courseRegister " +
+            String sql = "select * from Course,Teacher,Student,courseSchedule,courseRegister " +
                     "where reg_courseId=courseId " +
                     "and reg_teacherId=teacherId " +
-                    "and reg_studentId=studentId order by " + order_by;
+                    "and reg_studentId=studentId " +
+                    "and sch_courseId=courseId " +
+                    "and sch_teacherId=teacherId order by " + order_by;
             if ("0".equals(order))
                 sql += " desc";
             sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Register> registers = template.query(sql, registerRowMapper);
             return registers;
         } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Register> selectAll(String param,String value){
+        try {
+            String sql="select * from Course,Teacher,Student,courseSchedule,courseRegister " +
+                    "where reg_courseId=courseId " +
+                    "and reg_teacherId=teacherId " +
+                    "and reg_studentId=studentId " +
+                    "and sch_courseId=courseId " +
+                    "and sch_teacherId=teacherId " +
+                    "and "+param+" = "+value;
+            List<Register> registers=template.query(sql,registerRowMapper);
+            return registers;
+        }catch (Exception e){
             System.out.println(e);
         }
         return null;

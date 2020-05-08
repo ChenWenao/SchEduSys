@@ -1,9 +1,6 @@
 package com.controller;
 
-import com.bean.Course;
-import com.bean.Schedule;
-import com.bean.Teacher;
-import com.bean.User;
+import com.bean.*;
 import com.service.CourseService;
 import com.service.RegisterService;
 import com.service.ScheduleService;
@@ -145,4 +142,14 @@ public class ScheduleController {
         return scheduleService.getOnSchedules(order_by, order, page, pageSize);
     }
 
+
+
+
+
+    //查询功能！！！
+    //根据特定字段查询，查询范围：teacher，course，
+    @GetMapping("SearchSc/{param}/{value}")
+    public List<Schedule> searchSchedule(@PathVariable("param") String param, @PathVariable("value") String value){
+        return scheduleService.getAll(param, value);
+    }
 }

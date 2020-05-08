@@ -116,4 +116,14 @@ public class RegisterController {
         return registerService.getRegisters(order_by, order, page, pageSize);
     }
 
+
+
+
+    //查询功能！！！
+    //根据特定字段查询，查询范围：teacher，course，student
+    @GetMapping("SearchRe/{param}/{value}")
+    public List<Register> searchRegister(@PathVariable("param") String param,@PathVariable("value") String value){
+        return registerService.getAll(param,value);
+    }
+
 }
