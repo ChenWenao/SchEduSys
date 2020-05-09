@@ -196,7 +196,7 @@ public class ScheduleRepository {
             String sql="select * from Course,Teacher,courseSchedule " +
                     "where sch_courseId=courseId " +
                     "and sch_teacherId=teacherId " +
-                    "and "+param+" = "+value;
+                    "and "+param+" = '"+value+"'";
             List<Schedule> schedules=template.query(sql,scheduleRowMapper);
             return schedules;
         }catch (Exception e){

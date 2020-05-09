@@ -131,7 +131,7 @@ public class RegisterRepository {
                     "and reg_studentId=studentId " +
                     "and sch_courseId=courseId " +
                     "and sch_teacherId=teacherId " +
-                    "and "+param+" = "+value;
+                    "and "+param+" = '"+value+"'";
             List<Register> registers=template.query(sql,registerRowMapper);
             return registers;
         }catch (Exception e){
