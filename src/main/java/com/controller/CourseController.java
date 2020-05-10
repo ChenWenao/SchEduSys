@@ -33,6 +33,25 @@ public class CourseController {
         return mav;
     }
 
+    //课程详细页
+    @GetMapping("Course/detail/{courseId}")
+    public ModelAndView detailPage(@PathVariable("courseId")int courseId){
+        ModelAndView mav=new ModelAndView("detail");
+        mav.addObject("courseMsg",courseService.getCourseById(courseId));
+        return mav;
+    }
+
+    //新闻详细页
+    @GetMapping("News/news/{newsid}")
+    public ModelAndView news(@PathVariable("newsid") int newsid)
+    {
+        ModelAndView mav=new ModelAndView("newsDetail");
+        mav.addObject("newsid",newsid);
+        return mav;
+    }
+
+
+
 
     //增
 
