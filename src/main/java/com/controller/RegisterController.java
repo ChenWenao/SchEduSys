@@ -94,8 +94,8 @@ public class RegisterController {
     //学生调用，查询当前登陆的学生的所有选课数据。无需参数，后台通过session自动获取学生id。
     //Ps:只能查询到启用的选课数据，假如这个学生选了课a，b，c，但是管理员软删掉了课程a，那么学生只能查到b，c
     // page表示第几页，pageSize表示每页几条数据
-    @GetMapping("Register/myRegister/{page}/{pageSize}")
-    public List<Register> getMyRegister(HttpSession session, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+    @GetMapping("Register/myRegister")
+    public List<Register> getMyRegister(HttpSession session) {
         //暂时新建一个学生，登陆做完后删除。
         User loginUser_pre = new User();
         loginUser_pre.setUserId(2);
@@ -103,7 +103,7 @@ public class RegisterController {
         session.setAttribute("loginUser", loginUser_pre);
         //删到这里。
 
-        return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId(), page, pageSize);
+        return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId());
     }
 
     //查询所有的选课数据。

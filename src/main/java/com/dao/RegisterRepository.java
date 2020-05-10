@@ -85,7 +85,7 @@ public class RegisterRepository {
         return null;
     }
 
-    public List<Register> selectRegisterByStudentId(int studentId, int page, int pageSize) {
+    public List<Register> selectRegisterByStudentId(int studentId) {
         try {
             List<Register> registers = template.query("select * from Course,Student,Teacher,courseSchedule,courseRegister " +
                     "where reg_studentId=studentId " +
@@ -94,9 +94,9 @@ public class RegisterRepository {
                     "and sch_courseId=courseId " +
                     "and sch_teacherId=teacherId " +
                     "and courseRegister.isEnable='T' " +
-                    "and studentId=? limit ?,?", registerRowMapper, studentId, (page - 1) * pageSize, pageSize);
+                    "and studentId=? " +
+                    "order by reg_courseId", registerRowMapper, studentId);
             return registers;
-
         } catch (Exception e) {
             System.out.println(e);
         }

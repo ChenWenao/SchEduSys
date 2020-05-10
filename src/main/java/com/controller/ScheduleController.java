@@ -138,18 +138,22 @@ public class ScheduleController {
     //学生调用，查询所有可以选的课程。（查询已经开放选课的课程）
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/schedulesOn/{order_by}/{order}/{page}/{pageSize}")
-    public List<Schedule> getSelectSchedules(@PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
-        return scheduleService.getOnSchedules(order_by, order, page, pageSize);
+    public List<Schedule> getSelectSchedules(HttpSession session, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+        //暂时新建一个学生，登陆做完后删除。
+        User loginUser_pre = new User();
+        loginUser_pre.setUserId(2);
+        loginUser_pre.setUserCode("202004290326281402");
+        session.setAttribute("loginUser", loginUser_pre);
+        //删到这里。
+
+        return scheduleService.getOnSchedules(((User) session.getAttribute("loginUser")).getUserId(), order_by, order, page, pageSize);
     }
-
-
-
 
 
     //查询功能！！！
     //根据特定字段查询，查询范围：teacher，course，
     @GetMapping("SearchSc/{param}/{value}")
-    public List<Schedule> searchSchedule(@PathVariable("param") String param, @PathVariable("value") String value){
+    public List<Schedule> searchSchedule(@PathVariable("param") String param, @PathVariable("value") String value) {
         return scheduleService.getAll(param, value);
     }
 }

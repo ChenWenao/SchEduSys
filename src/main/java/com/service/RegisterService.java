@@ -34,8 +34,8 @@ public class RegisterService {
         return registerRepository.selectRegisterByCourseId(reg_courseId, page, pageSize);
     }
 
-    public List<Register> getMyRegister(int studentId, int page, int pageSize) {
-        return registerRepository.selectRegisterByStudentId(studentId, page, pageSize);
+    public List<Register> getMyRegister(int studentId) {
+        return registerRepository.selectRegisterByStudentId(studentId);
     }
 
     public List<Register> getRegisters(String order_by, String order, int page, int pageSize) {

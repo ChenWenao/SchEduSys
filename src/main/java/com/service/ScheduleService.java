@@ -52,8 +52,8 @@ public class ScheduleService {
         return scheduleRepository.selectSchedules(isEnable, order_by, order, page, pageSize);
     }
 
-    public List<Schedule> getOnSchedules(String order_by, String order, int page, int pageSize) {
-        return scheduleRepository.selectOnSchedules(order_by, order, page, pageSize);
+    public List<Schedule> getOnSchedules(int studentId,String order_by, String order, int page, int pageSize) {
+        return scheduleRepository.selectOnSchedules(studentId,order_by, order, page, pageSize);
     }
 
     public List<Schedule> getAll(String param,String value){
