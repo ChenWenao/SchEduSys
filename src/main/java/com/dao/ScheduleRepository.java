@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.bean.Register;
 import com.bean.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -134,7 +135,8 @@ public class ScheduleRepository {
                 sql += " and current_timestamp > scoreStartTime and current_timestamp < scoreEndTime ";
             else if ("off".equals(giveScore))
                 sql += " and current_timestamp < scoreStartTime and current_timestamp > scoreEndTime ";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<Schedule> schedules = template.query(sql
                     , scheduleRowMapper);
             return schedules;
@@ -168,18 +170,37 @@ public class ScheduleRepository {
         return null;
     }
 
-    public List<Schedule> selectOnSchedules(String order_by, String order, int page, int pageSize) {
+    public List<Schedule> selectOnSchedules(int studentId, String order_by, String order, int page, int pageSize) {
         try {
             String sql = "select * from Course,Teacher,courseSchedule " +
                     "where courseId=sch_courseId " +
                     "and teacherId=sch_teacherId " +
                     "and current_timestamp > selectStartTime " +
                     "and current_timestamp < selectEndTime " +
+                    "and courseId not in " +
+                    "(select reg_courseId " +
+                    "from courseRegister " +
+                    "where reg_studentId = " + studentId + " ) " +
                     "order by ";
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            List<Schedule> schedules = template.query(sql, scheduleRowMapper);
+            return schedules;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Schedule> selectAll(String param, String value) {
+        try {
+            String sql = "select * from Course,Teacher,courseSchedule " +
+                    "where sch_courseId=courseId " +
+                    "and sch_teacherId=teacherId " +
+                    "and " + param + " = '" + value + "'";
             List<Schedule> schedules = template.query(sql, scheduleRowMapper);
             return schedules;
         } catch (Exception e) {

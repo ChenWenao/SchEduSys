@@ -12,6 +12,54 @@ public class Register {
     private float finalScore;
 
     //以下为附带字段：
+
+    //Schedule
+    private String publishScore;
+    private Date selectStartTime;
+    private Date selectEndTime;
+    private Date scoreStartTime;
+    private Date scoreEndTime;
+
+    public String getPublishScore() {
+        return publishScore;
+    }
+
+    public void setPublishScore(String publishScore) {
+        this.publishScore = publishScore;
+    }
+
+    public Date getSelectStartTime() {
+        return selectStartTime;
+    }
+
+    public void setSelectStartTime(Date selectStartTime) {
+        this.selectStartTime = selectStartTime;
+    }
+
+    public Date getSelectEndTime() {
+        return selectEndTime;
+    }
+
+    public void setSelectEndTime(Date selectEndTime) {
+        this.selectEndTime = selectEndTime;
+    }
+
+    public Date getScoreStartTime() {
+        return scoreStartTime;
+    }
+
+    public void setScoreStartTime(Date scoreStartTime) {
+        this.scoreStartTime = scoreStartTime;
+    }
+
+    public Date getScoreEndTime() {
+        return scoreEndTime;
+    }
+
+    public void setScoreEndTime(Date scoreEndTime) {
+        this.scoreEndTime = scoreEndTime;
+    }
+
     //Course
     private String courseName;
     private int courseTopicId;

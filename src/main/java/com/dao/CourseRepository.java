@@ -172,7 +172,20 @@ public class CourseRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            List<Course> courses = template.query(sql, courseRowMapper);
+            return courses;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Course> selectAll(String param, String value) {
+        try {
+            String sql = "select * from Course where " + param + "= '" + value + "'";
+            System.out.println(sql);
             List<Course> courses = template.query(sql, courseRowMapper);
             return courses;
         } catch (Exception e) {

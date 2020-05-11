@@ -97,16 +97,13 @@ public class UserController {
     //传入的表单名称为resetUser
     //表单需要包含字段：userRealName,userIdCard,userIdentity
     @PostMapping("User/resetPasswordCheck")
-    public ModelAndView resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser) {
-        ModelAndView mav = new ModelAndView();
+    public boolean resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser) {
         User user_find = userService.resetPasswordCheck(resetUser.getUserIdCard(), resetUser.getUserRealName(), resetUser.getUserIdentity());
         if (user_find != null) {
             session.setAttribute("resetUser", user_find);
-            mav.setViewName("resetPassword");//若身份验证成功，跳转到修改密码页面
-        } else {
-            mav.setViewName("redirect:/User/authentication");//若身份验证失败，重新加载身份验证页面
+            return true;
         }
-        return mav;
+        return false;
     }
 
     //重置密码

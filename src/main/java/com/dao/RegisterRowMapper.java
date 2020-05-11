@@ -18,7 +18,14 @@ public class RegisterRowMapper implements RowMapper<Register> {
         register.setTestScore(resultSet.getFloat("testScore"));
         register.setFinalScore(resultSet.getFloat("finalScore"));
 
+
         //以下为附加字段：
+        //Schedule
+        register.setPublishScore(resultSet.getString("publishScore"));
+        register.setSelectStartTime(resultSet.getDate("selectStartTime"));
+        register.setSelectEndTime(resultSet.getDate("selectEndTime"));
+        register.setScoreStartTime(resultSet.getDate("scoreStartTime"));
+        register.setScoreEndTime(resultSet.getDate("scoreEndTime"));
 
         //Teacher
         register.setTeacherCode(resultSet.getString("teacherCode"));

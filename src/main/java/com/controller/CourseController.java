@@ -2,6 +2,7 @@ package com.controller;
 
 import com.bean.Course;
 
+import com.bean.Schedule;
 import com.service.CourseService;
 import com.service.DepartService;
 import com.service.TopicService;
@@ -32,6 +33,25 @@ public class CourseController {
         return mav;
     }
 
+    //课程详细页
+    @GetMapping("Course/detail/{courseId}")
+    public ModelAndView detailPage(@PathVariable("courseId")int courseId){
+        ModelAndView mav=new ModelAndView("detail");
+        mav.addObject("courseMsg",courseService.getCourseById(courseId));
+        return mav;
+    }
+
+    //新闻详细页
+    @GetMapping("News/news/{newsid}")
+    public ModelAndView news(@PathVariable("newsid") int newsid)
+    {
+        ModelAndView mav=new ModelAndView("newsDetail");
+        mav.addObject("newsid",newsid);
+        return mav;
+    }
+
+
+
 
     //增
 
@@ -60,7 +80,7 @@ public class CourseController {
         //设置imgName。
         String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
         //获取课程图片存储文件夹，若不存在，就创建文件夹。
-        String fileDirPath = "src/main/resources/img/courseImg";
+        String fileDirPath = "src/main/resources/static/img/courseImg";
         File fileDir = new File(fileDirPath);
         if (!fileDir.exists()) {
             // 递归生成文件夹
@@ -162,7 +182,7 @@ public class CourseController {
             //设置imgName。
             String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
             //获取课程图片存储文件夹，若不存在，就创建文件夹。
-            String fileDirPath = "src/main/resources/img/courseImg";
+            String fileDirPath = "src/main/resources/static/img/courseImg";
             File fileDir = new File(fileDirPath);
             try {
                 // 构建真实的文件路径
@@ -200,15 +220,28 @@ public class CourseController {
         return courseService.getCourseById(courseId);
     }
 
-    // order_by表示根据哪个字段查询
+    // order_by表示根据哪个字段排序
     // order表示正序还是倒序查询，order为0表示逆序，1表示正序
     // isEnable表示是否启用，on表示查询启用的课程，off表示查询未启用的课程，all表示查询所有
     // haveTeacher表示查询是否有老师的课程，have表示查询有老师的课程，lack表示查询没有老师的课程，all表示查询所有
     // page表示第几页，pageSize表示每页几条数据
+    // 若page和pageSize都为0，则返回所有数据。
     // 示例：Course/courses/on/have/courseId/0
     @GetMapping("Course/courses/{isEnable}/{haveTeacher}/{order_by}/{order}/{page}/{pageSize}")
     public List<Course> getCourses(@PathVariable("isEnable") String isEnable, @PathVariable("haveTeacher") String haveTeacher, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
         return courseService.getCourses(isEnable, haveTeacher, order_by, order, page, pageSize);
+    }
+
+
+
+
+
+
+    //查询功能！！！
+    //根据特定字段查询，查询范围：course
+    @GetMapping("SearchCo/{param}/{value}")
+    public List<Course> searchCourse(@PathVariable("param") String param, @PathVariable("value") String value){
+        return courseService.getAll(param, value);
     }
 }
 

@@ -34,11 +34,15 @@ public class RegisterService {
         return registerRepository.selectRegisterByCourseId(reg_courseId, page, pageSize);
     }
 
-    public List<Register> getMyRegister(int studentId, int page, int pageSize) {
-        return registerRepository.selectRegisterByStudentId(studentId, page, pageSize);
+    public List<Register> getMyRegister(int studentId) {
+        return registerRepository.selectRegisterByStudentId(studentId);
     }
 
     public List<Register> getRegisters(String order_by, String order, int page, int pageSize) {
         return registerRepository.selectRegisters(order_by, order, page, pageSize);
+    }
+
+    public List<Register> getAll(String param,String value){
+        return registerRepository.selectAll(param,value);
     }
 }

@@ -47,4 +47,8 @@ public class CourseService {
     public List<Course> getCourses(String isEnable, String haveTeacher, String order_by, String order, int page, int pageSize) {
         return courseRepository.selectCourses(isEnable, haveTeacher, order_by, order, page, pageSize);
     }
+
+    public List<Course> getAll(String param,String value){
+        return courseRepository.selectAll(param, value);
+    }
 }

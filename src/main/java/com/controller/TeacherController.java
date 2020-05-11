@@ -117,8 +117,8 @@ public class TeacherController {
     //也就是说，只能修改以上字段
     @PostMapping("Teacher/modifyTeacher")
     public String modifyTeacher(@ModelAttribute(value = "modifyTeacher") Teacher modifyTeacher) {
-        Teacher student_find = teacherService.getTeacherById(modifyTeacher.getTeacherId());
-        if (student_find == null)
+        Teacher teacher_find = teacherService.getTeacherById(modifyTeacher.getTeacherId());
+        if (teacher_find == null)
             return "教师不存在！";//要修改的student不存在。
         Department department_find = departService.getDepartmentByName(modifyTeacher.getTeacherDepartName());
         if (department_find == null) {

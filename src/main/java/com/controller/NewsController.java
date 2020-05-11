@@ -27,7 +27,7 @@ public class NewsController {
             return false;
         }
         String newsName = System.currentTimeMillis() + newNewsFile.getOriginalFilename();
-        String fileDirPath = "src/main/resources/files/news";
+        String fileDirPath = "src/main/resources/static/files/news";
         File fileDir = new File(fileDirPath);
         if (!fileDir.exists()) {
             fileDir.mkdirs();

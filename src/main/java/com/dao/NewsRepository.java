@@ -92,7 +92,8 @@ public class NewsRepository {
             sql += order_by;
             if ("0".equals(order))
                 sql += " desc";
-            sql += " limit " + (page - 1) * pageSize + "," + pageSize;
+            if (page != 0 || pageSize != 0)
+                sql += " limit " + (page - 1) * pageSize + "," + pageSize;
             List<News> news = template.query(sql, newsRowMapper);
             return news;
         } catch (Exception e) {
