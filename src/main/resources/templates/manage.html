@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage</title>
+    <link type="text/css" href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link type="text/css" href="../static/bootstrap/css/fileinput.min.css" media="all" rel="stylesheet"/>
+	<link type="text/css" href="../static/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+	<link type="text/css" href="../static/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+	<style>
+		input[type="file"] {
+			color: transparent;
+		}
+	</style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="height: 100px;background-color: #005521">
+            <div class="col-lg-2" style="position: relative">
+                <div style="padding-left: 15%;padding-top: 10%">
+                    <img class="img-circle" src="../static/images/icon.jpg" width="60px" height="60px"/>
+                    <label style="color: white;font-weight: normal">管理员</label>
+                </div>
+
+
+            </div>
+            <div class="col-lg-3">
+                <img src="../static/images/hbdx.jpg" style="width: 250px;height: 80px">
+            </div>
+            <div class="col-lg-7">
+                <label style="text-align: center;padding-top:30px ;font-size: 25px;color:white;font-family: STKaiti">学生成绩管理系统</label>
+            </div>
+        </div>
+        <div class="row" style="height: 653px">
+            <div class="col-lg-2" style="height: 653px;width:15%;background-color: #005521">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a style="color: white" href="#">课程管理</a></li>
+                    <li role="presentation"><a style="color: white" href="#">选课管理</a></li>
+                    <li role="presentation"><a style="color: white" href="#">学院管理</a></li>
+                    <li role="presentation"><a style="color: white" href="#">个人中心</a></li>
+                    <li role="presentation"><a style="color: white" href="#">关于</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-10" style="height: 653px;width:85%">
+				<br><br>
+				<div id="toolbar">
+					<div class="btn btn-primary" data-toggle="modal" data-target="#addModal">添加</div>
+					<div class="btn btn-primary" data-toggle="modal" data-target="#delModal">删除</div>
+				</div>
+
+				<table id="table"></table>
+
+				<form method="post" enctype="multipart/form-data" id="createCourse" action="/Course/newCourse" th:object="${newCourse}">
+					<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+										&times;
+									</button>
+									<h4 class="modal-title" id="myModalLabel">添加课程</h4>
+								</div>
+								<div class="modal-body" style="height: 650px">
+									<div class="row" style="height: 30px;">
+										<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+											<span style="float: right">课程名:</span>
+										</label>
+										<input class="col-lg-4" id="courseName" name="courseName" placeholder="请输入课程名" style="float: left;height: 30px;width: 150px">
+
+										<label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+											<span style="float: right">开课学院:</span>
+										</label>
+
+										<div class="col-lg-3" style="width: 150px">
+											<select class="departName" id="courseDepartName" name="courseDepartName">
+												<option>--请选择学院--</option>
+											</select>
+										</div>
+
+									</div>
+
+									<div class="row" style="height: 30px;padding-top: 10px">
+										<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+											<span style="float: right">学分:</span>
+										</label>
+										<input class="col-lg-4" id="courseCredit" name="courseCredit" style="height: 30px;width: 150px;">
+
+										<label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+											<span style="float: right">开课时间:</span>
+										</label>
+										<input class="col-lg-3" id="courseStartTime" name="courseStartTime" style="height: 30px;width: 150px">
+									</div>
+
+									<div class="row" style="height: 30px;padding-top: 20px">
+										<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+											<span style="float: right">学时:</span>
+										</label>
+										<input class="col-lg-4" id="coursePeriod" name="coursePeriod" style="float: left;height: 30px;width: 150px;">
+
+										<label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+											<span style="float: right">课程类别:</span>
+										</label>
+										<input class="col-lg-3" id="courseTopicName" name="courseTopicName" style="height: 30px;width: 150px">
+									</div>
+
+									<div class="row" style="height: 30px;padding-top: 40px">
+										<label class="col-lg-2" style="padding-top: 5px;font-weight: normal">
+											<span style="float: right">课程图片:</span>
+										</label>
+									</div>
+<!--									<div class="row" style="padding-top: 40px">-->
+<!--										<input type="file" id="courseImg" name="courseImg">-->
+<!--									</div>-->
+
+									<input type="file" name="courseImg" accept="image/*">
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+									<button type="submit" class="btn btn-primary" id="add_Course">提交</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../static/lib/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/fileinput.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap-datetimepicker.fr.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap-select.js"></script>
+
+<!--表格渲染的js代码-->
+<script>
+	$(document).ready(function () {
+		var table = $('#table').bootstrapTable({
+			url: "/Course/courses/on/all/courseId/1/0/0",
+			striped: true,//隔行显示颜色
+			showRefresh: true,//刷新按钮
+			buttonsAlign: "left",//按钮对齐方式
+			search: true,//是否搜索
+			searchAlign: "left",//查询框对齐方式
+			toolbar: "#toolbar",//指定工具栏
+			toolbarAlign: "right",//工具栏对齐方式
+			pageSize: 3,//每页显示的行数
+			pageList: [3, 5],
+			page: 1,//起始页数
+			pagination: true,// 是否分页
+			// 表格数据来源
+			columns: [
+				{
+					title: "全选",
+					field: "select",
+					checkbox: true,
+					width: 20,//宽度
+					align: "center",//水平
+					valign: "middle"//垂直
+				},
+				{
+					title: '序号',
+					field: 'id',
+					formatter: function (value, row, index) {
+
+						return index + 1;
+					}
+				}, {
+					field: 'courseName',
+					title: '课程名',
+					textAlign: 'center'
+
+				}, {
+					field: 'courseDepartName',
+					title: '开课学院',
+					textAlign: 'center'
+				}, {
+					field: 'coursePeriod',
+					title: '学时',
+					textAlign: 'center'
+				}, {
+					field: 'courseCredit',
+					title: '学分',
+					textAlign: 'center'
+				}, {
+					field: 'courseStartTime',
+					title: '开课时间',
+					textAlign: 'center'
+				}, {
+					field: 'courseType',
+					title: '课程类型',
+					textAlign: 'center'
+				},
+			]
+		});
+		$($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+	})
+</script>
+<!--文件选择控件的js代码-->
+<!--<script>-->
+<!--	$("#courseImg").fileinput({-->
+<!--		language: "zh",-->
+<!--		showCaption: false, // 不显示本地文件名-->
+<!--		showUpload : false, //是否显示上传按钮,跟随文本框的那个-->
+<!--		showRemove : false, //显示移除按钮,跟随文本框的那个-->
+<!--		allowedFileTypes: ['image'], // 只允许上传图片-->
+<!--		allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],-->
+<!--		// maxFileCount : 1, //表示允许同时上传的最大文件个数-->
+<!--		// uploadUrl: "{{ url('Course/newCourse') }}" //上传图片的服务器地址-->
+<!--	})-->
+<!--	// 		.on('fileuploaded', function(event, data, previewId, index){-->
+<!--	// 	var response = data.response;-->
+<!--	// 	$('input#coverUploader').attr('required', false);-->
+<!--	// 	var input = $('<input type="hidden" name="cover" />');-->
+<!--	// 	input.attr('value', response.key);-->
+<!--	// 	$('form').append(input);-->
+<!--	// });-->
+<!--</script>-->
+<!--时间控件的js代码-->
+<script>
+	$('#courseStartTime').datetimepicker({
+		format: 'yyyy/mm/dd',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+		minView: 2		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+	});
+</script>
+<!--下拉框数据渲染-->
+<script type="text/javascript">
+
+	getDepartName();
+	function getDepartName() {
+		$.ajax({
+			url: "/Depart/departments/all/departId/1/0/0",//请求地址(控制器地址)
+			type: "get",
+			success: function (data) {
+				for (var i = 0; i < data.length; i++) {
+					$('#departName').append("<option value=" + data[i].departName + ">" + data[i].departName + "</option>");
+					console.assert(data)
+				}
+
+				$('#departName').selectpicker({
+					width: '150px',
+					height: '30px'
+				});
+				$('#departName').selectpicker('refresh');
+
+				$('#departName').selectpicker('render');
+			}
+		});
+	}
+</script>
+<!--表单数据提交-->
+<!--<script>-->
+<!--	$("#add_Course").click(function() {-->
+<!--		var formObject = {};-->
+<!--		var formArray =$("#createCourse").serializeArray();-->
+<!--		$.each(formArray,function(i,item){-->
+<!--			formObject[item.name] = item.value;-->
+<!--		});-->
+<!--		$.ajax({-->
+<!--			url:"/Course/newCourse",-->
+<!--			type:"post",-->
+<!--			contentType: "application/json; charset=utf-8",-->
+<!--			data: JSON.stringify(formObject),-->
+<!--			dataType: "json",-->
+<!--			success:function(data){-->
+<!--				alert(data.msg);-->
+<!--			},-->
+<!--			error:function(e){-->
+<!--				alert(e.message);-->
+<!--			}-->
+<!--		});-->
+<!--	});-->
+<!--</script>-->
+
+</html>
