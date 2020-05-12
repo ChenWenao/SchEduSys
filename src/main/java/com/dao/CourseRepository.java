@@ -96,7 +96,7 @@ public class CourseRepository {
                             "courseStartTime=?," +
                             "courseLogo=?," +
                             "courseLevel=?," +
-                            "courseType=?," +
+                            "courseType=?" +
                             "where courseId=?", modifyCourse.getCourseName(), modifyCourse.getCourseTopicId(), modifyCourse.getCourseTopicName(),
                     modifyCourse.getCourseDepartId(), modifyCourse.getCourseDepartName(), modifyCourse.getCoursePeriod(),
                     modifyCourse.getCourseCredit(), modifyCourse.getCourseStartTime(), modifyCourse.getCourseLogo(),
