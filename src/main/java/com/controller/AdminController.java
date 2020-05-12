@@ -27,13 +27,13 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/Admin/teacher")
+    @GetMapping("/Admin/teacherManage")
     public ModelAndView adminTeacherHome() {
         ModelAndView mav = new ModelAndView("teacherManage");
         return mav;
     }
 
-    @GetMapping("/Admin/student")
+    @GetMapping("/Admin/studentManage")
     public ModelAndView adminStudentHome() {
         ModelAndView mav = new ModelAndView("studentManage");
         return mav;
