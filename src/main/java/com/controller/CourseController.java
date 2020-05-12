@@ -121,8 +121,8 @@ public class CourseController {
                     File file = new File(course_drop.getCourseLogo());
                     if (file.exists() && file.isFile()) {
                         file.delete();
-                        courseService.removeCourse(courseId);
                     }
+                    courseService.removeCourse(courseId);
                 }
             }
             return true;
