@@ -35,12 +35,6 @@ public class RegisterController {
     //学生选课，只需要传入课程id，后台通过session自动获取学生id
     @GetMapping("Register/newRegister/{courseId}")
     public String addNewRegister(HttpSession session, @PathVariable("courseId") int courseId) {
-        //暂时新建一个学生，登陆做完后删除。
-        User loginUser_pre = new User();
-        loginUser_pre.setUserId(1);
-        loginUser_pre.setUserCode("202004290326281402");
-        session.setAttribute("loginUser", loginUser_pre);
-        //删到这里。
 
         Schedule courseSchedule = scheduleService.getScheduleByCourseId(courseId);
         if (courseSchedule == null) {
@@ -55,13 +49,6 @@ public class RegisterController {
     //学生调用，退选课程。
     @GetMapping("Register/removeRegister/{courseId}")
     public boolean removeRegister(HttpSession session, @PathVariable("courseId") int courseId) {
-        //暂时新建一个学生，登陆做完后删除。
-        User loginUser_pre = new User();
-        loginUser_pre.setUserId(2);
-        loginUser_pre.setUserCode("202004290326281402");
-        session.setAttribute("loginUser", loginUser_pre);
-        //删到这里。
-
         return registerService.removeRegister(((User) session.getAttribute("loginUser")).getUserId(), courseId);
     }
 
@@ -96,13 +83,6 @@ public class RegisterController {
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Register/myRegister")
     public List<Register> getMyRegister(HttpSession session) {
-        //暂时新建一个学生，登陆做完后删除。
-        User loginUser_pre = new User();
-        loginUser_pre.setUserId(2);
-        loginUser_pre.setUserCode("202004290326281402");
-        session.setAttribute("loginUser", loginUser_pre);
-        //删到这里。
-
         return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId());
     }
 

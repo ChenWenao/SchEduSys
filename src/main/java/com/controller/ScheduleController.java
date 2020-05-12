@@ -113,14 +113,6 @@ public class ScheduleController {
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/mySchedule/{giveScore}/{page}/{pageSize}")
     public List<Schedule> getScheduleByTeacherId(HttpSession session, @PathVariable("giveScore") String giveScore, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
-
-        //暂时建立一个session，登陆做完后删除
-        User loginUser_pre = new User();
-        loginUser_pre.setUserId(1);
-        loginUser_pre.setUserCode("202004290326282401");
-        session.setAttribute("loginUser", loginUser_pre);
-        //删到这里。
-
         return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode(), giveScore, page, pageSize);
     }
 
@@ -139,13 +131,6 @@ public class ScheduleController {
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/schedulesOn/{order_by}/{order}/{page}/{pageSize}")
     public List<Schedule> getSelectSchedules(HttpSession session, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
-        //暂时新建一个学生，登陆做完后删除。
-        User loginUser_pre = new User();
-        loginUser_pre.setUserId(2);
-        loginUser_pre.setUserCode("202004290326281402");
-        session.setAttribute("loginUser", loginUser_pre);
-        //删到这里。
-
         return scheduleService.getOnSchedules(((User) session.getAttribute("loginUser")).getUserId(), order_by, order, page, pageSize);
     }
 

@@ -27,6 +27,18 @@ public class AdminController {
         return mav;
     }
 
+    @GetMapping("/Admin/teacherManage")
+    public ModelAndView adminTeacherHome() {
+        ModelAndView mav = new ModelAndView("teacherManage");
+        return mav;
+    }
+
+    @GetMapping("/Admin/studentManage")
+    public ModelAndView adminStudentHome() {
+        ModelAndView mav = new ModelAndView("studentManage");
+        return mav;
+    }
+
 
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。

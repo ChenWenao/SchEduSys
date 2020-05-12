@@ -109,8 +109,7 @@ public class UserController {
     //重置密码
     //Post方法，传入字段名称为：newPassword
     @PostMapping("User/resetPassword")
-    public ModelAndView resetPassword(HttpSession session, @ModelAttribute(value = "newPassword") String newPassword) throws NoSuchAlgorithmException {
-        ModelAndView mav = new ModelAndView();
+    public boolean resetPassword(HttpSession session, @ModelAttribute(value = "newPassword") String newPassword) throws NoSuchAlgorithmException {
         User resetUser = (User) session.getAttribute("resetUser");//拿到前面验证时添加的用户。
         session.removeAttribute("resetUser");//拿完用户后，关闭session，节省系统资源。
 
@@ -120,11 +119,10 @@ public class UserController {
         resetUser.setUserPassword(newPassword_MD5);
 
         if (userService.modifyPassword(resetUser)) {
-            mav.setViewName("redirect:/User/login");
+            return true;
         } else {
-            return null;
+            return false;
         }
-        return mav;
     }
 
 }
