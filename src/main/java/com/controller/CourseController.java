@@ -203,7 +203,7 @@ public class CourseController {
                 msg += "课程修改失败！";
             return msg;
         }
-        return "课程修改失败！";
+        return msg;
     }
 
     //修改课程的部分信息
