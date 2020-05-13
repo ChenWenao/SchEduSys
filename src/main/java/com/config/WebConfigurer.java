@@ -24,9 +24,9 @@ public class WebConfigurer implements WebMvcConfigurer {
         // addPathPatterns("/**") 表示拦截所有的请求，
         InterceptorRegistration registration =
                 registry.addInterceptor(loginInterceptor);
-        registration.addPathPatterns("/OnlineCommunity/**");
-        registration.excludePathPatterns("/OnlineCommunity/welcome");
-        registration.excludePathPatterns("/OnlineCommunity/login/**");
+        registration.addPathPatterns("/**");
+        registration.excludePathPatterns("/Index");
+        registration.excludePathPatterns("/User/login/**");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }
