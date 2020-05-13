@@ -83,15 +83,25 @@ public class ScheduleController {
     }
 
     //发布分数。
-    @GetMapping("Schedule/publishScore/{courseId}")
-    public boolean publishScore(@PathVariable("courseId") int courseId) {
-        return scheduleService.publishScore(courseId);
+    @PostMapping("Schedule/publishScore")
+    public boolean publishScore(@RequestBody List<Integer> sch_courseIds) {
+        for (int sch_courseId : sch_courseIds) {
+            if (!scheduleService.publishScore(sch_courseId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //停止发布分数
-    @GetMapping("Schedule/publishScoreOff/{courseId}")
-    public boolean publishScoreOff(@PathVariable("courseId") int courseId) {
-        return scheduleService.publishScoreOff(courseId);
+    @PostMapping("Schedule/publishScoreOff")
+    public boolean publishScoreOff(@RequestBody List<Integer> sch_courseIds) {
+        for (int sch_courseId : sch_courseIds) {
+            if (!scheduleService.publishScoreOff(sch_courseId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //查，同时会查出该授课计划的课程信息以及教师信息
