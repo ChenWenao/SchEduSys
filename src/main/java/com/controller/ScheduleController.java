@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -104,6 +105,7 @@ public class ScheduleController {
         return true;
     }
 
+
     //查，同时会查出该授课计划的课程信息以及教师信息
 
     //查询单个数据。
@@ -123,6 +125,7 @@ public class ScheduleController {
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/mySchedule/{giveScore}/{page}/{pageSize}")
     public List<Schedule> getScheduleByTeacherId(HttpSession session, @PathVariable("giveScore") String giveScore, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+
         return scheduleService.getScheduleByTeacherId(((User) session.getAttribute("loginUser")).getUserCode(), giveScore, page, pageSize);
     }
 
@@ -140,7 +143,14 @@ public class ScheduleController {
     //学生调用，查询所有可以选的课程。（查询已经开放选课的课程）
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Schedule/schedulesOn/{order_by}/{order}/{page}/{pageSize}")
+    @ResponseBody
     public List<Schedule> getSelectSchedules(HttpSession session, @PathVariable("order_by") String order_by, @PathVariable("order") String order, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+
+       List<Schedule> schedules = new LinkedList<>(scheduleService.getOnSchedules(((User) session.getAttribute("loginUser")).getUserId(), order_by, order, page, pageSize));
+       for (int i = 0; i < schedules.size(); i++) {
+            System.out.println(schedules.get(i).getCourseName());
+       }
+
         return scheduleService.getOnSchedules(((User) session.getAttribute("loginUser")).getUserId(), order_by, order, page, pageSize);
     }
 

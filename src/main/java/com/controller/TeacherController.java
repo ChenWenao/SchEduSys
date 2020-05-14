@@ -27,13 +27,36 @@ public class TeacherController {
 
 
     //暂时用这个url来返回teacher页面，在登陆做完后，可以由登陆来返回teacher页面，到那时候，这个接口可以删掉。
-    @GetMapping("Teacher/teacher")
+    @GetMapping("/Teacher/teacher")
     public ModelAndView teacherHome() {
         ModelAndView mav = new ModelAndView("teacher");
         return mav;
     }
 
+    @GetMapping("/Teacher/courseList")
+    public ModelAndView courseList(){
+        ModelAndView mav = new ModelAndView("courseList");
+        return mav ;
+    }
 
+    @GetMapping("/Teacher/examList")
+    public ModelAndView examList(){
+        ModelAndView mav = new ModelAndView("examList");
+        return mav;
+    }
+
+    @GetMapping("/Teacher/editInfo")
+    public ModelAndView editInfo(){
+        ModelAndView mav = new ModelAndView("editInfo");
+        return mav;
+    }
+
+    @GetMapping("/Teacher/editCourse/{courseId}")
+    public ModelAndView editCourse(@PathVariable("courseId")int courseId){
+        ModelAndView mav = new ModelAndView("editCourse");
+        mav.addObject("courseId", courseId);
+        return mav;
+    }
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
     //teacherDepartName,teacherGender,teacherNativePlace,teacherPoliticsStatus,teacherPhoneNumber,teacherDescription

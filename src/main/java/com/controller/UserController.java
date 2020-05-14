@@ -6,6 +6,7 @@ import com.service.AdminService;
 import com.service.StudentService;
 import com.service.TeacherService;
 import com.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,9 +30,9 @@ public class UserController {
 
 
     //返回登陆页面
-    @GetMapping("User/login")
+    @GetMapping("/User/login")
     public ModelAndView login() {
-        ModelAndView mav = new ModelAndView("login");
+        ModelAndView mav = new ModelAndView("login.html");
         return mav;
     }
 
@@ -42,6 +43,11 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("/User/resetPassword")
+    public ModelAndView getPage(){
+        ModelAndView mav = new ModelAndView("resetpassword");
+        return mav;
+    }
 
     //查
     @GetMapping("User/userById/{userId}")
@@ -58,7 +64,7 @@ public class UserController {
     //为了信息安全，采用post方法
     //传入的表单名称为loginUser
     //表单需要包含字段：userCode,userPassword
-    @PostMapping("User/login")
+    @PostMapping("/User/login")
     public ModelAndView login(HttpSession session, @ModelAttribute(value = "loginUser") User loginUser) throws NoSuchAlgorithmException {
         ModelAndView mav = new ModelAndView();//新建要返回的页面。
         //加密密码
@@ -73,6 +79,9 @@ public class UserController {
                 Student loginStudent = studentService.getStudentByCode(user_find.getUserCode());
                 user_find.setUserId(loginStudent.getStudentId());
                 session.setAttribute("loginUser", user_find);
+               User user =  (User)session.getAttribute("loginUser");
+               System.out.println(user.getUserRealName());
+               System.out.println(user.getUserIdentity());
                 mav.setViewName("redirect:/Student/student");   //设置学生主页。
             } else if ("教师".equals(user_find.getUserIdentity())) {
                 Teacher loginTeacher = teacherService.getTeacherByCode(user_find.getUserCode());
@@ -96,21 +105,26 @@ public class UserController {
     //为了信息安全，采用post方法
     //传入的表单名称为resetUser
     //表单需要包含字段：userRealName,userIdCard,userIdentity
-    @PostMapping("User/resetPasswordCheck")
+    @PostMapping("/User/resetPasswordCheck")
     public boolean resetPasswordCheck(HttpSession session, @ModelAttribute(value = "resetUser") User resetUser) {
         User user_find = userService.resetPasswordCheck(resetUser.getUserIdCard(), resetUser.getUserRealName(), resetUser.getUserIdentity());
         if (user_find != null) {
             session.setAttribute("resetUser", user_find);
             return true;
         }
+      System.out.println(resetUser.getUserRealName());
         return false;
     }
+
+
 
     //重置密码
     //Post方法，传入字段名称为：newPassword
     @PostMapping("User/resetPassword")
     public boolean resetPassword(HttpSession session, @ModelAttribute(value = "newPassword") String newPassword) throws NoSuchAlgorithmException {
+        ModelAndView mav = new ModelAndView();
         User resetUser = (User) session.getAttribute("resetUser");//拿到前面验证时添加的用户。
+
         session.removeAttribute("resetUser");//拿完用户后，关闭session，节省系统资源。
 
         MessageDigest md5 = MessageDigest.getInstance("MD5");
