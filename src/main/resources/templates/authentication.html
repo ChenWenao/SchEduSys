@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>忘记密码</title>
+    <link type="text/css" rel="stylesheet" href="/css/password.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+    </style>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-form.js"></script>
+
+</head>
+
+<body>
+<div class="main">
+    <div class="main0">
+        <div class="formBox">
+            <h3>登录密码重置</h3>
+            <ul>
+                <li class="mainCol firLi">&gt;身份验证</li>
+                <li>&gt;登录密码重置</li>
+                <li class="lastLi">&gt;重置完成</li>
+            </ul>
+            <div id="line"></div>
+            <form id="resetUser" name="resetUser" enctype="multipart/form-data" method="post"
+                  action="/User/resetPasswordCheck" class="site-form" onsubmit="return check()">
+                <div class="itembox">
+                    <label>真实姓名 :</label>
+                    <input id="userRealName" name="userRealName" type="text" onchange="nameValidate()"
+                           placeholder="请输入真实姓名"/>
+                </div>
+                <div class="itembox">
+                    <label>身份证号&nbsp;:</label>
+                    <input id="userIdCard" name="userIdCard" type="text" onchange="IdCardValidate()"
+                           placeholder="请输入身份证号"/>
+                </div>
+                <div class="itembox">
+                    <label>身份 :</label>
+
+                    <label for="student"><input id="student" type="radio" name="userIdentity" value="学生"/>学生</label>
+                    <label for="manager"><input id="manager" type="radio" name="userIdentity" value="管理员"/>管理员</label>
+                    <label for="teacher"><input id="teacher" type="radio" name="userIdentity" value="教师"/>教师</label>
+                </div>
+                <div class="itembox">
+                    <input class="error" id="error" type="text" readonly/>
+                </div>
+
+                <div class="btnBox">
+                    <button type="submit" id="btn">下一步</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer0">
+        <div class="footer_l">使用条款 | 隐私保护</div>
+        <div class="footer_r">© 2015 （杭州）金融信息服务有限公司 杭ICP备0000000号</div>
+    </div>
+</div>
+</body>
+<script>
+    function nameValidate() {
+
+        var name = document.getElementById('userRealName').value;
+
+        if (!(/^[\u4e00-\u9fa5]{1,}((·[\u4e00-\u9fa5]{1,}){0,3})$/.test(name))) {
+
+            $("#error").val("请输入正确的姓名！");
+            return false;
+        } else {
+
+            $("#error").val("");
+            return true
+        }
+
+
+    }
+
+    function IdCardValidate() {
+        var phone = document.getElementById('userIdCard').value;
+
+        if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(phone))) {
+
+            $("#error").val("身份证输入错误！");
+            return false;
+
+        } else {
+            $("#error").val("");
+            return true;
+        }
+    }
+
+    function check() {
+        var check = nameValidate() && IdCardValidate();
+        return check;
+    }
+
+    $(function () {
+        $("#resetUser").ajaxForm(function (data) {
+            if (data == "false") {
+                alert("身份验证失败！");
+            } else {
+                alert("身份验证成功！")
+                window.location.href = "/User/resetPassword"
+            }
+        })
+
+    })
+</script>
+</html>

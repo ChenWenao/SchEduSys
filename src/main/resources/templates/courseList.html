@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>课程列表</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+
+
+    <meta name="author" content="yinqi">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap-table.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table-zh-CN.min.js"></script>
+
+
+</head>
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+    <div class="layout-container">
+        <!--左侧导航-->
+        <aside class="layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <img src="/static/images/logo-sidebar.png" title="" alt=""/>
+            </div>
+            <div class="layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item ">
+                            <a href="#" onclick="javascript:window.location.href='/Teacher/teacher'"><i
+                                    class="mdi mdi-home"></i> 后台首页</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav active">
+                            <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 课程查看</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/courseList'">课程列表</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>考试事务</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/examList'">成绩登记</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2019. All rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="aside-toggler">
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title">课程查看</span>
+
+                    </div>
+
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <!--                            根据角色显示身份            -->
+                                <span>老师端 <span class="caret"></span></span>
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/editInfo'"><i
+                                        class="mdi mdi-account"></i>修改个人信息</a></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/authentication'"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/login'"><i
+                                        class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="table"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </main>
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        var table = $('#table').bootstrapTable({
+            url: "/Schedule/mySchedule/all/0/0",
+            striped: true,//隔行显示颜色
+            pageList: [1,5, 10], // 选择每页展示的信息行数
+            pageSize: 10,//每页显示的页数
+            page: 1,//起始页数
+            pagination: true,// 是否分页
+            paginationPreText: "上一页",
+            paginationNextText: "下一页",
+            // 表格数据来源
+            columns: [
+                {
+                    title: '序号',
+                    field: 'id',
+                    formatter: function (value, row, index) {
+
+                        return index + 1;
+                    }
+                }, {
+                    field: 'sch_courseId',
+                    title: '课程编号',
+                    sortable: "true"
+
+                }, {
+                    field: 'courseName',
+                    title: '课程名称'
+                }, {
+                    field: 'courseType',
+                    title: '课程属性'
+                }, {
+                    field: 'courseDepartName',
+                    title: '开课单位'
+                }, {
+                    field: 'courseCredit',
+                    title: '学分'
+                }, {
+                    field: 'courseLogo',
+                    title: '课程图片',
+                    visible: false
+
+                }, {
+                    field: 'coursePeriod',
+                    title: '课时'
+
+                }, {
+                    field: 'courseStartTime',
+                    title: '开课时间'
+
+                },{
+                    field: "",
+                    title: "操作",
+                    formatter: function (value, row, index) {
+                        var a = row.sch_courseId;
+                        var e = "<a onclick='submit(\"" + a + "\");'>修改课程信息</a>"
+                        return e;
+                    }
+                }
+
+            ]
+        });
+        $($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+    })
+    function submit(n) {
+        window.location.href = "/Teacher/editCourse/" + n;
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

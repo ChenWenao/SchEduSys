@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,14 @@ public class RegisterController {
     @GetMapping("Register/newRegister/{courseId}")
     public String addNewRegister(HttpSession session, @PathVariable("courseId") int courseId) {
 
+
+        System.out.println("xxxxxxxx");
+
         Schedule courseSchedule = scheduleService.getScheduleByCourseId(courseId);
+        System.out.println(courseSchedule.getCourseName());
+        System.out.println(courseSchedule.getSch_courseId());
+        System.out.println(((User) session.getAttribute("loginUser")).getUserId());
+        System.out.println(courseSchedule.getSch_teacherId());
         if (courseSchedule == null) {
             return "授课数据不存在！";
         } else if (registerService.addNewRegister(courseSchedule.getSch_teacherId(), ((User) session.getAttribute("loginUser")).getUserId(), courseId)) {
@@ -49,6 +57,8 @@ public class RegisterController {
     //学生调用，退选课程。
     @GetMapping("Register/removeRegister/{courseId}")
     public boolean removeRegister(HttpSession session, @PathVariable("courseId") int courseId) {
+
+
         return registerService.removeRegister(((User) session.getAttribute("loginUser")).getUserId(), courseId);
     }
 
@@ -83,6 +93,9 @@ public class RegisterController {
     // page表示第几页，pageSize表示每页几条数据
     @GetMapping("Register/myRegister")
     public List<Register> getMyRegister(HttpSession session) {
+        System.out.println("HelloWord");
+        List<Register> lists  = new LinkedList<>(registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId()));
+        System.out.println(lists.size());
         return registerService.getMyRegister(((User) session.getAttribute("loginUser")).getUserId());
     }
 

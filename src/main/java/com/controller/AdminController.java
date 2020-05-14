@@ -27,6 +27,13 @@ public class AdminController {
         return mav;
     }
 
+    @GetMapping("/temp")
+    public ModelAndView temp(){
+        ModelAndView mav = new ModelAndView("temp");
+        return mav;
+    }
+
+
     @GetMapping("/Admin/teacherManage")
     public ModelAndView adminTeacherHome() {
         ModelAndView mav = new ModelAndView("teacherManage");
@@ -38,6 +45,10 @@ public class AdminController {
         ModelAndView mav = new ModelAndView("studentManage");
         return mav;
     }
+
+
+    @GetMapping("/Admin/courseAttribute")
+    public ModelAndView courseAttribute(){ModelAndView mav = new ModelAndView("courseAttribute"); return mav;}
 
 
     //增

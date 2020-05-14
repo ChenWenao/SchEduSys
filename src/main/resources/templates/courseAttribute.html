@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Manage</title>
+    <link type="text/css" href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link type="text/css" href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link type="text/css" href="/css/fileinput.min.css" media="all" rel="stylesheet"/>
+    <link type="text/css" href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+    <link type="text/css" href="/css/bootstrap-select.css" rel="stylesheet">
+    <style>
+        input[type="file"] {
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row" style="height: 100px;background-color: #005521">
+        <div class="col-lg-2" style="position: relative">
+            <div style="padding-left: 15%;padding-top: 10%">
+                <img class="img-circle" src="/images/icon.jpg" width="60px" height="60px"/>
+                <label style="color: white;font-weight: normal">管理员</label>
+            </div>
+
+        </div>
+        <div class="col-lg-3">
+            <img src="/images/hbdx.jpg" style="width: 250px;height: 80px">
+        </div>
+        <div class="col-lg-7">
+            <label style="text-align: center;padding-top:30px ;font-size: 25px;color:white;font-family: STKaiti">学生成绩管理系统</label>
+        </div>
+    </div>
+    <div class="row" style="height: 653px">
+        <div class="col-lg-2" style="height: 653px;width:15%;background-color: #005521">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a style="color: white" href="/Admin/manage">课程管理</a></li>
+                <li role="presentation"><a style="color: white" href="/Admin/studentManage">学生管理</a></li>
+                <li role="presentation"><a style="color: white" href="/Admin/teacherManage">教师管理</a></li>
+                <li role="presentation"><a style="color: white" href="/Admin/courseAttribute">课程分配</a></li>
+                <li role="presentation"><a style="color: white" href="#">个人中心</a></li>
+                <li role="presentation"><a style="color: white" href="#">关于</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-10" style="height: 653px;width:85%">
+            <br><br>
+            <div id="toolbar">
+                <div class="btn btn-primary" data-toggle="modal" data-target="#scheduleModal">添加</div>
+                <div class="btn btn-primary" id="deleteChoose">删除</div>
+                <div class="btn btn-primary" id="publishScore">发布分数</div>
+            </div>
+
+            <div class="row" style="height: 50px;">
+                <label class="col-lg-12" style="text-align: center;
+					font-size: 20px;color:black;font-family: STKaiti;font-weight: bold">课程分配</label>
+            </div>
+
+            <div class="row" style="height: 623px">
+                <table id="table"></table>
+            </div>
+
+            <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">课程分配</h4>
+                        </div>
+                        <div class="modal-body" style="height: 300px;">
+                            <div class="row" style="height: 30px;">
+                                <label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+                                    <span style="float: right">课程名:</span>
+                                </label>
+                                <div class="col-lg-3" style="width: 120px">
+                                    <select class="selectpicker" id="sch_courseId" name="sch_courseId" style="float: left">
+                                        <option>--请选择课程--</option>>
+                                    </select>
+                                </div>
+
+                                <label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+                                    <span style="float: right">教师:</span>
+                                </label>
+                                <div class="col-lg-3" style="width: 120px">
+                                    <select class="selectpicker" id="sch_teacherId" name="sch_teacherId" style="float: left">
+                                        <option>--请选择教师--</option>>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row" style="height: 30px;padding-top: 10px">
+                                <label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+                                    <span style="float: right">打分开始时间:</span>
+                                </label>
+                                <input class="col-lg-3" id="scoreStartTime" name="scoreStartTime" style="float:left;height: 30px;width: 120px">
+                                <label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+                                    <span style="float: right">打分结束时间:</span>
+                                </label>
+                                <input class="col-lg-3" id="scoreEndTime" name="scoreEndTime" style="float:left;height: 30px;width: 120px">
+                            </div>
+
+                            <div class="row" style="height: 30px;padding-top: 20px">
+                                <label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+                                    <span style="float: right">查分开始时间:</span>
+                                </label>
+                                <input class="col-lg-3" id="selectStartTime" name="selectStartTime" style="float:left;height: 30px;width: 120px">
+                                <label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+                                    <span style="float: right">查分结束时间:</span>
+                                </label>
+                                <input class="col-lg-3" id="selectEndTime" name="selectEndTime" style="float:left;height: 30px;width: 120px">
+                            </div>
+
+                            <label id="forIndex" style="display: none"></label>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="submitSchedule" onclick="submitSchedule()">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="/lib/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.fr.js"></script>
+<script type="text/javascript" src="/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="/js/bootbox.min.js"></script>
+
+<!--表格渲染-->
+<script>
+    $(document).ready(function () {
+        var table = $('#table').bootstrapTable({
+            url: "/Schedule/schedules/on/sch_courseId/1/0/0",
+            striped: true,//隔行显示颜色
+            showRefresh: true,//刷新按钮
+            buttonsAlign: "left",//按钮对齐方式
+            search: true,//是否搜索
+            searchAlign: "left",//查询框对齐方式
+            toolbar: "#toolbar",//指定工具栏
+            toolbarAlign: "right",//工具栏对齐方式
+            pageSize: 5,//每页显示的行数
+            pageList: [5, 10],
+            page: 1,//起始页数
+            pagination: true,// 是否分页
+            // 表格数据来源
+            columns: [
+                {
+                    title: "全选",
+                    field: "select",
+                    checkbox: true,
+                    width: 20,//宽度
+                    align: "center",//水平
+                    valign: "middle"//垂直
+                },
+                {
+                    field: 'sch_courseId',
+                    title: '课程号',
+                    formatter: function (value, row, index) {
+                        return value;
+                    }
+                }, {
+                    field: 'sch_teacherId',
+                    title: '教师编号'
+                }, {
+                    field: 'publishScore',
+                    title: '教师是否打分'
+                }, {
+                    field: 'selectStartTime',
+                    title: '查分开始时间'
+                }, {
+                    field: 'selectEndTime',
+                    title: '查分结束时间'
+                }, {
+                    field: 'scoreStartTime',
+                    title: '打分开始时间'
+                }, {
+                    field: 'scoreEndTime',
+                    title: '打分结束时间'
+                }
+            ]
+        });
+
+        $($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+
+        $("#deleteChoose").on("click", function() {
+            if (!confirm("是否确认删除？"))
+                return;
+            var rows = $("#table").bootstrapTable('getSelections');// 获得要删除的数据
+            if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                alert("请先选择要删除的记录!");
+            } else {
+                var sch_courseIds = [];// 声明一个数组
+                $(rows).each(function() {// 通过获得别选中的来进行遍历
+                    sch_courseIds.push(this.sch_courseId);// cid为获得到的整条数据中的一列
+                });
+                console.log(sch_courseIds);
+                deleteMs(JSON.stringify(sch_courseIds));
+            }
+        });
+        function deleteMs(sch_courseIds) {
+            console.log(sch_courseIds);
+            $.ajax({
+                url : "/Schedule/removeSchedule",
+                data : sch_courseIds,
+                type : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType : "json",
+                success : function(data) {
+                    $('#table').bootstrapTable('refresh', {
+                        url : '/Schedule/schedules/on/sch_courseId/1/0/0',
+                        method: "get"
+                    });
+                    if(data == true){
+                        alert("删除成功");
+                    }else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+        $("#publishScore").on("click", function () {
+            if (!confirm("是否确认发布？"))
+                return;
+            var rows = $("#table").bootstrapTable('getSelections');// 获得要删除的数据
+            if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                alert("请先选择要删除的记录!");
+            } else {
+                var sch_courseIds = [];// 声明一个数组
+                $(rows).each(function() {// 通过获得别选中的来进行遍历
+                    sch_courseIds.push(this.sch_courseId);// cid为获得到的整条数据中的一列
+                });
+                console.log(sch_courseIds);
+                publish(JSON.stringify(sch_courseIds));
+            }
+        });
+        function publish(sch_courseIds) {
+            $.ajax({
+                url : "/Schedule/publishScore",
+                data : sch_courseIds,
+                type : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType : "json",
+                success : function(data) {
+                    $('#table').bootstrapTable('refresh', {
+                        url : '/Schedule/schedules/on/sch_courseId/1/0/0',
+                        method: "get"
+                    });
+                    if(data == true){
+                        alert("发布成功");
+                    }else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    })
+</script>
+<!--时间控件-->
+<script>
+    $('#selectStartTime').datetimepicker({
+        format: 'yyyy/mm/dd hh:ii:ss',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+        minView: 0		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+    });
+    $('#selectEndTime').datetimepicker({
+        format: 'yyyy/mm/dd hh:ii:ss',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+        minView: 0		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+    });
+    $('#scoreStartTime').datetimepicker({
+        format: 'yyyy/mm/dd hh:ii:ss',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+        minView: 0		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+    });
+    $('#scoreEndTime').datetimepicker({
+        format: 'yyyy/mm/dd hh:ii:ss',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+        minView: 0		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+    });
+</script>
+<!--下拉框数据渲染-->
+<script>
+    getSelectOptions_course();
+    getSelectOptions_teacher();
+    function getSelectOptions_course() {
+        $.ajax({
+            url: "/Course/courses/on/all/courseId/1/0/0",//请求地址(控制器地址)
+            type: "get",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $('#sch_courseId').append("<option value=" + data[i].courseId + ">" + data[i].courseName + "</option>");
+                    console.assert(data)
+                }
+
+                $('#sch_courseId').selectpicker({
+                    width: '120px',
+                    height: '30px'
+                });
+                $('#sch_courseId').selectpicker('refresh');
+                $('#sch_courseId').selectpicker('render');
+            }
+        });
+    }
+
+    function getSelectOptions_teacher(){
+        $.ajax({
+            url: "/Teacher/teachers/all/teacherDepartId/1/0/0",//请求地址(控制器地址)
+            type: "get",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $('#sch_teacherId').append("<option value=" + data[i].teacherId + ">" + data[i].teacherRealName + "</option>");
+                    console.assert(data)
+                }
+
+                $('#sch_teacherId').selectpicker({
+                    width: '120px',
+                    height: '30px'
+                });
+                $('#sch_teacherId').selectpicker('refresh');
+                $('#sch_teacherId').selectpicker('render');
+            }
+        });
+    }
+</script>
+<!--提交课程安排信息并弹窗-->
+<script>
+    function submitSchedule() {
+        var sch_courseId = document.getElementById("sch_courseId").value;
+        var sch_teacherId= document.getElementById("sch_teacherId").value;
+        var selectStartTime = document.getElementById("selectStartTime").value;
+        var selectEndTime= document.getElementById("selectEndTime").value;
+        var scoreStartTime = document.getElementById("scoreStartTime").value;
+        var scoreEndTime= document.getElementById("scoreEndTime").value;
+
+        var fd = new window.FormData();  //通过FormData拼装数据
+        fd.append("sch_courseId", sch_courseId);
+        fd.append("sch_teacherId", sch_teacherId);
+        fd.append("selectStartTime", selectStartTime);
+        fd.append("selectEndTime", selectEndTime);
+        fd.append("scoreStartTime", scoreStartTime);
+        fd.append("scoreEndTime", scoreEndTime);
+
+        console.log(fd);
+        //通过ajax发送数据
+        $.ajax({
+            url: "/Schedule/newSchedule",
+            type: "post",
+            processData: false,
+            contentType: false,
+            enctype: "multipart/form-data",
+            data: fd,
+            success: function(result) {
+                alert(result);
+                if(result.indexOf("课程分配教师完成！") == -1){
+                }
+                else {
+                    $('#scheduleModal').modal('hide');
+                }
+                $('#table').bootstrapTable('refresh', {
+                    url : '/Schedule/schedules/on/sch_courseId/1/0/0',
+                    method: "get"
+                });
+            }
+        });
+    }
+</script>
+</html>

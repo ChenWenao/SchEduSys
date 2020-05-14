@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>登记分数</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+
+    <meta name="author" content="yinqi">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-editable.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table-export.min.js"></script>
+
+    <script type="text/javascript" src="/js/bootstrap-editable.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table-zh-CN.min.js"></script>
+
+</head>
+
+<body data-logobg="color_8" data-sidebarbg="color_8" onload="getPolicy()">
+<div class="layout-web">
+    <div class="layout-container">
+        <!--左侧导航-->
+        <aside class="layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <img src="/static/images/logo-sidebar.png" title="" alt=""/>
+            </div>
+            <div class="layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item ">
+                            <a href="#" onclick="javascript:window.location.href='/Teacher/teacher'"><i
+                                    class="mdi mdi-home"></i> 后台首页</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 课程查看</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/courseList'">课程列表</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav active">
+                            <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>考试事务</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/examList'">成绩登记</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2019. All rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="aside-toggler">
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 成绩登记 </span>
+
+                    </div>
+
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <!--                            根据角色显示身份            -->
+                                <span>老师端 <span class="caret"></span></span>
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/editInfo'"><i
+                                        class="mdi mdi-account"></i>修改个人信息</a></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/authentication'"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/login'"><i
+                                        class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <button style="margin-bottom: 20px" class="btn btn-primary" onclick="javascript:window.location.href='/Teacher/examList'">返回</button>
+
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label for="courseId">课程编号</label>
+                                        <input class="form-control" type="text" id="courseId" disabled
+                                               style="background-color: transparent">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseName">课程名称</label>
+                                        <input class="form-control" type="text" id="courseName"
+                                               disabled style="background-color: transparent">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseDepartName">开课单位</label>
+                                        <input class="form-control" type="text" id="courseDepartName"
+                                               disabled style="background-color: transparent">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseDepartName">评分比例</label>
+                                        <input class="form-control" type="text" id="courseGradingPolicy"
+                                               disabled style="background-color: transparent;width: 230px;">
+                                    </div>
+                                </div>
+                                <div id="toolbar">
+                                <form style="margin: 30px" class="form-inline"  onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label for="studentCode">学号</label>
+                                        <input class="form-control" type="text" id="studentCode" name="studentCode" placeholder="请输入学号">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="courseName">姓名</label>
+                                        <input class="form-control" type="text" id="studentRealName" name="studentRealName" placeholder="请输入姓名..">
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="studentlist" class="btn btn-default" type="submit">查询</button>
+                                    </div>
+                                    </form>
+                                    </div>
+                                    <table id="table" data-pagination="true" class="table table-striped pull-left">
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+
+<script>
+
+
+    var sudentList=[];　　//生成查询数据
+    $.ajax({
+        url: '/Register/registerByCourseId/' + [[${courseId}]] + '/0/0',
+        type:'get',
+        success:function(res) {
+            sudentList = res;
+            $('#table').bootstrapTable('destroy');
+            var table = $('#table').bootstrapTable({
+                url: '/Register/registerByCourseId/' + [[${courseId}]] + '/0/0',
+                type: "get",
+                toolbar:'#toolbar',
+                pageSize: 10,//每页显示的页数
+                page: 1,//起始页数
+                striped: true,//隔行显示颜色
+                pagination: true, // 是否分页
+                paginationPreText: "上一页",
+                paginationNextText: "下一页",
+                pageList: [1, 5, 10], // 选择每页展示的信息行数
+                showRefresh: true,//表格局部刷新
+                columns: [{
+                    title: '序号',
+                    field: 'id',
+                    formatter: function (value, row, index) {
+                        return index + 1
+                    }
+                }, {
+                    field: 'reg_studentId',
+                    title: '学生Id'
+                }, {
+                    field: 'studentCode',
+                    title: '学号',
+                    sortable: "true"
+                }, {
+                    field: 'studentRealName',
+                    title: '姓名'
+                }, {
+                    field: 'grade',
+                    title: '平时成绩',
+                    editable: {
+                        type: 'text',
+                        title: '平时成绩',
+                        validate: function (value) { //字段验证
+                            if (!$.trim(value))
+                                return "不能为空";
+                            else if ($.trim(value) < 0 || $.trim(value) > 100)
+                                return "输入范围错误";
+                        }
+                    }
+                }, {
+                    field: 'testScore',
+                    title: '期末成绩',
+                    editable: {
+                        type: 'text',
+                        title: '期末成绩',
+                        validate: function (value) {
+                            //字段验证
+                            if (!$.trim(value))
+                                return "不能为空";
+                            else if ($.trim(value) < 0 || $.trim(value) < 0 || $.trim(value) > 100)
+
+                                return "输入范围错误";
+                        }
+                    }
+                }, {
+                    field: 'finalScore',
+                    title: '总成绩',
+
+                }, {
+                    field: 'option',
+                    title: '操作',
+                    formatter: function (value, row, index) {
+                        var a = "<button onclick='giveGrade(\"" + row.studentRealName + "\",\"" + row.reg_studentId + "\",\"" + row.grade + "\",\"" + row.testScore + "\");'>录入</button>"
+                        return a;
+                    }
+
+
+                }],
+                onEditableSave(field, row, oldValue, $el) {
+                    $table = $('#table').bootstrapTable({});
+                    $table.bootstrapTable('updateRow', {index: row.grade, row: row});
+                    $table.bootstrapTable('updateRow', {index: row.testScore, row: row});
+
+                }
+
+            });
+
+            $($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+
+        }
+    })
+    $('#studentlist').click(function(){
+        var stucode=$('#studentCode').val();
+        var stuRN=$('#studentRealName').val();
+        searchFun(stucode,'studentCode',stuRN,'studentRealName');
+
+    });
+    function searchFun(stucode,studentCodeStr,stuRN,studentRealNameStr){ 　　//scho,codepname为用户输入的搜索值，NameStr为搜索的字段
+        var newArry=[];
+        for(var i in sudentList){
+            var studentCode=sudentList[i][studentCodeStr];
+            var studentRealName=sudentList[i][studentRealNameStr];
+            stucode=new RegExp(stucode);
+            stuRN=new RegExp(stuRN);
+            var isHasName=stucode.test(studentCode);//匹配当前是否符合条件
+            var iscodepname=stuRN.test(studentRealName)
+            if(isHasName&&iscodepname){
+                newArry.push(sudentList[i]);　　　　//符合条件添加到newArry中　
+            }
+        }
+        $('#table').bootstrapTable('load',newArry);　　//加载数据
+    }
+
+    function giveGrade(n, a, b, c) {
+        var studentRealName = n;
+        var studentId = a;
+        var grade = b;
+        var testScore = c;
+        $.ajax({
+            url: "/Register/giveGrade/" + [[${courseId}]] + "/" + studentId + "/" + grade + "/" + testScore,    // 提交到controller的url路径
+            type: "get",    // 提交方式
+            dataType: "json",    // 服务器端返回的数据类型
+            success: function (data) {
+
+                alert("成功提交");
+
+            },
+            error: function () {
+                alert("提交失败");
+
+            }
+        })
+    }
+
+
+    function getPolicy() {
+        $.ajax({
+            type: "get",
+            url: "/Course/courseById/" + [[${courseId}]],
+            dataType: "json",
+            success: function (data) {
+                $("#courseId").val(data.courseId);
+                $("#courseName").val(data.courseName);
+                $("#courseDepartName").val(data.courseDepartName)
+                $("#courseGradingPolicy").val(data.courseGradingPolicy)
+            },
+            error: function () {
+                alert("加载该课程信息失败！");
+            }
+        })
+    }
+
+
+</script>
+</body>
+
+</html>

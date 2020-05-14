@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>首页 - bootstrap中文后台管理系统模板</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+
+
+    <meta name="author" content="yinqi">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body data-logobg="color_8" data-sidebarbg="color_8" onload="getData()">
+<div class="layout-web">
+    <div class="layout-container">
+        <!--左侧导航-->
+        <aside class="layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <img src="/static/images/logo-sidebar.png" title="" alt=""/>
+            </div>
+            <div class="layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item active">
+                            <a href="#" onclick="javascript:window.location.href='/Teacher/teacher'"><i
+                                    class="mdi mdi-home"></i> 后台首页</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 课程查看</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/courseList'">课程列表</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>考试事务</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/examList'">成绩登记</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2019. All rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="aside-toggler">
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 后台首页 </span>
+
+                    </div>
+
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <!--                            根据角色显示身份            -->
+                                <span>老师端 <span class="caret"></span></span>
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/editInfo'"><i
+                                        class="mdi mdi-account"></i>修改个人信息</a></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/authentication'"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/login'"><i
+                                        class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="layout-content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group" style="border:0">
+                                    <label for="teacherRealName">教师姓名</label>
+                                    <input type="text" class="form-control" id="teacherRealName" disabled="disabled"
+                                           style="background-color: transparent"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherCode">教师工号</label>
+                                    <input type="text" class="form-control" id="teacherCode" disabled="disabled"
+                                           style="background-color: transparent"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherDepartName">所属院系</label>
+                                    <input type="text" class="form-control" id="teacherDepartName" value=""
+                                           disabled="disabled" style="background-color: transparent"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+
+<script>
+
+    function getData() {
+        $.ajax({
+            type: "get",
+            url: "/Teacher/teacherById/13",
+            dataType: "json",
+            success: function (data) {
+                $("#teacherRealName").val(data.teacherRealName)
+                $("#teacherCode").val(data.teacherCode)
+                $("#teacherDepartName").val(data.teacherDepartName)
+            },
+            error: function () {
+                alert("加载数据失败！");
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

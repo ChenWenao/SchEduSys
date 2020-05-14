@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Manage</title>
+    <link type="text/css" href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link type="text/css" href="/css/fileinput.min.css" media="all" rel="stylesheet"/>
+	<link type="text/css" href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+	<link type="text/css" href="/css/bootstrap-select.css" rel="stylesheet">
+	<style>
+		input[type="file"] {
+			color: transparent;
+		}
+	</style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="height: 100px;background-color: #005521">
+            <div class="col-lg-2" style="position: relative">
+                <div style="padding-left: 15%;padding-top: 10%">
+                    <img class="img-circle" src="/images/icon.jpg" width="60px" height="60px"/>
+                    <label style="color: white;font-weight: normal">管理员</label>
+                </div>
+
+
+            </div>
+            <div class="col-lg-3">
+                <img src="/images/hbdx.jpg" style="width: 250px;height: 80px">
+            </div>
+            <div class="col-lg-7">
+                <label style="text-align: center;padding-top:30px ;font-size: 25px;color:white;font-family: STKaiti">学生成绩管理系统</label>
+            </div>
+        </div>
+        <div class="row" style="height: 653px">
+            <div class="col-lg-2" style="height: 653px;width:15%;background-color: #005521">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a style="color: white" href="/Admin/manage">课程管理</a></li>
+                    <li role="presentation"><a style="color: white" href="/Admin/studentManage">学生管理</a></li>
+                    <li role="presentation"><a style="color: white" href="/Admin/teacherManage">教师管理</a></li>
+					<li role="presentation"><a style="color: white" href="/Admin/courseAttribute">课程分配</a></li>
+                    <li role="presentation"><a style="color: white" href="#">个人中心</a></li>
+                    <li role="presentation"><a style="color: white" href="#">关于</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-10" style="height: 653px;width:85%">
+				<br><br>
+				<div id="toolbar">
+					<div class="btn btn-primary" data-toggle="modal" data-target="#courseModal"
+						 onclick="var obj = document.getElementById('submitCourse');
+						 obj.innerHTML='提交';
+						 var obj1 = document.getElementById('myModalLabel');
+						 obj1.innerHTML='添加课程';">
+						添加
+					</div>
+					<div class="btn btn-primary" id="deleteChoose">删除</div>
+				</div>
+
+				<div class="row" style="height: 50px;">
+					<label class="col-lg-12" style="text-align: center;
+					font-size: 20px;color:black;font-family: STKaiti;font-weight: bold">课程管理</label>
+				</div>
+
+				<div class="row" style="height: 623px">
+					<table id="table"></table>
+				</div>
+
+
+				<div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">添加课程</h4>
+							</div>
+							<div class="modal-body" style="height: 400px">
+								<div class="row" style="height: 30px;">
+									<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+										<span style="float: right">课程名:</span>
+									</label>
+									<input class="col-lg-4" id="courseName" name="courseName" placeholder="请输入课程名" style="float: left;height: 30px;width: 150px">
+
+									<label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+										<span style="float: right">开课学院:</span>
+									</label>
+
+									<div class="col-lg-3" style="width: 150px">
+										<select class="selectpicker" id="courseDepartName" name="courseDepartName">
+											<option>--请选择学院--</option>
+										</select>
+									</div>
+
+								</div>
+
+								<div class="row" style="height: 30px;padding-top: 10px">
+									<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+										<span style="float: right">学分:</span>
+									</label>
+									<input class="col-lg-4" id="courseCredit" name="courseCredit" style="height: 30px;width: 150px;">
+
+									<label class="col-lg-3" style="padding-top: 5px;font-weight: normal;">
+										<span style="float: right">开课时间:</span>
+									</label>
+									<input class="col-lg-3" id="courseStartTime" name="courseStartTime" style="height: 30px;width: 150px">
+								</div>
+
+								<div class="row" style="height: 30px;padding-top: 20px">
+									<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+										<span style="float: right">学时:</span>
+									</label>
+									<input class="col-lg-4" id="coursePeriod" name="coursePeriod" style="float: left;height: 30px;width: 150px;">
+
+									<label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+										<span style="float: right">课程类别:</span>
+									</label>
+									<input class="col-lg-3" id="courseTopicName" name="courseTopicName" style="height: 30px;width: 150px">
+								</div>
+
+								<div class="row" style="height: 30px;padding-top: 40px">
+									<label class="col-lg-2" style="padding-top: 5px;font-weight: normal;">
+										<span style="float: right">学期:</span>
+									</label>
+									<div class="col-lg-4" style="width: 150px">
+										<select class="selectpicker" id="courseLevel" name="courseLevel">
+											<option value="1" selected>大一上</option>
+											<option value="2">大一下</option>
+											<option value="3">大二上</option>
+											<option value="4">大二下</option>
+											<option value="5">大三上</option>
+											<option value="6">大三下</option>
+											<option value="7">大四上</option>
+											<option value="8">大四下</option>
+										</select>
+									</div>
+
+									<label class="col-lg-3" style="font-weight: normal;padding-top: 5px;">
+										<span style="float: right">课程类型:</span>
+									</label>
+									<div class="col-lg-3" style="width: 150px">
+										<select class="selectpicker" id="courseType" name="courseType">
+											<option value="必修" selected>必修</option>
+											<option value="选修">选修</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="row" style="height: 30px;padding-top: 40px">
+									<label class="col-lg-2" style="padding-top: 5px;font-weight: normal">
+										<span style="float: right">课程图片:</span>
+									</label>
+									<input type="file" id="courseImg" name="courseImg" accept="image/*">
+								</div>
+
+								<label id="forIndex" style="display: none"></label>
+
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-primary" id="submitCourse" onclick="submitCourse()">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="/lib/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.fr.js"></script>
+<script type="text/javascript" src="/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="/js/bootbox.min.js"></script>
+
+<!--表格渲染-->
+<script>
+	$(document).ready(function () {
+		var table = $('#table').bootstrapTable({
+			url: "/Course/courses/on/all/courseId/1/0/0",
+			striped: true,//隔行显示颜色
+			showRefresh: true,//刷新按钮
+			buttonsAlign: "left",//按钮对齐方式
+			search: true,//是否搜索
+			searchAlign: "left",//查询框对齐方式
+			toolbar: "#toolbar",//指定工具栏
+			toolbarAlign: "right",//工具栏对齐方式
+			pageSize: 3,//每页显示的行数
+			pageList: [3, 5],
+			page: 1,//起始页数
+			pagination: true,// 是否分页
+			// 表格数据来源
+			columns: [
+				{
+					title: "全选",
+					field: "select",
+					checkbox: true,
+					width: 20,//宽度
+					align: "center",//水平
+					valign: "middle"//垂直
+				},
+				{
+					field: 'courseId',
+					title: '课程编号'
+
+				}, {
+					field: 'courseName',
+					title: '课程名',
+					textAlign: 'center'
+
+				}, {
+					field: 'courseDepartName',
+					title: '开课学院',
+					textAlign: 'center'
+				}, {
+					field: 'coursePeriod',
+					title: '学时',
+					textAlign: 'center'
+				}, {
+					field: 'courseCredit',
+					title: '学分',
+					textAlign: 'center'
+				}, {
+					field: 'courseStartTime',
+					title: '开课时间',
+					textAlign: 'center'
+				}, {
+					field: 'courseType',
+					title: '课程类型',
+					textAlign: 'center'
+				},{
+					field: '',
+					title: '管理',
+					halign:'center',
+					align:'center',
+					width:'100px',
+					formatter: function (value, row, index) {
+						return '<button class="btn btn-primary" id="modifyOne" data-toggle="modal" data-target="#courseModal"' +
+								'onclick="var obj = document.getElementById(\'submitCourse\');' +
+								'obj.innerHTML=\'修改\';' +
+								'var obj1 = document.getElementById(\'myModalLabel\');\n' +
+								'\t\t\t\t\t\t obj1.innerHTML=\'修改课程\';' +
+								'var obj2 = document.getElementById(\'forIndex\');\n' +
+								'obj2.innerHTML =\'' + index + '\'">修改</button>';
+					},
+				}
+			]
+		});
+
+		$($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+
+		$("#deleteChoose").on("click", function() {
+			if (!confirm("是否确认删除？"))
+				return;
+			var rows = $("#table").bootstrapTable('getSelections');// 获得要删除的数据
+			if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+				alert("请先选择要删除的记录!");
+			} else {
+				var courseIds = [];// 声明一个数组
+				$(rows).each(function() {// 通过获得别选中的来进行遍历
+					courseIds.push(this.courseId);// cid为获得到的整条数据中的一列
+				});
+				console.log(courseIds);
+				deleteMs(JSON.stringify(courseIds));
+			}
+		});
+		function deleteMs(courseIds) {
+			console.log(courseIds);
+			$.ajax({
+				url : "/Course/removeCourse",
+				data : courseIds,
+				type : "post",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				dataType : "json",
+				success : function(data) {
+					$('#table').bootstrapTable('refresh', {
+						url : '/Course/courses/on/all/courseId/1/0/0',
+						method: "get"
+					});
+					if(data == true){
+						alert("删除成功");
+					}else {
+						alert(data);
+					}
+
+				}
+			});
+		}
+	})
+</script>
+
+<!--时间控件-->
+<script>
+	$('#courseStartTime').datetimepicker({
+		format: 'yyyy/mm/dd',      //此属性是显示顺序，还有显示顺序是mm-dd-yyyy
+		minView: 2		//最精准的时间选择为日期0-分 1-时 2-日 3-月
+	});
+</script>
+<!--下拉框数据渲染-->
+<script>
+	getDepartName();
+	function getDepartName() {
+		$('#courseLevel').selectpicker({
+			width: '150px',
+			height: '30px'
+		});
+		$('#courseType').selectpicker({
+			width: '150px',
+			height: '30px'
+		});
+		$.ajax({
+			url: "/Depart/departments/all/departId/1/0/0",//请求地址(控制器地址)
+			type: "get",
+			success: function (data) {
+				for (var i = 0; i < data.length; i++) {
+					$('#courseDepartName').append("<option value=" + data[i].departName + ">" + data[i].departName + "</option>");
+					console.assert(data)
+				}
+
+				$('#courseDepartName').selectpicker({
+					width: '150px',
+					height: '30px'
+				});
+				$('#courseDepartName').selectpicker('refresh');
+				$('#courseDepartName').selectpicker('render');
+			}
+		});
+	}
+</script>
+<!--提交/修改课程信息并弹窗-->
+<script>
+	function submitCourse() {
+		var courseName = document.getElementById("courseName").value;
+		var courseDepartName= document.getElementById("courseDepartName").value;
+		var courseCredit = document.getElementById("courseCredit").value;
+		var courseStartTime= document.getElementById("courseStartTime").value;
+		var coursePeriod = document.getElementById("coursePeriod").value;
+		var courseTopicName= document.getElementById("courseTopicName").value;
+		var courseLevel= document.getElementById("courseLevel").value;
+		var courseType= document.getElementById("courseType").value;
+		var courseImg = document.getElementById("courseImg").files;   //文件是通过.files取数据
+
+		var fd = new window.FormData();  //通过FormData拼装数据
+		fd.append("courseName", courseName);
+		fd.append("courseDepartName", courseDepartName);
+		fd.append("courseCredit", courseCredit);
+		fd.append("courseStartTime", courseStartTime);
+		fd.append("coursePeriod", coursePeriod);
+		fd.append("courseTopicName", courseTopicName);
+		fd.append("courseLevel", courseLevel);
+		fd.append("courseType", courseType);
+		fd.append("courseImg", courseImg[0]);  //因为取出的文件是数组，所以取第一项
+		var URL;
+		var btTxt = document.getElementById("submitCourse").innerHTML;
+		if(btTxt == "修改"){
+			URL = "/Course/modifyCourse";
+			var index = document.getElementById("forIndex").innerHTML;
+
+			var courseRow = $("#table").bootstrapTable("getData")[index];
+			var courseId = courseRow["courseId"];
+			// console.log("获取到的课程Id" + courseId);
+			fd.append("courseId", courseId);
+		}
+		else if(btTxt == "提交"){
+			URL = "/Course/newCourse";
+		}
+
+
+		console.log(fd);
+		//通过ajax发送数据
+		$.ajax({
+			url: URL,
+			type: "post",
+			processData: false,
+			contentType: false,
+			enctype: "multipart/form-data",
+			data: fd,
+			success: function(result) {
+				alert(result);
+				if(result.indexOf("课程新建成功！") == -1){
+
+				}
+				else {
+					$('#courseModal').modal('hide');
+				}
+				if(result.indexOf("课程修改成功！") == -1){
+
+				}
+				else {
+					$('#courseModal').modal('hide');
+				}
+				$('#table').bootstrapTable('refresh', {
+					url : '/Course/courses/on/all/courseId/1/0/0',
+					method: "get"
+				});
+			}
+		});
+	}
+
+
+</script>
+</html>

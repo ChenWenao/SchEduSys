@@ -1,0 +1,49 @@
+
+
+.info{
+    text-align: center;
+    margin: 0 auto;
+
+}
+
+.student-manager{
+    background-color: black;
+}
+
+.page-header {
+    z-index: 32;
+    font-size: 10px;
+    line-height: 1.5;
+    color: hsla(0,0%,100%,.7);
+    background-color: #24292e;
+}
+
+#school-icon{
+    border-radius: 70%;
+}
+
+.info{
+    font-size: 20px;
+}
+
+
+.header-search{
+   margin: 18px;
+}
+
+aside{
+    background-color: white;
+}
+
+.function-container{
+    margin: 50px;
+}
+
+.welcome{
+    margin: 20px;
+}
+
+.main-content{
+    text-align: center;
+    margin: 0 auto;
+}

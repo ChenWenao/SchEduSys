@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link type="text/css" rel="stylesheet" href="/css/login.css"/>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="main">
+    <div class="main0">
+        <div class="main_left">
+            <div class="main_l_img"></div>
+            <div class="system">学生成绩管理系统</div>
+        </div>
+        <div class="main_right">
+            <div class="main_r_up">
+                <div class=main_r_up_img></div>
+                <div class="pp">登录</div>
+            </div>
+
+            <form enctype="multipart/form-data" method="post" action="/User/login">
+                <div class="txt">
+                    <span style="letter-spacing:16px;">工号:</span>
+                    <input id="userCode" name="userCode" type="text" class="txtphone" placeholder="请输入用户名"/>
+                </div>
+                <div class="txt">
+                    <span style="letter-spacing:4px;">登录密码:</span>
+                    <input id="userPassword" name="userPassword" type="password" class="txtphone"
+                           placeholder="请输入登录密码"/>
+                </div>
+
+                <!--            <div class="txt">-->
+                <!--                <span style=" float:left;letter-spacing:8px;">验证码:</span>-->
+                <!--                <input id="adminCode" name="adminCode" type="text" class="txtyzm" placeholder="请输入页面验证码" />-->
+                <!--                <img src="/Admin/SecurityCode" id="test" class="test" alt="点击切换验证码" title="点击切换验证码" style="cursor: pointer;"/>-->
+                <!--            </div>-->
+
+
+                <input id="error" name="error" type="text" class="error" disabled="disabled"/>
+
+                <div class="xieyi">
+                    <input name="" type="checkbox" value="" checked="checked"/>
+                    记住我 <a href="/User/authentication"><span class="blue"
+                                                                                         style=" padding-left:130px; cursor:pointer">忘记密码?</span></a>
+                </div>
+
+
+                <div class="xiayibu">
+                    <input id="btn" type="submit" value="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer0">
+        <div class="footer_l">使用条款 | 隐私保护</div>
+        <div class="footer_r">学生成绩管理系统</div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" language="javascript">
+    //登录验证
+
+    //点击切换验证码
+    // $(document).ready(function () {
+    //
+    //     $("#test").bind("click", function () {
+    //         this.src = "/Admin/SecurityCode/?time=" + (new Date()).getTime();
+    //     });
+    // });
+</script>
+</html>

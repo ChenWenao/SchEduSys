@@ -8,6 +8,7 @@ import com.service.DepartService;
 import com.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +27,7 @@ public class CourseController {
     private TopicService topicService;
 
     //测试用的，整合的时候要删掉
-    @GetMapping("Course/index")
+    @GetMapping("/Index")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
@@ -34,12 +35,15 @@ public class CourseController {
     }
 
     //课程详细页
+
     @GetMapping("Course/detail/{courseId}")
     public ModelAndView detailPage(@PathVariable("courseId")int courseId){
         ModelAndView mav=new ModelAndView("detail");
         mav.addObject("courseMsg",courseService.getCourseById(courseId));
+        mav.addObject("logo",courseService.getCourseById(courseId).getCourseLogo());
         return mav;
     }
+
 
     //新闻详细页
     @GetMapping("News/news/{newsid}")
@@ -50,7 +54,8 @@ public class CourseController {
         return mav;
     }
 
-
+    @GetMapping("/courseAttribute")
+    public ModelAndView courseAttribute(){ModelAndView mav = new ModelAndView("courseAttribute"); return mav;}
 
 
     //增
@@ -80,7 +85,7 @@ public class CourseController {
         //设置imgName。
         String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
         //获取课程图片存储文件夹，若不存在，就创建文件夹。
-        String fileDirPath = "src/main/resources/static/img/courseImg";
+        String fileDirPath = "C:\\Program Files\\Tomcat 9.0\\webapps\\demo-0.0.1-SNAPSHOT\\WEB-INF\\classes\\static\\img\\courseImg";
         File fileDir = new File(fileDirPath);
         if (!fileDir.exists()) {
             // 递归生成文件夹
@@ -132,6 +137,7 @@ public class CourseController {
         return false;
     }
 
+
     //改
 
     //下架课程
@@ -157,7 +163,7 @@ public class CourseController {
     }
 
     //修改课程的全部信息
-    @PostMapping("Course/modifyCourse")
+    @PostMapping("/Course/modifyCourse")
     public String modifyCourse(@RequestParam("courseImg") MultipartFile courseImg, @ModelAttribute(value = "modifyCourse") Course modifyCourse) {
         String msg = "";
         Course oldCourse = courseService.getCourseById(modifyCourse.getCourseId());
@@ -182,7 +188,7 @@ public class CourseController {
             //设置imgName。
             String imgName = System.currentTimeMillis() + courseImg.getOriginalFilename();
             //获取课程图片存储文件夹，若不存在，就创建文件夹。
-            String fileDirPath = "src/main/resources/static/img/courseImg";
+            String fileDirPath = "C:\\Program Files\\Tomcat 9.0\\webapps\\demo-0.0.1-SNAPSHOT\\WEB-INF\\classes\\static\\img\\courseImg";
             File fileDir = new File(fileDirPath);
             try {
                 // 构建真实的文件路径
@@ -206,6 +212,14 @@ public class CourseController {
         return "课程修改失败！";
     }
 
+    @GetMapping("/Course/list/{Param}/{value}")
+    public ModelAndView list(@PathVariable("Param") String Param, @PathVariable("value") String value) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("list");
+        mav.addObject("Param",Param);
+        mav.addObject("value",value);
+        return mav;
+    }
     //修改课程的部分信息
     //传入一个课程对象
     //需要课程字段：Id，Description，FAQ，gradingPolicy，Requirement

@@ -110,6 +110,7 @@ public class CourseRepository {
         return false;
     }
 
+
     public boolean modifyCourseInfo(Course courseInfo) {
         try {
             template.update("update Course set courseDescription=?," +
@@ -179,7 +180,13 @@ public class CourseRepository {
 
     public List<Course> selectAll(String param, String value) {
         try {
-            String sql = "select * from Course where " + param + "= '" + value + "'";
+            String sql;
+            if (param == null && value == null)
+            {
+              sql   = "select * from Course" ;
+            } else {
+                 sql = "select * from Course where " + param + "= '" + value + "'";
+            }
             System.out.println(sql);
             List<Course> courses = template.query(sql, courseRowMapper);
             return courses;

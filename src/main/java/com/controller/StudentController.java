@@ -1,9 +1,11 @@
 package com.controller;
 
 
+import com.bean.Course;
 import com.bean.Department;
 import com.bean.Student;
 import com.bean.User;
+import com.service.CourseService;
 import com.service.DepartService;
 import com.service.StudentService;
 import com.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -26,9 +29,15 @@ public class StudentController {
     @Autowired
     private DepartService departService;
 
-    @GetMapping("Student/student")
+    @Autowired
+    private CourseService courseService;
+    @GetMapping("/Student/student")
     public ModelAndView studentHome() {
         ModelAndView mav = new ModelAndView("student");
+        List<Course> courses = new LinkedList<>();
+        courses =   courseService.getAll(null, null);
+        mav.addObject("courses", courses);
+        System.out.println(courses.size());
         return mav;
     }
 

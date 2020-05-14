@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>首页 - bootstrap中文后台管理系统模板</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+
+    <meta name="author" content="yinqi">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/select.js"></script>
+
+
+</head>
+
+<body data-logobg="color_8" data-sidebarbg="color_8" >
+<div class="layout-web">
+    <div class="layout-container">
+        <!--左侧导航-->
+        <aside class="layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <img src="/static/images/logo-sidebar.png" title="" alt=""/>
+            </div>
+            <div class="layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item ">
+                            <a href="#" onclick="javascript:window.location.href='/Teacher/teacher'"><i
+                                    class="mdi mdi-home"></i> 后台首页</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 课程查看</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/courseList'">课程列表</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>考试事务</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/examList'">成绩登记</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2019. All rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="aside-toggler">
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 修改个人信息 </span>
+
+                    </div>
+
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <!--                            根据角色显示身份            -->
+                                <span>老师端 <span class="caret"></span></span>
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/editInfo'"><i
+                                        class="mdi mdi-account"></i>修改个人信息</a></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/authentication'"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/login'"><i
+                                        class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+
+        <!--页面主要内容-->
+        <main class="layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+
+                            <div class="card-body">
+
+
+                                <form id="user_reg" name="user_reg" enctype="multipart/form-data" method="post"
+                                      action="/Teacher/modifyTeacher" class="site-form" onsubmit="return check();">
+                                    <div class="form-group ">
+                                        <!--                                        教师Id不可修改-->
+                                        <label for="teacherId">教师ID</label> <br>
+                                        <input style="width: 100px;display: inline-block;color: #0C0C0C" type="text"
+                                               class="form-control " name="teacherId" id="teacherId" readonly/>
+
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label for="teacherRealName">教师姓名</label>
+                                        <input style="width: 100px;display: inline-block;background-color: transparent" type="text" class="form-control "
+                                               name="teacherRealName" id="teacherRealName"  onkeyup="nameValidate()" readonly />
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#nameModal" data-whatever="@mdo">修改姓名
+                                        </button>
+                                        <div class="modal fade" id="nameModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="nameModalLabel">修改姓名</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="teacherNativePlacereal"
+                                                                   class="control-label">修改后的姓名:</label>
+                                                            <input id="realname" type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="btnsave" class="btn btn-primary">确定
+                                                        </button>
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input style="background-color:transparent; display: inline-block;border: 0;color: red;"
+                                               id="error1" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>教师籍贯</label>
+                                        <input style="display: inline-block;width: 150px;background-color: transparent" class="form-control" name="teacherNativePlace" type="text" id="teacherNativePlace" onkeyup="nativeValidate()" readonly/>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#nativeModal" data-whatever="@mdo">修改籍贯
+                                        </button>
+                                        <div class="modal fade" id="nativeModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="nativeModalLabel">修改籍贯</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="teacherNativePlacereal"
+                                                                   class="control-label">修改后的籍贯:</label>
+                                                            <input name="teacherNativePlacereal" type="text"
+                                                                   id="teacherNativePlacereal" onkeyup="nativeValidate()" readonly/>
+                                                            <select name="sheng" onchange="select()">
+                                                            </select>
+                                                            <select name="shi" onchange="select()"></select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="btnsave1" class="btn btn-primary">确定
+                                                        </button>
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input style="background-color:transparent; display: inline-block;border: 0;color: red;"
+                                               id="error2" >
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="teacherDepartName">所属院系</label>
+                                        <input style="width: 100px;display: inline-block;background-color: transparent"
+                                               type="text" class="form-control "
+                                               name="teacherDepartName" id="teacherDepartName" readonly value=""/>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModal" data-whatever="@mdo">修改院系
+                                        </button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="exampleModalLabel">修改院系</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="teacherDepartName" class="control-label">修改后的所属院系:</label>
+                                                            <select style="width: 300px;display: inline-block"
+                                                                    class="form-control" name="teacherDepartName0"
+                                                                    id="teacherDepartName0">
+                                                                <option value="0"></option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="btnsave2" class="btn btn-primary">确定
+                                                        </button>
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>教师性别</label>
+                                        <label class="radio radio-inline radio-primary">
+                                            <input type="radio" name="teacherGender" checked="checked"
+                                                   value="男"><span>男</span>
+                                        </label>
+                                        <label class="radio radio-inline radio-primary">
+                                            <input type="radio" name="teacherGender" value="女"><span>女</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>政治面貌</label>
+                                        <label class="radio radio-inline radio-primary">
+                                            <input type="radio" name="teacherPoliticsStatus" checked="checked"
+                                                   value="党员"><span>党员</span>
+                                        </label>
+                                        <label class="radio radio-inline radio-primary">
+                                            <input type="radio" name="teacherPoliticsStatus" value=">团员"><span>团员</span>
+                                        </label>
+                                        <label class="radio radio-inline radio-primary">
+                                            <input type="radio" name="teacherPoliticsStatus" value="群众"><span>群众</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="teacherPhoneNumber">教师电话 &nbsp;</label>
+                                        <input style="width: 200px;display: inline-block" type="text"
+                                               class="form-control " name="teacherPhoneNumber"
+                                               id="teacherPhoneNumber" onkeyup="phoneValidate()"/>
+                                        <input style="background-color:transparent; display: inline-block;border: 0;color: red;"
+                                               id="error" >
+
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary"  >保存</button>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        init();
+        getData();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                return false;
+            }
+        });
+    });
+
+    function getData() {
+        $.ajax({
+            type: "get",
+            url: "/Teacher/teacherById/1?time=" + (new Date()).getTime(),
+            dataType: "json",
+            success: function (data) {
+                $("#teacherId").val(data.teacherId)
+                $("#teacherRealName").val(data.teacherRealName)
+                $("#teacherDepartName").val(data.teacherDepartName)
+                $("#teacherPhoneNumber").val(data.teacherPhoneNumber)
+                $("#teacherNativePlace").val(data.teacherNativePlace)
+                $(":radio[name='teacherGender'][value='" + data.teacherGender + "']").prop("checked", "checked");
+                $(":radio[name='teacherPoliticsStatus'][value='" + data.teacherPoliticsStatus + "']").prop("checked", "checked");
+
+            },
+            error: function () {
+                alert("加载数据失败！");
+            }
+        })
+    }
+    
+
+    $("#teacherDepartName0").ready(function () {
+
+        $.ajax({
+            url: "/Depart/departments/on/departName/1/1/10?time=" + (new Date()).getTime(),
+            // data: params,
+            async: true,
+            datatype: "json",
+            success: function (data) {
+                $("#teacherDepartName0").empty();
+                $.each(data, function (index, item) {
+                    $("#teacherDepartName0").append( //此处向select中循环绑定数据
+                        "<option value=" + item.departName + ">" + item.departName + "</option>");
+                });
+            },
+            error: function (data) {
+                alert("下拉框数据加载失败");
+            }
+        });
+    });
+    $('#btnsave').click(function () {
+        var value = $('#realname').val();
+        $("#teacherRealName").val(value)
+        console.log(value)
+        $('#nameModal').modal('hide');
+    });
+    $('#btnsave1').click(function () {
+        var value = $('#teacherNativePlacereal').val();
+        $("#teacherNativePlace").val(value)
+        console.log(value)
+        $('#nativeModal').modal('hide');
+    });
+    $('#btnsave2').click(function () {
+        var value = $('#teacherDepartName0').val();
+        $("#teacherDepartName").val(value)
+        console.log(value)
+        $('#exampleModal').modal('hide');
+    });
+
+    $(function () {
+        $("#user_reg").ajaxForm(function (data) {
+            if (data == "教师不存在！") {
+                alert(data);
+            } else if (data == "要修改的学院不存在！") {
+                alert("要修改的学院不存在！");
+            } else if (data == "修改失败！") {
+                alert("修改失败！")
+            } else {
+                alert("修改成功！")
+                window.location.href = "/Teacher/editInfo"
+            }
+        })
+
+    })
+
+    function nameValidate() {
+        var name = document.getElementById('teacherRealName').value;
+        if (!(/^[\u4E00-\u9FA5]{2,4}$/.test(name))){
+            $("#error1").val("请输入正确的姓名");
+            return false
+        }else{
+            $("#error1").val("");
+            return true;
+        }
+
+    }
+    function nativeValidate() {
+        var native = document.getElementById("teacherNativePlace").value;
+        console.log(native)
+        if (native==""){
+            $("#error2").val("籍贯不能为空");
+            return false
+        }else{
+            $("#error2").val("");
+            return true;
+        }
+
+        }
+    function phoneValidate() {
+        var phone = document.getElementById('teacherPhoneNumber').value;
+
+        if (!(/^1[34578]\d{9}$/.test(phone))) {
+
+            $("#error").val("手机号码有误");
+            return false
+
+        } else {
+
+            $("#error").val("");
+            return true;
+        }
+    }
+
+
+
+    function check() {
+        var check = phoneValidate()&&nameValidate()&&nativeValidate();
+        if (check==true){
+        return check;
+        console.log(check)}
+        else {
+
+            alert("无法提交，请检查修改的信息是否正确！")
+            return false
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

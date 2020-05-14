@@ -1,6 +1,5 @@
 package com.dao;
 
-import com.bean.Schedule;
 import com.bean.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +12,6 @@ public class StudentRepository {
     @Autowired
     private JdbcTemplate template;
     private StudentRowMapper studentRowMapper = new StudentRowMapper();
-    private ScheduleRowMapper scheduleRowMapper = new ScheduleRowMapper();
 
     //增
     public boolean insertANewStudent(Student newStudent) {
@@ -29,14 +27,6 @@ public class StudentRepository {
                     , newStudent.getStudentRealName()
                     , newStudent.getStudentIdCard()
                     , newStudent.getStudentNote());
-            List<Schedule> schedules = template.query("select * from courseSchedule,Course,Teacher " +
-                    "where sch_teacherId=teacherId " +
-                    "and sch_courseId=courseId " +
-                    "and courseType='必修'" +
-                    "and courseDepartId = ?", scheduleRowMapper, newStudent.getStudentDepartId());
-            for (Schedule schedule : schedules) {
-                template.update("insert into courseRegister(reg_courseId,reg_teacherId,reg_studentId) values (?,?,(select studentId from Student where studentCode=?))",schedule.getSch_courseId(),schedule.getSch_teacherId(),newStudent.getStudentCode());
-            }
             return true;
         } catch (Exception e) {
             System.out.println(e);
