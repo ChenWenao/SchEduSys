@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <style>
+        a{
+            color:#999;
+        }
+        .box a{
+            color:#6F6F6F;
+        }
+        .redColor{
+            color: #C40000 !important;
+        }
+        nav.top{
+            background-color: #f2f2f2;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom:1px solid  #e7e7e7;
+        }
+        nav.top span, nav.top a{
+            color: #999;
+            margin: 0px 10px 0px 10px;
+        }
+        nav.top a:hover{
+            color: #C40000;
+            text-decoration: none;
+        }
+        .pic{
+            margin:auto;
+            width:1100px;
+            height:400px;
+        }
+        #lunbo{
+            margin:auto;
+            width:1100px;
+            height:400px;
+        }
+        .box{
+            width:1100px;
+            margin:auto;
+
+        ;
+        }
+        .box1{
+            width:1100px;
+            height:280px;
+            margin-bottom: 30px;
+            margin-top: 30px;
+            padding: 20px;
+            border-color: #3c3c3c;
+            border:solid 1px;
+            background-color: #E6E6E6;
+        }
+        .box2{
+            width:1100px;
+            height:650px;
+            margin-bottom: 30px;
+            margin-top: 30px;
+            padding: 20px;
+            border-color: #3c3c3c;
+            line-height: 46px;
+            border:solid 1px;
+            background-color: #E6E6E6;
+        }
+        .box2 img{
+            width:150px;
+            margin-left: 55px;
+            height:250px;
+            color: rgb(51, 51, 51);
+            border:solid 1px;
+        }
+        .box span{
+            font-size: 10px;
+            padding-left: 10px;
+            padding-right:10px;
+        }
+        .div3{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-color: #3c3c3c;
+            line-height: 46px;
+            border:solid 1px;
+        }
+        .info{
+            border-color: #3c3c3c;
+            line-height: 25px;
+            border:solid 1px;
+        }
+        .box3{
+            display:inline-block;
+            width:33%;
+            height:550px;
+        }
+        .box4{
+            display:inline-block;
+            width:33%;
+            height:550px;
+        }
+        .box5{
+            display:inline-block;
+            width:33%;
+            height:550px;
+        }
+        .box1 a{
+            display:block;
+        }
+        .footer_wrap {
+            width: 100%;
+            height: 120px;
+            background: #212425;
+            color: #888;
+            position: relative;
+        }
+        .footer_wrap .line {
+            position: absolute;
+            top: 1px;
+            width: 100%;
+            height: 1px;
+            background: #959595;
+        }
+        .footer {
+            position: relative;
+            width: 1080px;
+            padding: 25px 0 0 20px;
+            margin: 0 auto;
+        }
+        .footer .er {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width:100px;
+            height:100px;
+        }
+    </style>
+
+
+</head>
+<body>
+<nav class="top ">
+    <a href="/index">
+        <span class="glyphicon glyphicon-home redColor"></span>
+        首页
+    </a>
+
+    <span>喵，欢迎来湖大</span>
+    <a href="/User/login">请登录</a>
+
+    <span class="pull-right">
+        <select id="info" margin-right="20px" height="20px">
+            <option value="courseId">课程id：</option>
+            <option value="courseCredit">学分：</option>
+            <option value="courseName">课程名：</option>
+            <option value="courseDepartName">学院：</option>
+            <option value="courseType">必修或选修：</option>
+            <option value="coursePeriod">学时：</option>
+        </select>
+        <input type="text" size="15" id="value">
+        <button id="search">查询</button>
+    </span>
+
+</nav>
+<img src="/images/back1.png" height="100" width="1350"/>
+<div class="pic">
+<img id="lunbo" src="/images/2.jpg" height="400px" width="1200px"/>
+</div>
+<div class="box">
+    <div class="box1">
+        <div class="box3">
+            <div class="info"><span>最新新闻</span></div>
+
+
+        </div>
+        <div class="box4">
+            <div class="info"><span>最热新闻</span></div>
+        </div>
+        <div class="box5">
+            <div class="info"><span>重点新闻</span></div>
+        </div>
+    </div>
+    <div class="box2">
+        <div class="div3">
+            <a href="/Course/list/0/1"><span font-size="10px">热门学科more+</span></a>
+        </div>
+    </div>
+</div>
+<div class="footer_wrap">
+    <div class="line"></div>
+    <div class="footer">
+        <p>版权所有：湖北大学无八哥无阿哥小组</p>
+        <p>电话：888-8888888&nbsp;&nbsp;&nbsp;邮箱：XXXXXXXX@163.com</p>
+        <p>地址：湖北省武汉市  </p>
+        <img src="/images/hubu.png" class="er" />
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url:"/News/news/All/newsId/1/1/8",
+            dataType:"json",
+            success: function(result){
+                $.each(result, function(i, n){
+                    var urlStr = n.newsURL;
+                    var index = urlStr.lastIndexOf('\\');
+                    urlStr = urlStr.substring(index + 1, urlStr.length);
+                    var str="/files/news/"+urlStr;
+                    var address="<a href="+str+"><span>"+n.newsTitle+"</span></a>";
+                    $(".box3").append(address);
+                })
+            }
+        });
+        $.ajax({
+            url:"/News/news/All/newsId/0/1/8",
+            dataType:"json",
+            success: function(result){
+                $.each(result, function(i, n){
+                    var urlStr = n.newsURL;
+                    var index = urlStr.lastIndexOf('\\');
+                    urlStr = urlStr.substring(index + 1, urlStr.length);
+                    var str="/files/news/"+urlStr;
+                    var address="<a href="+str+"><span>"+n.newsTitle+"</span></a>";
+                    $(".box4").append(address);
+                })
+            }
+        });
+        $.ajax({
+            url:"/News/news/All/newsId/1/1/9",
+            dataType:"json",
+            success: function(result){
+                $.each(result, function(i, n){
+                    var urlStr = n.newsURL;
+                    var index = urlStr.lastIndexOf('\\');
+                    urlStr = urlStr.substring(index + 1, urlStr.length);
+                    var str="/files/news/"+urlStr;
+                    var address="<a href="+str+"><span>"+n.newsTitle+"</span></a>";
+                    $(".box5").append(address);
+                })
+            }
+        });
+        $.ajax({
+            url:"/Course/courses/all/all/courseId/1/1/8",
+            dataType:"json",
+            success: function(result){
+                $.each(result, function(i, n){
+                    var urlStr = n.courseLogo;
+                    var index = urlStr.lastIndexOf('\\');
+                    urlStr = urlStr.substring(index + 1, urlStr.length);
+                    var str="/img/courseImg/"+urlStr;
+                    var href1="/Course/detail/"+n.courseId;
+                    var address="<a class='d' href="+href1+"><img src="+str+"></a>";
+                    $(".box2").append(address);
+                })
+            }
+        });
+    })
+</script>
+<script>
+var jx_speed = 5000; //轮播图片时间设置
+var jxlunbo = document.getElementById("lunbo");
+var num = 1;
+var time1 = setInterval(getlunbo, jx_speed);
+
+function getlunbo() {
+num++;
+if (num == 3) {
+num = 1;
+}
+jxlunbo.src = "../images/" + num + ".jpg";
+}
+</script>
+<script>
+    $("#search").click(function(){
+        var param=$("#info").val();
+        var value=$("#value").val();
+        if(value=="")
+        {
+            alert("wrong input!");
+        }
+        else{
+            window.location.href="/Course/list/"+param+"/"+value;
+        }
+    })
+</script>
+</html>

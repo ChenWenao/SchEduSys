@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <h1>bootstrap table</h1>
+</head>
+<body>
+<div>
+    <h2>下面是表格</h2>
+    <table id="table"></table>
+</div>
+</body>
+
+<script type="text/javascript" src="../static/lib/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/bootstrap-table.min.js"></script>
+
+<script>
+
+    $(function(){
+        $('#table').bootstrapTable({
+            ajax : function (request) {
+
+                $.ajax({
+                    type : "GET",
+                    url : "8080/Course/courseById/2",
+                    contentType: "application/json;charset=utf-8",
+                    dataType:"jsonp",
+                    data:'',
+                    jsonp:'callback',
+                    ajaxOptions: {
+                        xhrFields: {        //跨域
+                            withCredentials: true
+                        },
+                        crossDomain: true
+                    },
+                    success : function (msg) {
+                        request.success({
+                            row : msg
+                        });
+                        $('#table').bootstrapTable('load', msg);
+                    },
+                    error:function(){
+                        alert("错误");
+                    }
+                });
+            },
+
+            toolbar:'#toolbar',
+            singleSelect:true,
+            clickToSelect:true,
+            sortName: "create_time",
+            sortOrder: "desc",
+            pageSize: 15,
+            pageNumber: 1,
+            pageList: "[10, 25, 50, 100, All]",
+            showToggle: true,
+            showRefresh: true,
+            showColumns: true,
+            search: true,
+            pagination: true,
+            columns: [{
+                field: "state",
+                checkbox:true,
+            },
+                {
+                    field: 'courseName',
+                    title: '课程名'
+            },
+                {
+                    field: 'courseDepartName',
+                    title: '开课学院'
+            },
+                {
+                    field: 'coursePeriod',
+                    title: '学时'
+            } ,
+                {
+                    field: 'courseCredit',
+                    title: '学分'
+            },
+                {
+                    field: 'courseStartTime',
+                    title: '开课时间'
+            },
+                {
+                    field: 'courseType',
+                    title: '课程类型'
+
+                }],
+
+        });
+    }
+</script>
+
+
+</html>

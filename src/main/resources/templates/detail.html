@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <style>
+        body{
+            font-size: 12px;
+            font-family: Arial;
+        }
+        a{
+            color:#999;
+        }
+        .redColor{
+            color: #C40000 !important;
+        }
+        nav.top{
+            background-color: #f2f2f2;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom:1px solid  #e7e7e7;
+        }
+        nav.top span, nav.top a{
+            color: #999;
+            margin: 0px 10px 0px 10px;
+        }
+        nav.top a:hover{
+            color: #C40000;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            vertical-align: middle;
+        }
+        .container {
+            height: 400px;
+            width: 90%;
+            margin: 0 5% 10px 5%;
+        }
+
+        table {
+            width: 90%;
+            height: 90%;
+            margin: 20px 0 20px 0;
+        }
+
+        .btn {
+            width:150px;
+            margin-left:37%;
+        }
+        .away {
+            margin-left: 50px;
+            margin-top:10px;
+            width: 50%;
+            font-size:30px;
+            font-family:Consolas;
+        }
+        pre {
+            white-space: pre-wrap;
+            margin-top: 10px;
+            word-wrap: break-word;
+            font-size: 30px;
+            font-family: Consolas;
+        }
+        li{
+            display:inline;
+        }
+    </style>
+</head>
+<body>
+<nav class="top ">
+    <a href="/Course/index">
+        <span class="glyphicon glyphicon-home redColor"></span>
+        首页
+    </a>
+
+    <span>喵，欢迎来湖大</span>
+    <a href="/User/login">请登录</a>
+
+    <span class="pull-right">
+        <select id="info" margin-right="20px" height="20px">
+            <option value="courseId">课程id：</option>
+            <option value="courseCredit">学分：</option>
+            <option value="courseName">课程名：</option>
+            <option value="courseDepartName">学院：</option>
+            <option value="courseType">必修或选修：</option>
+            <option value="coursePeriod">学时：</option>
+        </select>
+        <input type="text" size="15" id="value">
+        <button id="search">查询</button>
+    </span>
+
+</nav>
+<img src="/images/back1.png" height="100" width="1350"/>
+<div class="container">
+    <table>
+        <tr>
+            <td width="50%" height="260px" align="right"><img class="logo" th:src="${logo}" style="width:150px; height:250px;"/></td>
+            <td width="50%" rowspan="2"><div class="away"><p th:text="${courseMsg.courseDescription}"></p></div></td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    详细信息
+                </button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">详细信息</h4>
+                            </div>
+                            <ul class="modal-body">
+                                    课程：<li th:text="${courseMsg.courseName}"></li></br>
+                                    学分：<li th:text="${courseMsg.courseCredit}"></li></br>
+                                    学院：<li th:text="${courseMsg.courseDepartName}"></li></br>
+                                    学时：<li th:text="${courseMsg.coursePeriod}"></li></br>
+                                    课程开始时间：<li th:text="${courseMsg.courseStartTime}"></li></br>
+                                    课程类型：<li th:text="${courseMsg.courseType}"></li></br>
+                                    常见问题：<li th:text="${courseMsg.courseFAQ}"></li></br>
+                                    课程打分政策：<li th:text="${courseMsg.courseGradingPolicy}"></li></br>
+                                    课程要求：<li th:text="${courseMsg.courseRequirement}"></li></br>
+                            </ul>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    $(document).ready(function(){
+        var urlStr = $(".logo").attr("src");
+        var index = urlStr.lastIndexOf('\\');
+        urlStr = urlStr.substring(index + 1, urlStr.length);
+        var str="/img/courseImg/"+urlStr;
+        $(".logo").attr("src",str);
+    })
+</script>
+<script>
+    $("#search").click(function(){
+        var param=$("#info").val();
+        var value=$("#value").val();
+        if(value=="")
+        {
+            alert("wrong input!");
+        }
+        else{
+            window.location.href="/Course/list/"+param+"/"+value;
+        }
+    })
+</script>
+</body>
+</html>

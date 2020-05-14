@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理界面</title>
+
+    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.css" rel="stylesheet">
+
+    <link href="/student.css" rel="stylesheet">
+
+    <script src="/student.js" type="application/javascript"></script>
+</head>
+<body>
+    <header class="page-header d-flex flex-row">
+        <div class="header-item p-2 flex-grow-1">
+            <a href="/student">
+                <img src="/hubu.png" id="school-icon">
+            </a>
+        </div>
+
+        <div class="header-item p-2 info mb-3 mt-3">
+
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    学生端  <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" ><span th:text="${session.loginUser.userRealName}">个人信息</span></a>
+                    <a class="dropdown-item" href="#" onclick="javascript:window.location.href='/User/authentication'">修改密码</a>
+                    <a class="dropdown-item" href="#" onclick="javascript:window.location.href='/User/login'">退出登录</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="application-main">
+        <div class="d-flex flex-wrap bg-gray" style="min-height: 100vh">
+           <aside class="function-left-column team-left-column col-12 col-md-3 col-lg-2 bg-gray border-right border-bottom hide-md hide-sm">
+               <div class="function-container  function-item">
+                   <div class="mb-3 mt-5" >
+                       <div class="dropdown">
+                           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                               课程管理  <span class="caret"></span>
+                           </a>
+                           <div class="dropdown-menu">
+                               <a class="dropdown-item" href="#"  id="courseRegister" onclick="courseRegisterfunc()">学生选课</a>
+                               <a class="dropdown-item" href="#" id="courseRegisterAll" onclick="courseRegisterAllFunc()">学生查看已选课程</a>
+                           </div>
+                       </div>
+                   </div>
+
+
+                   <div class="mb-3  mt-5 function-item">
+                       <div class="dropdown">
+                           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                               成绩管理  <span class="caret"></span>
+                           </a>
+                           <div class="dropdown-menu">
+                               <a class="dropdown-item" id = "lookgrade" href="#" onclick="lookgradeFunc()" >查看成绩</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+
+                 <div class="border-top  mb-3 mt-3 welcome">
+                     <p class="welcome">欢迎来到学生管理系统</p>
+                 </div>
+              </aside>
+
+            <div class="main-content">
+                <table class="table main-table">
+                    <thead>
+                      <th scope="col">#</th>
+                      <th scope="col">课程名称</th>
+                      <th scope="col">课程类别</th>
+                      <th scope="col">开课院系</th>
+                      <th scope="col">学分</th>
+                      <th scope="col">开课时间</th>
+                      <th scope="col">开课年级</th>
+                      <th scope="col">选必修</th>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="course, iStat : ${courses}">
+                        <a href="#"><th scope="row" th:text="${iStat.index + 1}"></th></a>
+                        <td th:text="${course.courseName}"></td>
+                        <td th:text="${course.courseTopicName}"></td>
+                        <td th:text="${course.courseDepartName}"></td>
+                        <td th:text="${course.courseCredit}"></td>
+                        <td th:text="${course.courseStartTime}"></td>
+                        <td th:text="${course.courseLevel}"></td>
+                        <td th:text="${course.courseType}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+     </main>
+</body>
+
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <style>
+        body{
+            font-size: 12px;
+            font-family: Arial;
+        }
+        a{
+            color:#999;
+        }
+        .redColor{
+            color: #C40000 !important;
+        }
+        nav.top{
+            background-color: #f2f2f2;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom:1px solid  #e7e7e7;
+        }
+        nav.top span, nav.top a{
+            color: #999;
+            margin: 0px 10px 0px 10px;
+        }
+        nav.top a:hover{
+            color: #C40000;
+            text-decoration: none;
+        }
+
+        #box img{
+            margin:auto;
+            width:150px;
+            height:230px;
+            border:solid 1px;
+        }
+        #box{
+            margin:auto;
+            width:1100px;
+        }
+        #box a{
+            width:200px;
+            height:310px;
+            margin-left:33px;
+            margin-bottom: 20px;
+            align-text:center;
+
+        }
+    </style>
+
+</head>
+<body>
+<nav class="top ">
+    <a href="/Course/index">
+        <span class="glyphicon glyphicon-home redColor"></span>
+        首页
+    </a>
+
+    <span>喵，欢迎来湖大</span>
+    <a href="/User/login">请登录</a>
+
+    <span class="pull-right">
+        <select id="info" margin-right="20px" height="20px">
+            <option value="courseId">课程id：</option>
+            <option value="courseCredit">学分：</option>
+            <option value="courseName">课程名：</option>
+            <option value="courseDepartName">学院：</option>
+            <option value="courseType">必修或选修：</option>
+            <option value="coursePeriod">学时：</option>
+        </select>
+        <input type="text" size="15" id="value">
+        <button id="search">查询</button>
+    </span>
+
+</nav>
+<img src="/images/back1.png" height="100" width="1350"/>
+<div id="box">
+</div>
+<div align="center">
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="p" href="/Course/courses/all/all/courseId/0/1/12">Previous</a></li>
+        <li class="page-item"><a id="1" href="#">1</a></li>
+        <li class="page-item"><a id="2" href="#">2</a></li>
+        <li class="page-item"><a id="3" href="#">3</a></li>
+        <li class="page-item"><a class="n" href="/Course/courses/all/all/courseId/0/2/12">Next</a></li>
+    </ul>
+</nav>
+</div>
+</body>
+<script th:inline="javascript">
+    $(document).ready(function(){
+
+        var param= [[${Param}]];
+        var value= [[${value}]];
+        $("#1").attr("href","/Course/courses/all/all/courseId/0/1/12");
+        $("#2").attr("href","/Course/courses/all/all/courseId/0/2/12");
+        $("#3").attr("href","/Course/courses/all/all/courseId/0/3/12");
+        var add;
+        if(param=="0") {
+            add="/Course/courses/all/all/courseId/1/1/12";
+        }
+        else {
+            add="/SearchCo/"+param+"/"+value;
+        }
+        $.ajax({
+            url:add,
+            dataType:"json",
+            success: function(result){
+                $.each(result, function(i, n){
+                    var urlStr = n.courseLogo;
+                    var index = urlStr.lastIndexOf('\\');
+                    urlStr = urlStr.substring(index + 1, urlStr.length);
+                    var str="/img/courseImg/"+urlStr;
+                    var href1="/Course/detail/"+n.courseId;
+                    var address="<a class='d' href="+href1+"><img src="+str+"></a>";
+                    $("#box").append(address);
+                })
+            }
+        });
+    })
+</script>
+<script>
+    $("#search").click(function(){
+        var param=$("#info").val();
+        var value=$("#value").val();
+        if(value=="")
+        {
+            alert("wrong input!");
+        }
+        else{
+            window.location.href="/Course/list/"+param+"/"+value;
+        }
+    })
+</script>
+</html>

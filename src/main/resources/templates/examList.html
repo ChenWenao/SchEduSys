@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>考试事务</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+
+    <meta name="author" content="yinqi">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap-table.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-table-zh-CN.min.js"></script>
+
+</head>
+
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+    <div class="layout-container">
+        <!--左侧导航-->
+        <aside class="layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <img src="/static/images/logo-sidebar.png" title="" alt=""/>
+            </div>
+            <div class="layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item ">
+                            <a href="#" onclick="javascript:window.location.href='/Teacher/teacher'"><i
+                                    class="mdi mdi-home"></i> 后台首页</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 课程查看</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/courseList'">课程列表</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav active">
+                            <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>考试事务</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/examList'">成绩登记</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2019. All rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="aside-toggler">
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                            <span class="toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 考试事务 </span>
+
+                    </div>
+
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <!--                            根据角色显示身份            -->
+                                <span>老师端 <span class="caret"></span></span>
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" onclick="javascript:window.location.href='/Teacher/editInfo'"><i
+                                        class="mdi mdi-account"></i>修改个人信息</a></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/authentication'"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="javascript:window.location.href='/User/login'"><i
+                                        class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+
+                            <div class="card-body">
+<!--                                查询部分，若某项（某些项）为空，则返回符合其他项的所有数据-->
+                                <form class="form-inline" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label for="sch_courseId">课程编号</label>
+                                        <input class="form-control" type="text" id="sch_courseId" name="sch_courseId" placeholder="请输入课程编号..">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="courseName">课程名称</label>
+                                        <input class="form-control" type="text" id="courseName" name="courseName" placeholder="请输入课程名称..">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseDepartName">开课单位</label>
+                                        <select class="form-control"name="courseDepartName" id="courseDepartName">
+                                            <option value="0">--请选择开课单位--</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="examlist" class="btn btn-default" type="submit">查询</button>
+                                    </div>
+                                </form>
+<!--                                表格数据-->
+                                <table id="table" data-mobile-responsive="true">
+                                    <div class="alert alert-info" role="alert">现在是  <span style="font-size: large;color: red" id="time"></span>,请各位老师注意成绩录入时间</div>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+<script>
+    var productList=[];　　//生成查询数据
+    $.ajax({
+        url: '/Schedule/mySchedule/on/0/0',
+        type:'get',
+        success:function(res){
+            productList = res;
+            $('#table').bootstrapTable('destroy');
+            var table = $('#table').bootstrapTable({
+                url: '/Schedule/mySchedule/on/0/0',
+                striped: true,//隔行显示颜色
+                pageList: [1,5, 10], // 选择每页展示的信息行数
+                pageSize: 10,//每页显示的页数
+                page: 1,//起始页数
+                pagination:true,//是否分页
+                columns: [
+                    {
+                        title: '序号',
+                        field: 'id',
+                        formatter: function (value, row, index) {
+                            return index + 1;
+                        }
+                    },
+                    {
+                        field: 'sch_courseId',
+                        title: '课程编号',
+                        sortable: "true"
+                    }, {
+                        field: 'courseName',
+                        title: '课程名称'
+                    }, {
+                        field: 'courseDepartName',
+                        title: '开课单位'
+                    }, {
+                        field: 'courseType',
+                        title: '课程属性'
+                    }, {
+                        field: 'courseCredit',
+                        title: '学分'
+                    }, {
+                        field: 'scoreStartTime',
+                        title: '录入开始时间'
+                    }, {
+                        field: 'scoreEndTime',
+                        title: '录入结束时间'
+                    },
+                    {
+                        field: "",
+                        title: "操作",
+                        formatter: function (value, row, index) {
+                            var a = row.sch_courseId;
+                            var e = "<a onclick='submit(\"" + a + "\");'>录入</a>"
+                            return e;
+                        }
+                    }
+
+                ]
+            });
+            $($.parseHTML(this.linkTemplate, document, true)).appendTo(table);
+
+        }
+
+    })
+
+
+
+    window.onload=function(){
+            fnDate();
+            select();
+    }
+
+    function fnDate(){
+        var oDiv=document.getElementById("time");
+        var date=new Date();
+        var year=date.getFullYear();//当前年份
+        var month=date.getMonth();//当前月份
+        var data=date.getDate();//天
+        var time=year+"-"+fnW((month+1))+"-"+fnW(data);
+        oDiv.innerHTML=time;
+    }
+    //补位 当某个字段不是两位数时补0
+    function fnW(str){
+        var num;
+        str>10?num=str:num="0"+str;
+        return num;
+    }
+
+    function select() {
+        $.ajax({
+            url:"/Depart/departments/on/departName/1/1/10?time=" + (new Date()).getTime(),
+            // data: params,
+            async: true,
+            datatype: "json",
+            success: function (data) {
+                $("#courseDepartName").empty();
+                $.each(data, function (index, item) {
+                    $("#courseDepartName").append( //此处向select中循环绑定数据
+                        "<option value=" + item.departName + ">" + item.departName + "</option>");
+                });
+
+            },
+            error: function (data) {
+                alert("下拉框数据加载失败");
+            }
+        });
+    }
+
+    $('#examlist').click(function(){
+        var schco=$('#sch_courseId').val();
+        var coname=$('#courseName').val();
+        var codepname = $('#courseDepartName').val();
+        searchFun(schco,'sch_courseId',coname,'courseName',codepname,'courseDepartName');
+
+    });
+    function searchFun(schco,sch_courseIdStr,coname,courseNameStr,codepname,courseDepartNameStr){ 　　//scho,codepname为用户输入的搜索值，NameStr为搜索的字段
+        var newArry=[];
+        for(var i in productList){
+            var sch_courseId=productList[i][sch_courseIdStr];
+            var courseName=productList[i][courseNameStr]
+            var courseDepartName=productList[i][courseDepartNameStr]
+            schco=new RegExp(schco);
+            coname=new RegExp(coname);
+            codepname = new RegExp(codepname);
+            var isHasName=schco.test(sch_courseId);//匹配当前是否符合条件
+            var isconame=coname.test(courseName)
+            var iscodepname=codepname.test(courseDepartName)
+            if(isHasName&&iscodepname&&isconame){
+                newArry.push(productList[i]);　　　　//符合条件添加到newArry中　
+            }
+        }
+        $('#table').bootstrapTable('load',newArry);　　//加载数据
+    }
+    function submit(n) {
+        window.location.href = "/Teacher/register/" + n;
+    }
+</script>
+</body>
+
+</html>
