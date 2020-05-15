@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
@@ -21,7 +21,7 @@
 
 </head>
 
-<body data-logobg="color_8" data-sidebarbg="color_8" onload="getData()">
+<body data-logobg="color_8" data-sidebarbg="color_8" >
 <div class="layout-web">
     <div class="layout-container">
         <!--左侧导航-->
@@ -125,17 +125,17 @@
                                 <div class="form-group" style="border:0">
                                     <label for="teacherRealName">教师姓名</label>
                                     <input type="text" class="form-control" id="teacherRealName" disabled="disabled"
-                                           style="background-color: transparent"/>
+                                           style="background-color: transparent" th:value="${Teacher.teacherRealName}"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="teacherCode">教师工号</label>
                                     <input type="text" class="form-control" id="teacherCode" disabled="disabled"
-                                           style="background-color: transparent"/>
+                                           style="background-color: transparent" th:value="${Teacher.teacherCode}"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="teacherDepartName">所属院系</label>
                                     <input type="text" class="form-control" id="teacherDepartName" value=""
-                                           disabled="disabled" style="background-color: transparent"/>
+                                           disabled="disabled" style="background-color: transparent" th:value="${Teacher.teacherDepartName}"/>
                                 </div>
                             </div>
                         </div>
@@ -149,26 +149,6 @@
     </div>
 </div>
 
-<script>
-
-    function getData() {
-        $.ajax({
-            type: "get",
-            url: "/Teacher/teacherById/13",
-            dataType: "json",
-            success: function (data) {
-                $("#teacherRealName").val(data.teacherRealName)
-                $("#teacherCode").val(data.teacherCode)
-                $("#teacherDepartName").val(data.teacherDepartName)
-            },
-            error: function () {
-                alert("加载数据失败！");
-            }
-        })
-    }
-
-
-</script>
 
 </body>
 </html>

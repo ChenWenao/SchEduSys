@@ -242,7 +242,7 @@
                             //字段验证
                             if (!$.trim(value))
                                 return "不能为空";
-                            else if ($.trim(value) < 0 || $.trim(value) < 0 || $.trim(value) > 100)
+                            else if ($.trim(value) < 0 || $.trim(value) > 100)
 
                                 return "输入范围错误";
                         }
@@ -301,23 +301,50 @@
         var studentId = a;
         var grade = b;
         var testScore = c;
-        $.ajax({
-            url: "/Register/giveGrade/" + [[${courseId}]] + "/" + studentId + "/" + grade + "/" + testScore,    // 提交到controller的url路径
-            type: "get",    // 提交方式
-            dataType: "json",    // 服务器端返回的数据类型
-            success: function (data) {
+        if (b == 0 || c == 0 || (b == 0 && c == 0)) {
+            var r = confirm(studentRealName + "的平时成绩为" + grade + ",期末成绩为" + testScore + ",你确定要提交吗");
+            if (r) {
+                $.ajax({
+                    url: "/Register/giveGrade/" + [[${courseId}]] + "/" + studentId + "/" + grade + "/" + testScore,    // 提交到controller的url路径
+                    type: "get",    // 提交方式
+                    dataType: "json",    // 服务器端返回的数据类型
+                    success: function (data) {
 
-                alert("成功提交");
+                        alert("成功提交");
+                        $('#table').bootstrapTable('refresh', {
+                            url: '/Register/registerByCourseId/' + [[${courseId}]] + '/0/0',
+                            method: "get"
+                        })
 
-            },
-            error: function () {
-                alert("提交失败");
+                    },
+                    error: function () {
+                        alert("提交失败");
 
-            }
-        })
+                    },
+
+                })
+            } else
+                alert("请重新编辑！");
+        } else
+            $.ajax({
+                url: "/Register/giveGrade/" + [[${courseId}]] + "/" + studentId + "/" + grade + "/" + testScore,    // 提交到controller的url路径
+                type: "get",    // 提交方式
+                dataType: "json",    // 服务器端返回的数据类型
+                success: function (data) {
+
+                    alert("成功提交");
+                    $('#table').bootstrapTable('refresh', {
+                        url: '/Register/registerByCourseId/' + [[${courseId}]] + '/0/0',
+                        method: "get"
+                    })
+
+                },
+                error: function () {
+                    alert("提交失败");
+
+                }
+            })
     }
-
-
     function getPolicy() {
         $.ajax({
             type: "get",
