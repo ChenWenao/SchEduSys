@@ -2,7 +2,6 @@ package com.controller;
 
 
 import com.bean.Department;
-import com.bean.Student;
 import com.bean.Teacher;
 import com.bean.User;
 import com.service.DepartService;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,36 +27,44 @@ public class TeacherController {
 
 
     //暂时用这个url来返回teacher页面，在登陆做完后，可以由登陆来返回teacher页面，到那时候，这个接口可以删掉。
-    @GetMapping("/Teacher/teacher")
-    public ModelAndView teacherHome() {
+    @GetMapping("Teacher/teacher")
+    public ModelAndView teacherHome(HttpSession session) {
         ModelAndView mav = new ModelAndView("teacher");
+        Teacher teacher = teacherService.getTeacherById(((User)session.getAttribute("loginUser")).getUserId());
+        mav.addObject("Teacher",teacher);
         return mav;
     }
 
-    @GetMapping("/Teacher/courseList")
-    public ModelAndView courseList(){
-        ModelAndView mav = new ModelAndView("courseList");
-        return mav ;
+    //暂时用这个url来返回teacher的courseList，……
+    @GetMapping("Teacher/courseList")
+    public ModelAndView courseListPage(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("courseList");
+        return  mav;
     }
-
-    @GetMapping("/Teacher/examList")
-    public ModelAndView examList(){
-        ModelAndView mav = new ModelAndView("examList");
+    //暂时用这个url来返回teacher的examList，……
+    @GetMapping("Teacher/examList")
+    public ModelAndView examListPage(){
+        ModelAndView mav=new ModelAndView("examList");
         return mav;
     }
 
-    @GetMapping("/Teacher/editInfo")
-    public ModelAndView editInfo(){
-        ModelAndView mav = new ModelAndView("editInfo");
-        return mav;
+    //暂时用这个url来返回teacher的editInfo，……
+    @GetMapping("Teacher/editInfo")
+    public  ModelAndView editProfile(){
+        ModelAndView mav=new ModelAndView("editInfo");
+        return  mav;
     }
-
-    @GetMapping("/Teacher/editCourse/{courseId}")
+    //暂时用这个url来返回teacher的修改课程信息页面
+    @GetMapping("Teacher/editCourse/{courseId}")
     public ModelAndView editCourse(@PathVariable("courseId")int courseId){
-        ModelAndView mav = new ModelAndView("editCourse");
-        mav.addObject("courseId", courseId);
+        ModelAndView mav=new ModelAndView("editCourse");
+        mav.addObject("courseId",courseId);
         return mav;
     }
+
+
+
     //增
     //传入字段：userIdCard,userRealName       PS:isEnable默认是T，启用状态，密码默认123456，用户自己修改。
     //teacherDepartName,teacherGender,teacherNativePlace,teacherPoliticsStatus,teacherPhoneNumber,teacherDescription
@@ -137,12 +145,12 @@ public class TeacherController {
     //修改教师信息
     //传入的modifyTeacher表单，需要包含以下字段：teacherId，teacherDepartName，teacherGender，teacherNativePlace，teacherPoliticsStatus
     //，teacherPhoneNumber，teacherRealName
-    //也就是说，只能修改以上字段
+    //也就是说，只能修改以上字段(teacherId不能修改)
     @PostMapping("Teacher/modifyTeacher")
     public String modifyTeacher(@ModelAttribute(value = "modifyTeacher") Teacher modifyTeacher) {
         Teacher teacher_find = teacherService.getTeacherById(modifyTeacher.getTeacherId());
         if (teacher_find == null)
-            return "教师不存在！";//要修改的student不存在。
+            return "教师不存在！";//要修改的teacher不存在。
         Department department_find = departService.getDepartmentByName(modifyTeacher.getTeacherDepartName());
         if (department_find == null) {
             return "要修改的学院不存在！";
